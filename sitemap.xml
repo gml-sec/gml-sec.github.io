@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/11/13/2018-HCTF/</loc>
+    
+    <lastmod>2019-10-29T11:33:32.997Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/11/05/2018-XCTF-FINALS/</loc>
+    
+    <lastmod>2019-10-29T10:26:07.858Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/08/04/2019-de1ctf/</loc>
     
     <lastmod>2019-10-29T08:58:13.897Z</lastmod>
@@ -86,13 +100,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2018/11/05/2018-XCTF-FINALS/</loc>
-    
-    <lastmod>2019-10-28T17:07:48.953Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2018/12/12/2018-XCTF-BCTF-SEAFARING/</loc>
     
     <lastmod>2019-10-28T17:07:41.145Z</lastmod>
@@ -110,13 +117,6 @@
     <loc>http://yoursite.com/2018/10/24/2018-HITCON-Crypto-%25E9%2583%25A8%25E5%2588%2586%25E9%25A2%2598%25E8%25A7%25A3/</loc>
     
     <lastmod>2019-10-28T17:07:18.580Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/11/13/2018-HCTF/</loc>
-    
-    <lastmod>2019-10-28T17:07:12.054Z</lastmod>
     
   </url>
   

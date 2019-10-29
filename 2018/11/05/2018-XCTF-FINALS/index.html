@@ -18,10 +18,10 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-61b0a41e27b844f1.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1240">
 <meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-04787bf7b76d4d90.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1240">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-4c3c00d8e6e322c4.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1240">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-01782225a0d0feb8.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1240">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-6be35f179f2c4d91.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1240">
-<meta property="og:updated_time" content="2019-10-28T17:07:48.953Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-4c3c00d8e6e322c4.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-01782225a0d0feb8.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-6be35f179f2c4d91.png">
+<meta property="og:updated_time" content="2019-10-29T10:26:07.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-61b0a41e27b844f1.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1240">
   
@@ -207,9 +207,9 @@
 <p><code>?function=extract&amp;file=/tmp/sess_bl0ur0r6ni8ioq5mqggr3sh5h5</code></p>
 <p><img src="https://upload-images.jianshu.io/upload_images/9223743-04787bf7b76d4d90.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 <p>发现执行命令成功：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/9223743-4c3c00d8e6e322c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-4c3c00d8e6e322c4.png" alt="image.png"></p>
 <p>然后就是读 flag 了，拿蚁剑连一下：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/9223743-01782225a0d0feb8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-01782225a0d0feb8.png" alt="image.png"></p>
 <h4 id="PUBG"><a href="#PUBG" class="headerlink" title="PUBG"></a>PUBG</h4><p>这道题是之前 2018 HITB GSEC FINAL 的 AWD 一道题的环境做了一些修改，当时我也去了现场，虽然没有打 AWD (打的解题)但是听了出题师傅 RicterZ 在新加坡国立大学的出题分享，照着差不多算是 wp 的 ppt 复现题目可还行…</p>
 <p>这个题比较麻烦，源码泄露-&gt; ZEND解密 -&gt; sql 注入-&gt; 伪造 cookie 进管理员 -&gt; 控制 curl 的内容写 shell，具体可以参考 De1ta 的 Web 大师傅的 <a href="https://xz.aliyun.com/t/3158#toc-2" target="_blank" rel="noopener">wp</a></p>
 <h3 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h3><h4 id="Budge1"><a href="#Budge1" class="headerlink" title="Budge1"></a>Budge1</h4><p>Budge1 和 Budge2 是需要根据给的路由器拿 flag。</p>
@@ -217,7 +217,7 @@
 <p>Budge1 踩了坑，题目没给提示，还以为要抓包，连上网线分析了半天流量也没什么发现，然后出题人前面说 Budge1 是读灯的信息，才发现硬件有灯闪烁，应该是二进制的信息。两个灯可以闪烁，分别对应 0 和 1，连起来 hex 解码是 <code>hitb2018</code> ，然后怎么交也不对，提示说各种编码，hex 编码就过了…</p>
 <h4 id="Mysterious-signals"><a href="#Mysterious-signals" class="headerlink" title="Mysterious signals"></a>Mysterious signals</h4><p>hint:无线射频频谱 radio frequency spectrum </p>
 <p>使用 Audacity 导入数据（文件 -&gt; 导入 -&gt; 原始数据），查看频谱：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/9223743-6be35f179f2c4d91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-6be35f179f2c4d91.png" alt="image.png"></p>
 <h3 id="感受"><a href="#感受" class="headerlink" title="感受"></a>感受</h3><p>见识了许多国内强队，Nu1lL 的师傅们就坐在对面… 还有 0ops，天枢等强队，r3kapig 的师傅们 tql。</p>
 <p>Web 狗打不成攻防，肝了两天的解题，硬件的 Misc 题还是挺有趣的，第一天晚上回去肝核弹遥控器密码那个 Misc，只可惜没找到正确的工具分析，两天睡了 3 个多小时也是比较疲惫，不过酒店和队友一起肝的感觉也很好，有时候比赛结果并不是最重要的，重要的是有和你一起肝的兄弟们和朋友。</p>
 
@@ -441,11 +441,11 @@ gitalk.render('gitalk-container')
 var link="";
 var a = document.getElementsByTagName('img');
 for(i=0;i<a.length;i++){
-	if((a[i].src).indexOf("jianshu") > 0){
-	a[i].referrerpolicy='no-referrer';
-	link = a[i].src;
-	a[i].src = link;
-	}
+        if((a[i].src).indexOf("jianshu") > 0){
+        a[i].referrerPolicy='no-referrer';
+        link = a[i].src;
+        a[i].src = link+'?t='+Math.random();
+        }
 }
 </script>
           </div>
@@ -551,11 +551,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Misc</a>
+                <a href="javascript:void(0)" class="js-tag color3">wp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">wp</a>
+                <a href="javascript:void(0)" class="js-tag color5">Misc</a>
               </li>
              
               <li class="article-tag-list-item">
