@@ -6,15 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018 | gml&#39;s blog</title>
+  <title>2019 XCTF FINALS weiphp5.0 漏洞挖掘 | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="gml,博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="gml&#39;s blog">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;2018&#x2F;index.html">
+  <meta name="description" content="2019 XCTF FINALS weiphp5.0 漏洞挖掘">
+<meta name="keywords" content="Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2019 XCTF FINALS weiphp5.0 漏洞挖掘">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;30&#x2F;weiphp5-0&#x2F;index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
+<meta property="og:description" content="2019 XCTF FINALS weiphp5.0 漏洞挖掘">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-afce833fe26311ae.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-a94ec5b09af9dfef.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-03a037c4649dbc78.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-75670a9b451493ef.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-92dec9c7072c0adb.png">
+<meta property="og:updated_time" content="2019-10-30T10:58:55.788Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-afce833fe26311ae.png">
   
     <link rel="alternative" href="/atom.xml" title="gml&#39;s blog" type="application/atom+xml">
   
@@ -155,86 +164,94 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-weiphp5-0" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      2019 XCTF FINALS weiphp5.0 漏洞挖掘
+    </h1>
+  
+
+        
+        <a href="/2019/10/30/weiphp5-0/" class="archive-article-date">
+  	<time datetime="2019-10-30T06:24:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在2019 XCTF FINALS，麦香师傅出了一个最新版 weiphp 漏洞挖掘，出题人表示漏洞太多了所以删了一部分代码orz，题目放出来貌似被日穿了orz（要日一个cms最好的办法感觉是放到CTF上）</p>
+<a id="more"></a>
+
+<p>默认应该是关闭了注册功能，正常情况下我们没有admin的密码是无法登录的。</p>
+<h2 id="前台sql注入"><a href="#前台sql注入" class="headerlink" title="前台sql注入"></a>前台sql注入</h2><p>在/application/material/controller/Material 下material_lists方法，查询 title 处</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> $title = I(<span class="string">'title'</span>);</span><br><span class="line">        <span class="comment">// dump($title);exit;</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">empty</span>($title)) &#123;</span><br><span class="line">            $map[<span class="string">'title'</span>] = <span class="keyword">array</span>(</span><br><span class="line">                <span class="string">'like'</span>,</span><br><span class="line">                <span class="string">"%$title%"</span></span><br><span class="line">            );</span><br><span class="line">            $where .= <span class="string">" and `title` like '%$title%'"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">$count = M()-&gt;query(<span class="string">"SELECT COUNT( distinct `group_id`) AS tp_count FROM `wp_material_news` WHERE &#123;$where&#125; LIMIT 1"</span>);</span><br><span class="line">$count = <span class="keyword">isset</span>($count[<span class="number">0</span>][<span class="string">'tp_count'</span>]) ? $count[<span class="number">0</span>][<span class="string">'tp_count'</span>] : <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到title没有任何过滤拼接到了sql语句里，这里因为只能影响 count 的值，后面显示的部分调用了模版函数来执行查询，所以考虑时间盲注。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/weiphp5.0/public/index.php/Material/Material/material_lists?title=aa%27or%20sleep(5)%23</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: 10.211.55.5</span><br><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:45.0) Gecko/20100101 Firefox/45.0</span><br><span class="line"><span class="attribute">Accept</span>: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line"><span class="attribute">Accept-Language</span>: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3</span><br><span class="line"><span class="attribute">Cookie</span>: PHPSESSID=gh5hemmrqmujnb10fg8hs29bq8; ScanLoginKey=5db913058c905; __forward__=%2F%2Fweiphp5.0%2Fpublic%2Findex.php%2FMaterial%2FMaterial%2Fmaterial_lists%3Ftitle%3D1</span><br><span class="line"><span class="attribute">Connection</span>: close</span><br><span class="line"><span class="attribute">Content-Type</span>: application/x-www-form-urlencoded</span><br><span class="line"><span class="attribute">Content-Length</span>: 1</span><br><span class="line"></span><br><span class="line"><span class="attribute">a</span></span><br></pre></td></tr></table></figure>
+
+<p>这里必须是 post，get 请求应该是会渲染模版会跳转登录。</p>
+<p>发现sleep成功，扔到sqlmap就可以了</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-afce833fe26311ae.png" alt="image.png"></p>
+<p>不过数据库里admin的密码我们也是解不出来的，因为weiphp使用如下方法入库：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">think_weiphp_md5</span><span class="params">($str, $key = <span class="string">''</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">empty</span>($key)) &#123;</span><br><span class="line">        $key = config(<span class="string">'database.data_auth_key'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">''</span> === $str ? <span class="string">''</span> : md5(sha1($str) . $key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当时比赛的时候，开了debug模式，导致 wp_user 表里login_password 字段记录了admin的密码，所以直接能登后台了。。。</p>
+<h2 id="免登录文件上传"><a href="#免登录文件上传" class="headerlink" title="免登录文件上传"></a>免登录文件上传</h2><p>首页源代码里：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-a94ec5b09af9dfef.png" alt="image.png"></p>
+<p>访问upload_dialog_url，发现有可以上传，抓包得到上传包，发现要登录：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-03a037c4649dbc78.png" alt="image.png"></p>
+<p>定位file控制器upload_picture方法，发现有鉴权：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">upload_picture</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// <span class="doctag">TODO:</span> 用户登录检测</span></span><br><span class="line">        <span class="keyword">if</span> (!is_login())&#123;</span><br><span class="line">        	$return = <span class="keyword">array</span>(</span><br><span class="line">	            <span class="string">'status'</span> =&gt; <span class="number">0</span>,</span><br><span class="line">	            <span class="string">'info'</span> =&gt; <span class="string">'上传失败，请先登录'</span>,</span><br><span class="line">	            <span class="string">'data'</span> =&gt; <span class="string">''</span></span><br><span class="line">        	);</span><br><span class="line">        	<span class="keyword">return</span> json($return);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>看到有个upload_root 方法没有鉴权，直接可以上传:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">upload_root</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	$return = <span class="keyword">array</span>(</span><br><span class="line">    			<span class="string">'status'</span> =&gt; <span class="number">1</span>,</span><br><span class="line">    			<span class="string">'info'</span> =&gt; <span class="string">'上传成功'</span>,</span><br><span class="line">    			<span class="string">'data'</span> =&gt; <span class="string">''</span></span><br><span class="line">    	);</span><br><span class="line">    	<span class="comment">/* 调用文件上传组件上传文件 */</span></span><br><span class="line">    	$File = D(<span class="string">'home/File'</span>);</span><br><span class="line">    	$file_driver = strtolower(config(<span class="string">'picture_upload_driver'</span>));</span><br><span class="line">    	$setting = <span class="keyword">array</span> (</span><br><span class="line">    			<span class="string">'rootPath'</span> =&gt; <span class="string">'./'</span> ,</span><br><span class="line">    	);</span><br><span class="line">    	$info = $File-&gt;upload($setting, config(<span class="string">'picture_upload_driver'</span>), config(<span class="string">"upload_&#123;$file_driver&#125;_config"</span>));</span><br><span class="line"><span class="comment">//     	$info = $File-&gt;upload(config('download_upload'), config('picture_upload_driver'), config("upload_&#123;$file_driver&#125;_config"));</span></span><br><span class="line">    	<span class="comment">/* 记录附件信息 */</span></span><br><span class="line">    	<span class="keyword">if</span> ($info) &#123;</span><br><span class="line">    		$return[<span class="string">'status'</span>] = <span class="number">1</span>;</span><br><span class="line">    		$return = array_merge($info[<span class="string">'download'</span>], $return);</span><br><span class="line">    	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    		$return[<span class="string">'status'</span>] = <span class="number">0</span>;</span><br><span class="line">    		$return[<span class="string">'info'</span>] = $File-&gt;getError();</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="comment">/* 返回JSON数据 */</span></span><br><span class="line">    	<span class="keyword">return</span> json_encode($return);</span><br><span class="line">    	</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里用php5就可以绕过：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-75670a9b451493ef.png" alt="image.png"></p>
+<p>成功上传，文件路径<code>/public/uploads/download/20191030/5db9681e2d701.php5</code></p>
+<h2 id="登录后台文件上传"><a href="#登录后台文件上传" class="headerlink" title="登录后台文件上传"></a>登录后台文件上传</h2><p>登录后upload处随便传，同样用php5或者php7就行：</p>
+<p>upload_picture处应该有后缀名白名单。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-92dec9c7072c0adb.png" alt="image.png"></p>
+<h2 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h2><p>出题人预期解是<code>/application/common/controller/base.php</code>中的<code>common_lists</code>方法，$templateFile可以通过参数绑定方式控制，用ua头把命令写日志里然后包含日志执行命令。</p>
+<p>这个cms洞确实比较多，不登录也能传shell，也能sql注入… admin管理后台估计还有洞。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i><i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/12/21/CTF%E4%B8%AD%E7%9A%84LFSR/" class="archive-article-date">
-  	<time datetime="2018-12-21T09:01:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/21/CTF%E4%B8%AD%E7%9A%84LFSR/">CTF 中的 LFSR</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/12/12/2018-XCTF-BCTF-SEAFARING/" class="archive-article-date">
-  	<time datetime="2018-12-12T10:13:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/12/2018-XCTF-BCTF-SEAFARING/">2018 XCTF-BCTF SEAFARING</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
         		</li>
@@ -242,493 +259,166 @@
 		</ul>
 	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web//" class="article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
 
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxUlEQVR42u3aQY6DMAwF0N7/0ow0q5FGge84BCq9rCpow6MLy3b8+cTr+F2jK8efld/9v+eyhYuL2+Yep2vEHf02J47ujvbExcXdzz0PXuePz1n5d4bXcXFxX8ady0CSPXFxcb+XW010+n8HLi7us9yk+Mk3nSuEFtdquLi4DW61YXrH5xv7u7i4uEXuUVxzuy17Oi4u7hZukqAk1xNu55i2kE/h4uK2udXwtGq0ovrauLi4O7lz4xTnjdHqmEVSFF3EYFxc3KXczkBVHqqqA17Dp+Di4m7h5oFm7pikeiibjHDh4uLu5M6lLOVypd9sxcXFfYhbHaXqD1IUXhIXF3cLNw9Pa9sl1XILFxd3J7cftjopCy4u7tu4+UhEnsTk/1PeJMXFxd3J7Qedap0ydySDi4u7kztX2ORlTBV9EdpwcXE3cvMxynyIam5oIwpkuLi4W7j5ygNWdXQjeg1cXNwt3M6ZZnVUKw+OeVsWFxf3Pm4evDpHsHMN2XL0xcXFXcqthqe5Ry5IZXBxcV/GrQ5YzA1nXBRFuLi4r+d2ipn88AYXF/cp7lxwyZuneUG1rC2Ci4vb4PaHqzqFU6fliouLewP3B8WA3UTaQvdvAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/30/%E8%AE%B0%E4%B8%8A%E6%B5%B7%E8%B5%9B%E7%BA%BF%E4%B8%8B%E4%B8%8E%E6%B9%96%E6%B9%98%E6%9D%AF%E5%86%B3%E8%B5%9B/" class="archive-article-date">
-  	<time datetime="2018-11-30T08:34:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-30</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/10/29/hexo%E5%9B%BE%E7%89%87%E5%A4%96%E9%93%BE%E8%A2%AB%E9%99%90%E5%88%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">hexo图片外链被限制解决方法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/30/%E8%AE%B0%E4%B8%8A%E6%B5%B7%E8%B5%9B%E7%BA%BF%E4%B8%8B%E4%B8%8E%E6%B9%96%E6%B9%98%E6%9D%AF%E5%86%B3%E8%B5%9B/">记上海赛线下与湖湘杯决赛</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">线下</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前台sql注入"><span class="toc-number">1.</span> <span class="toc-text">前台sql注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#免登录文件上传"><span class="toc-number">2.</span> <span class="toc-text">免登录文件上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#登录后台文件上传"><span class="toc-number">3.</span> <span class="toc-text">登录后台文件上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件包含"><span class="toc-number">4.</span> <span class="toc-text">文件包含</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/13/2018-HCTF/" class="archive-article-date">
-  	<time datetime="2018-11-13T07:13:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/13/2018-HCTF/">2018 HCTF 总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web//" class="article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/05/2018-XCTF-FINALS/" class="archive-article-date">
-  	<time datetime="2018-11-05T11:25:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/05/2018-XCTF-FINALS/">2018 XCTF FINALS</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web//" class="article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/05/%E4%B8%8A%E6%B5%B7%E5%B8%82%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B/" class="archive-article-date">
-  	<time datetime="2018-11-05T02:32:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/05/%E4%B8%8A%E6%B5%B7%E5%B8%82%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B/">2018 上海市大学生网络安全大赛题解</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/wp//" class="article-tag-list-link color3">wp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/24/2018-HITCON-Crypto-%E9%83%A8%E5%88%86%E9%A2%98%E8%A7%A3/" class="archive-article-date">
-  	<time datetime="2018-10-24T12:55:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/24/2018-HITCON-Crypto-%E9%83%A8%E5%88%86%E9%A2%98%E8%A7%A3/">2018 HITCON Crypto lost key</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Crypto//" class="article-tag-list-link color2">Crypto</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/22/2018-HITCON-On-my-Raddit/" class="archive-article-date">
-  	<time datetime="2018-10-22T07:00:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/22/2018-HITCON-On-my-Raddit/">2018 HITCON On my Raddit</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web//" class="article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/19/CBC-Padding%E6%94%BB%E5%87%BB/" class="archive-article-date">
-  	<time datetime="2018-10-19T13:14:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/19/CBC-Padding%E6%94%BB%E5%87%BB/">CBC-Padding攻击</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Crypto//" class="article-tag-list-link color2">Crypto</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/16/hackergame2018/" class="archive-article-date">
-  	<time datetime="2018-10-16T07:37:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/16/hackergame2018/">hackergame 2018</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Misc</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2018/page/2/">2</a><a class="extend next" rel="next" href="/archives/2018/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
+  
 
+  
+
+<!--显示阅读次数-->
+
+  <br/>
+  <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+  <span class="icon-sort"></span>
+  <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+  </span>
+  </a>
+
+<!--显示阅读次数完毕-->
+
+  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+
+if(true){
+  var gitalk = new Gitalk({
+    clientID: 'c741c580e5927006c62d',
+    clientSecret: 'f8fdc39531f526b87dac59d9f025c55cb9580617',
+    repo: 'happygml.github.io',
+    owner: 'happygml',
+    admin: ['happygml'],
+    id: 'Wed Oct 30 2019 14:24:57 GMT+0800',
+    distractionFreeMode: 'true'
+})
+gitalk.render('gitalk-container') 
+}
+</script>
+
+  
+
+<!--简书外链-->
+<script>
+var link="";
+var a = document.getElementsByTagName('img');
+for(i=0;i<a.length;i++){
+        if((a[i].src).indexOf("jianshu") > 0){
+        a[i].referrerPolicy='no-referrer';
+        link = a[i].src;
+        a[i].src = link+'?t='+Math.random();
+        }
+}
+</script>
           </div>
         </div>
       </div>
@@ -749,8 +439,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
