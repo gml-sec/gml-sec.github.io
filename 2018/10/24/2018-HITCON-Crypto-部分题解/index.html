@@ -5,14 +5,14 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yoursite.com">
+  <link rel="dns-prefetch" href="http://igml.top">
   <title>2018 HITCON Crypto lost key | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="lost key赛后学习了一下这道密码题的攻击姿势。 题目脚本如下：">
 <meta name="keywords" content="CTF,Crypto">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2018 HITCON Crypto lost key">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;10&#x2F;24&#x2F;2018-HITCON-Crypto-%E9%83%A8%E5%88%86%E9%A2%98%E8%A7%A3&#x2F;index.html">
+<meta property="og:url" content="http:&#x2F;&#x2F;igml.top&#x2F;2018&#x2F;10&#x2F;24&#x2F;2018-HITCON-Crypto-%E9%83%A8%E5%88%86%E9%A2%98%E8%A7%A3&#x2F;index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
 <meta property="og:description" content="lost key赛后学习了一下这道密码题的攻击姿势。 题目脚本如下：">
 <meta property="og:locale" content="zh-CN">
@@ -317,7 +317,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADLUlEQVR42u3aQY4bMQwEQP//0841QOJxtzgG1tya0yLeaFQykA5JPR7x8/zrefXp9Z+8+vT5z/PqvdefPj7xYGNjY38J+3n5JL+TbChfOTn065+THWJjY2PvYycx00ZRHjkJ7Prg8n1iY2NjY+dlSb7RNt6SlbGxsbGxr5dLgqptUeVlSRJ72NjY2L+N3f53/2xUMCl7zgLvhl4aNjY29o9n51PRn//zR+bb2NjY2D+Y/Syfdsh6tsXnhx9sbGzsTezJVpKou2vNvKlUtLGwsbGx17HzZv2kqXQ2AD5rWr35u9jY2Ngr2PmgtN1KOxLOo7E9jjcVGDY2NvY6dou8d+yaH02+MjY2NvZvYL965fUSk7b+2fWddlDxcufY2NjYi9hJhCSj3PZ6TVE2jMHR0AIbGxv7y9ltoz/Z0NlhtcPa9ruN5tvY2NjYX8huG0Bnrfy2qZQfXPt2bGxs7E3sPE6SoGrByRE84uewl4aNjY29gt02gOYFw9mYIee9OThsbGzsReyztk4+Nmjb+ndd64m+AGxsbOwV7HlzPx8AzK/ytAMAbGxs7N/Anlx5aRtMbeuqjbd8aIGNjY29iT15fT5knZQu7RWi6FNsbGzspey2IMlbRe0oIi9m2nHFfwIMGxsbexE7b9+0rfmzjU4GwG+OEhsbG3sRex4/Z7A8tOYNrJefYmNjY69g542eSYvnbM12tFDEITY2NvY69llpkYRNXkK00+lJgYSNjY29m91er7mLnfx+HqVv9omNjY29iN2+po2N/NPJFZ82CLGxsbH3sc/KhrPRwqSdlPeF8nWwsbGxd7DzomIeWklknkVX3XjCxsbGXsc+i5Z8i/kdovnXEF0qwsbGxl7HzkuUu67UtAH2uPfBxsbGXsF+ls/ZQUxiaV6uvElsbGxs7C9nT/7Nz8uJJPA+Xa604YqNjY39Xew8JPKWU1uoTK7j5AGGjY2NvZudFw/5YX36GlDbLMPGxsbGjpa7dfwwL0huCzBsbGzspey8Td82/e8aUb9saWFjY2OvY58VDDlyUtIkh9IWOdjY2Nib2G1UnA0PknXyFfIDzd+FjY2N/YXsP13baQTIe4aTAAAAAElFTkSuQmCC" alt="微信分享二维码">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuklEQVR42u3aQW7jMAwF0Nz/0h2gmy4Gcj5JMdMBnleBG8t+LiAxn3q94uPr+zh9Pv31+dp8/OdrLxx4eHh4rUc/Hclt/v7+8/n87slrPX0fDw8Pb5uXT9bJtc/I58WjN8LxPB4eHt4/5fUeIrm2Wo7j4eHh/S+8pLTtUavlMh4eHt5v4CXDVcPW3kPfGg0PDw9vjzdvgH3+80f7e3h4eHjF5lMyiU/aY73COnpOPDw8vAVeHtHm4cXdGKK3zetV3b+Ah4eHF/OSSTx5uOfz1W0HyVVRqwwPDw9vmVddGCYtsd4WrnJggYeHh7fAq/7sz/PS6iaqXgBR/sWAh4eHN+ZVScmgPWo1Q0hCCjw8PLwN3q1ZtBr7bgQcb5YxPDw8vEu8SVyb1+zJi6hO+lHTDg8PD2+BVy2Oe6HAfJzeRgQ8PDy8z/AmVXleHOeTe3UEPDw8vE/ykrI1Z9+KYvMtCMe74+Hh4V3lzaPbfCtAr0mWvL7jCHh4eHgLvOomql5oO19yJgE0Hh4e3l1eNUjt3axXKOdbEwolNR4eHt6YV71ZHgrMY9xJ0wsPDw9vj1ctl3vtrrsxcR4B4+Hh4W3w8um4d/tqkyxflnr/Ejw8PLw579ZEnAQZebMqP/8Gj4eHh7fAq7b/q/HrhSJ4sPDg4eHh7fGqN5tEsc/Fer48jHZD4OHh4Y151YWhUM62iu9brTU8PDy8bV71cW8tDL3loRnm4uHh4Y15X8Wj2tzqlcX5VW9Gw8PDw1vgVUOH5xgiKYKrn/PmWROGh4eH1+Il0/pkQ1WyEeFWLNJctfDw8PBavEnnKIkbct68FXdMqfHw8PB+DS9fQqrbDpqLwd2FAQ8PD2/Au/Ui8qZXNQQ5hhF4eHh4C7zJRDxvYvVGi5YiPDw8vAXevAFWneirza087Fjp7+Hh4eH9fOcPx1XaT+47KVIAAAAASUVORK5CYII=" alt="微信分享二维码">
     </div>
 </div>
 
@@ -531,19 +531,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Web</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Crypto</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Misc</a>
+                <a href="javascript:void(0)" class="js-tag color4">Web</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">wp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Misc</a>
               </li>
              
               <li class="article-tag-list-item">

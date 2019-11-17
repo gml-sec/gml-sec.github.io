@@ -5,14 +5,14 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yoursite.com">
+  <link rel="dns-prefetch" href="http://igml.top">
   <title>CTF 中的 LFSR | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="线性反馈移位寄存器（LFSR）在流密码中有广泛的应用，是指给定前一状态的输出，将该输出的线性函数再用作输入的移位寄存器。LFSR 主要用于生成一串随机的比特流，比特流可用做加密明文的密钥。 LFSR 基本原理大致就是通过当前状态进行一些线性运算来确定下一状态。不清楚的可以参考这篇文章学习一下流密码和 LFSR 。 最开始接触 LFSR 是在强网杯的 streamgame，后来密码学课程上比较详细学">
 <meta name="keywords" content="CTF,Crypto">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CTF 中的 LFSR">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;12&#x2F;21&#x2F;CTF%E4%B8%AD%E7%9A%84LFSR&#x2F;index.html">
+<meta property="og:url" content="http:&#x2F;&#x2F;igml.top&#x2F;2018&#x2F;12&#x2F;21&#x2F;CTF%E4%B8%AD%E7%9A%84LFSR&#x2F;index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
 <meta property="og:description" content="线性反馈移位寄存器（LFSR）在流密码中有广泛的应用，是指给定前一状态的输出，将该输出的线性函数再用作输入的移位寄存器。LFSR 主要用于生成一串随机的比特流，比特流可用做加密明文的密钥。 LFSR 基本原理大致就是通过当前状态进行一些线性运算来确定下一状态。不清楚的可以参考这篇文章学习一下流密码和 LFSR 。 最开始接触 LFSR 是在强网杯的 streamgame，后来密码学课程上比较详细学">
 <meta property="og:locale" content="zh-CN">
@@ -564,7 +564,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aS47jMAwFwNz/0j3AbHuiPJLKAJbKKyM2bJUXjPh5veLj5++x/v33+frqu6e9u7rhwMDAeCzjZ3msl7i+//eCckz+LgwMjHsY+ePycJwsJf98H96IgYGBsQyC6+1gvuheUMbAwMBYLyi5mt+DgYGBsWZUk9K8lFZlfz0Xx8DAeCCj2hj4n+df7G9gYGA8hNErgeWBtRrWm6vCwMA4mrFe0Ly5WB2wqG5JX8l3xcDAeDijV+7vLWtXAvyP3zEwMI5mTJLV/AX50EY+urEt58bAwHgUozokkSxx1+61sN3EwMA4jvG9UJhvLje0SzEwMC5g5GExH3eo3lMducDAwLiZkZfY5uW23qd5WzXEwMA4lPG92arJgEUvAcbAwDib0VvcZIRi3gbAwMC4h1EdtujBqk9LRtYwMDDuYUwCaC9cTnqtH56GgYFxNKMaHKupZrVtme9qMTAw7mEUAtlgeKKaW5cTYAwMjKMZ1SGtJJhWG5DVxsOHfwwMDIyDGL2Sfa9Y1iu0RQ0GDAyMCxh5otgrt+VDZvlw2Nv+BgYGxnGMvFhfLevvbTBEyTAGBsahjF1Dq/PGZDWhxcDAuIeRH5OUde/gRTUZxsDAOIORBNl56Kx+svL2EQMD4wJGr6yfJ6vVkY5yUo2BgYExGK2owpLQ36waYmBgXMPo5ceTjWOhdoiBgXE0oxrmJglqXoArBHoMDIyjGZPX58uahO9tGAwMjOcx/gDofzf1i5kgDgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aQY7DIAwF0N7/0hlpttNE33YyEuSxqtqI8Fi4NubzicfxO86+/zuuZ7j+fDbDDQMDA2NZxnE5zhjXr7+eJ/k1XxsGBsZ7GEmITIJmwqg+E/0BYGBgYLQSu7PgmAd3DAwMjHnAzVO3fEEYGBgYkyI2L0fP5u8lnTfX4hgYGAsyqo2B//z8YH8DAwNjEcZRHL3mZd4WPVoDAwNjb0ZSRublZX5wNm+OFnYFAwNjI0Zv6U88k7cWMDAw3sOY1ImTaxm9xd1w3IaBgbEgo9oMSI7v84boXVc9MDAw3sbIU7TJr0lbFAMDA6N64JVftpg83+NhYGDsykgA+QH9/PleOY2BgfEGxqQxOT/Wr6aDX2bGwMDYmhGFs9Y1r/w6V7VVEK0QAwNja8ZdVx9yRvWCWnmLMTAwtmAkr5lckugledUrHRgYGLsyqkdm83tnj8yPgYHxGkYyXd6k7OWk1STyS8DFwMDYjpGXrPmk1bZBjok2HQMDYztGfkzfYxR2MQ70n+oOYWBgbMGoLqv3TL411UCMgYGxNyMPi3mamC+xd7GjmSBiYGAsyziKY1KOzjO6cg8WAwNjC0avjOyljNWFJjOXMRgYGMsyqgfxVVK1PZD3NDAwMN7GmATZXjpYjfqj9gAGBsZrGPNjtev3VgtpDAwMjPkliWobMj9iOy1iMTAwtmbkL+i9Jg+meVD+5NEaAwNjcUavgJw3Pp+bDQMDYyPGD/SDYL6VuGpGAAAAAElFTkSuQmCC" alt="微信分享二维码">
     </div>
 </div>
 
@@ -778,19 +778,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Web</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Crypto</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Misc</a>
+                <a href="javascript:void(0)" class="js-tag color4">Web</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">wp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Misc</a>
               </li>
              
               <li class="article-tag-list-item">
