@@ -157,6 +157,120 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-hexo图片外链被限制解决方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/29/hexo%E5%9B%BE%E7%89%87%E5%A4%96%E9%93%BE%E8%A2%AB%E9%99%90%E5%88%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">hexo图片外链被限制解决方法</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/29/hexo%E5%9B%BE%E7%89%87%E5%A4%96%E9%93%BE%E8%A2%AB%E9%99%90%E5%88%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2019-10-29T12:03:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>使用 hexo+github 搭建博客，图片成为一个头疼的问题，如果放在相对目录上，那么图片会占用空间，文章多了加载会变慢，所以我一直使用简书的图床。</p>
+<p>但是发现hexo里加载不出简书图床上的图片，搜索了一波发现微博图床也有类似的问题，找到了原因，具体参考：</p>
+        
+          <a class="article-more-a" href="/2019/10/29/hexo%E5%9B%BE%E7%89%87%E5%A4%96%E9%93%BE%E8%A2%AB%E9%99%90%E5%88%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">解决方法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/29/hexo%E5%9B%BE%E7%89%87%E5%A4%96%E9%93%BE%E8%A2%AB%E9%99%90%E5%88%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+<!--显示阅读次数-->
+
+<!--显示阅读次数完毕-->
+
+  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+
+if(true){
+  var gitalk = new Gitalk({
+    clientID: 'c741c580e5927006c62d',
+    clientSecret: 'f8fdc39531f526b87dac59d9f025c55cb9580617',
+    repo: 'happygml.github.io',
+    owner: 'happygml',
+    admin: ['happygml'],
+    id: '',
+    distractionFreeMode: 'true'
+})
+gitalk.render('gitalk-container') 
+}
+</script>
+
+  
+
+<!--简书外链-->
+<script>
+var link="";
+var a = document.getElementsByTagName('img');
+for(i=0;i<a.length;i++){
+        if((a[i].src).indexOf("jianshu") > 0){
+        a[i].referrerPolicy='no-referrer';
+        link = a[i].src;
+        a[i].src = link+'?t='+Math.random();
+        }
+}
+</script>
+  
     <article id="post-2019-de1ctf" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -953,11 +1067,11 @@ for(i=0;i<a.length;i++){
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
         		</li>
       		
 		</ul>
@@ -1224,11 +1338,11 @@ for(i=0;i<a.length;i++){
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
         		</li>
       		
 		</ul>
@@ -1254,139 +1368,6 @@ for(i=0;i<a.length;i++){
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/11/05/%E4%B8%8A%E6%B5%B7%E5%B8%82%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-<!--显示阅读次数-->
-
-<!--显示阅读次数完毕-->
-
-  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script type="text/javascript">
-
-if(true){
-  var gitalk = new Gitalk({
-    clientID: 'c741c580e5927006c62d',
-    clientSecret: 'f8fdc39531f526b87dac59d9f025c55cb9580617',
-    repo: 'happygml.github.io',
-    owner: 'happygml',
-    admin: ['happygml'],
-    id: '',
-    distractionFreeMode: 'true'
-})
-gitalk.render('gitalk-container') 
-}
-</script>
-
-  
-
-<!--简书外链-->
-<script>
-var link="";
-var a = document.getElementsByTagName('img');
-for(i=0;i<a.length;i++){
-        if((a[i].src).indexOf("jianshu") > 0){
-        a[i].referrerPolicy='no-referrer';
-        link = a[i].src;
-        a[i].src = link+'?t='+Math.random();
-        }
-}
-</script>
-  
-    <article id="post-2018-HITCON-Crypto" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/24/2018-HITCON-Crypto/">2018 HITCON Crypto lost key</a>
-    </h1>
-  
-
-        
-        <a href="/2018/10/24/2018-HITCON-Crypto/" class="archive-article-date">
-  	<time datetime="2018-10-24T12:55:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="lost-key"><a href="#lost-key" class="headerlink" title="lost key"></a>lost key</h3><p>赛后学习了一下这道密码题的攻击姿势。</p>
-<p>题目脚本如下：</p>
-        
-          <a class="article-more-a" href="/2018/10/24/2018-HITCON-Crypto/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Crypto//" class="article-tag-list-link color2">Crypto</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/24/2018-HITCON-Crypto/">展开全文 >></a>
         </p>
       
 
@@ -1555,11 +1536,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Crypto</a>
+                <a href="javascript:void(0)" class="js-tag color4">Web</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Web</a>
+                <a href="javascript:void(0)" class="js-tag color2">Crypto</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1575,15 +1556,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">ciscn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">解决方法</a>
+                <a href="javascript:void(0)" class="js-tag color3">线下</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">线下</a>
+                <a href="javascript:void(0)" class="js-tag color5">解决方法</a>
               </li>
             
             <div class="clearfix"></div>
