@@ -9,14 +9,16 @@
   <title>hexo图片外链被限制解决方法 | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="hexo图片外链被限制解决方法">
-<meta name="keywords" content="解决方法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo图片外链被限制解决方法">
-<meta property="og:url" content="http:&#x2F;&#x2F;igml.top&#x2F;2019&#x2F;10&#x2F;29&#x2F;hexo%E5%9B%BE%E7%89%87%E5%A4%96%E9%93%BE%E8%A2%AB%E9%99%90%E5%88%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95&#x2F;index.html">
+<meta property="og:url" content="http://igml.top/2019/10/29/hexo%E5%9B%BE%E7%89%87%E5%A4%96%E9%93%BE%E8%A2%AB%E9%99%90%E5%88%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
 <meta property="og:description" content="hexo图片外链被限制解决方法">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-29T12:23:23.164Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-29T12:03:55.000Z">
+<meta property="article:modified_time" content="2019-10-29T12:23:23.164Z">
+<meta property="article:author" content="gml">
+<meta property="article:tag" content="解决方法">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="gml&#39;s blog" type="application/atom+xml">
@@ -35,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 5.2.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -49,10 +51,8 @@
 			<img src="/avator.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="">gml</a></h1>
+		  <h1 class="header-author"><a href=""></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">千里之行，始于足下。</p>
 		
 
 		<nav class="header-menu">
@@ -110,10 +110,8 @@
 				<img src="/avator.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">gml</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>千里之行，始于足下。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -182,18 +180,18 @@
 <p>但是发现hexo里加载不出简书图床上的图片，搜索了一波发现微博图床也有类似的问题，找到了原因，具体参考：</p>
 <a id="more"></a>
 
-<p><a href="https://blog.gobyte.cn/post/cfce32d8.html" target="_blank" rel="noopener">https://blog.gobyte.cn/post/cfce32d8.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.gobyte.cn/post/cfce32d8.html">https://blog.gobyte.cn/post/cfce32d8.html</a></p>
 <p>但是上述链接的脚本：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> link = <span class="string">""</span> ;</span><br><span class="line"><span class="comment">// 遍历所有的img标签</span></span><br><span class="line">$(<span class="string">"img"</span>).each( <span class="function">(<span class="params">i,o</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">var</span> o = $(o);</span><br><span class="line">    <span class="comment">// 判断图片的链接是否包含sinaimg关键字</span></span><br><span class="line">	<span class="keyword">if</span>( o.attr(<span class="string">"src"</span>).indexOf(<span class="string">"sinaimg"</span>) &gt; <span class="number">0</span> )&#123;</span><br><span class="line">        <span class="comment">// 给这个标签加上referrerPlicy属性</span></span><br><span class="line">		o.attr(<span class="string">"referrerpolicy"</span>,<span class="string">"no-referrer"</span>);</span><br><span class="line">        <span class="comment">// 备份图片的src</span></span><br><span class="line">		link = o.attr(<span class="string">"src"</span>);</span><br><span class="line">        <span class="comment">// 重新设置src，让页面重新加载一次图片</span></span><br><span class="line">		o.attr(<span class="string">"src"</span>,link);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> link = <span class="string">&quot;&quot;</span> ;</span><br><span class="line"><span class="comment">// 遍历所有的img标签</span></span><br><span class="line">$(<span class="string">&quot;img&quot;</span>).each( <span class="function">(<span class="params">i,o</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">var</span> o = $(o);</span><br><span class="line">    <span class="comment">// 判断图片的链接是否包含sinaimg关键字</span></span><br><span class="line">	<span class="keyword">if</span>( o.attr(<span class="string">&quot;src&quot;</span>).indexOf(<span class="string">&quot;sinaimg&quot;</span>) &gt; <span class="number">0</span> )&#123;</span><br><span class="line">        <span class="comment">// 给这个标签加上referrerPlicy属性</span></span><br><span class="line">		o.attr(<span class="string">&quot;referrerpolicy&quot;</span>,<span class="string">&quot;no-referrer&quot;</span>);</span><br><span class="line">        <span class="comment">// 备份图片的src</span></span><br><span class="line">		link = o.attr(<span class="string">&quot;src&quot;</span>);</span><br><span class="line">        <span class="comment">// 重新设置src，让页面重新加载一次图片</span></span><br><span class="line">		o.attr(<span class="string">&quot;src&quot;</span>,link);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
 <p>我发现并不好用，经过调试发现$(“img”)并不能取得页面所有的im g标签，我换成了<code>document.getElementsByTagName(&#39;img&#39;)</code>的形式，可以取得所有的 img 标签（我用的是简书图床，所以关键字是jianshu）</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> link=<span class="string">""</span>;</span><br><span class="line"><span class="keyword">var</span> a = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'img'</span>);</span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;a.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>((a[i].src).indexOf(<span class="string">"jianshu"</span>) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        a[i].referrerpolicy=<span class="string">'no-referrer'</span>;</span><br><span class="line">        link = a[i].src;</span><br><span class="line">        a[i].src = link;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> link=<span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> a = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&#x27;img&#x27;</span>);</span><br><span class="line"><span class="function"><span class="title">for</span>(<span class="params">i=<span class="number">0</span>;i&lt;a.length;i++</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>((a[i].src).indexOf(<span class="string">&quot;jianshu&quot;</span>) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        a[i].referrerpolicy=<span class="string">&#x27;no-referrer&#x27;</span>;</span><br><span class="line">        link = a[i].src;</span><br><span class="line">        a[i].src = link;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>但是发现还是无效，一顿调试发现浏览器根本不像代码注释那样面重新加载一次图片，而是使用原来的缓存（检测到src没有改变），遂参考如下链接：<a href="https://blog.csdn.net/maoxunxing/article/details/40618617" target="_blank" rel="noopener">https://blog.csdn.net/maoxunxing/article/details/40618617</a> 解决。</p>
+<p>但是发现还是无效，一顿调试发现浏览器根本不像代码注释那样面重新加载一次图片，而是使用原来的缓存（检测到src没有改变），遂参考如下链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/maoxunxing/article/details/40618617">https://blog.csdn.net/maoxunxing/article/details/40618617</a> 解决。</p>
 <p>由于直接从上传到简书图床获得的链接中已经有?与参数，所以要把原先链接的?及后面参数删除（不影响显示图片）。</p>
 <p>改上去发现还是不好使orz，继续调试发现img的标签referrerpolicy已经是no-referrer，抓包还是会有refer头，问题出在这里，一顿测后来在文档里发现属性应该是referrerPolicy…大写的P，没写过前端的痛。</p>
 <p>贴上最终好用的代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> link=<span class="string">""</span>;</span><br><span class="line"><span class="keyword">var</span> a = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'img'</span>);</span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;a.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>((a[i].src).indexOf(<span class="string">"jianshu"</span>) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        a[i].referrerPolicy=<span class="string">'no-referrer'</span>;</span><br><span class="line">        link = a[i].src;</span><br><span class="line">        a[i].src = link+<span class="string">'?t='</span>+<span class="built_in">Math</span>.random();</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> link=<span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> a = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&#x27;img&#x27;</span>);</span><br><span class="line"><span class="function"><span class="title">for</span>(<span class="params">i=<span class="number">0</span>;i&lt;a.length;i++</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>((a[i].src).indexOf(<span class="string">&quot;jianshu&quot;</span>) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        a[i].referrerPolicy=<span class="string">&#x27;no-referrer&#x27;</span>;</span><br><span class="line">        link = a[i].src;</span><br><span class="line">        a[i].src = link+<span class="string">&#x27;?t=&#x27;</span>+<span class="built_in">Math</span>.random();</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -499,23 +497,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Crypto</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Web</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Misc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">wp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Datacon</a>
+                <a href="javascript:void(0)" class="js-tag color2">Crypto</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -524,6 +510,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">ciscn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">wp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -536,6 +526,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">线下</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Misc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Datacon</a>
               </li>
             
             <div class="clearfix"></div>

@@ -9,17 +9,20 @@
   <title>RSA的一个小trick | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="最近遇到了一个 RSA 的问题，涉及一个小小的 trick ，记录一下。 题目条件如下：">
-<meta name="keywords" content="CTF,Crypto">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RSA的一个小trick">
-<meta property="og:url" content="http:&#x2F;&#x2F;igml.top&#x2F;2018&#x2F;10&#x2F;14&#x2F;RSA%E2%80%94%E2%80%94trick&#x2F;index.html">
+<meta property="og:url" content="http://igml.top/2018/10/14/RSA%E2%80%94%E2%80%94trick/index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
 <meta property="og:description" content="最近遇到了一个 RSA 的问题，涉及一个小小的 trick ，记录一下。 题目条件如下：">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-30f8ea24352ecb27.png">
-<meta property="og:updated_time" content="2019-10-29T11:45:45.735Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9223743-30f8ea24352ecb27.png">
+<meta property="article:published_time" content="2018-10-14T09:55:46.000Z">
+<meta property="article:modified_time" content="2019-10-29T11:45:45.735Z">
+<meta property="article:author" content="gml">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Crypto">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-30f8ea24352ecb27.png">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/9223743-30f8ea24352ecb27.png">
   
     <link rel="alternative" href="/atom.xml" title="gml&#39;s blog" type="application/atom+xml">
   
@@ -37,7 +40,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 5.2.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -51,10 +54,8 @@
 			<img src="/avator.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="">gml</a></h1>
+		  <h1 class="header-author"><a href=""></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">千里之行，始于足下。</p>
 		
 
 		<nav class="header-menu">
@@ -112,10 +113,8 @@
 				<img src="/avator.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">gml</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>千里之行，始于足下。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -184,7 +183,7 @@
 <p>题目条件如下：</p>
 <a id="more"></a>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">e=65537</span><br><span class="line">n1=23813929634961916607351565880455941766670447113389071712756695324346844628401731716721342593051007386272154527731664038624979611788014212477351852945244505409460937047258358062539110381430391840699958786987625931706228387994323041218966203797392082298285118826348211114759651033904573709571472601260689154545949713245271655372366964733467694911683404472839031932865195076679363440004259157441442904092160547940620462275523928770007343760308099893870201392965037704560065286860197211399375405419620507897112217284427055511050820476779226202266877872708788417574738346625361066145535064835057037859284000257460115692751L</span><br><span class="line">n2=23813929634961916607351565880455941766670447113389071712756695324346844628401731716721342593051007386272154527731664038624979611788014212477351852945244505409460937047258358062539110381430391840699958786987625931706228387994323041218966203797392082298285118826348211114759651033904573709571472601260689154673727252437046185126099084752843732400209032782207790902956024459189700856089587545302854326571561755007254420608514135036673700243280752364319986331493694769729841789115612749641973878393284804681876299531933348630664123809944975501332215753682284226293973903784246618067269627749460102002825975011735463170307L</span><br><span class="line">encrypt=18605789682603602447496491798717321758798293700581905324029316650457391496265655270825055100678097929357061608642146193773598093988238186832894784951616085628646685595376101261377731258729834390380505295109894703902052847643842156614062711247564519297808798554671766259798926540994634858657655351713982599673967765484141456377356967352743349134262973092564982272405212241089526282547070247316071159193009664342169931360323767519419547890738439815871541842638219161372841320792826512207337857015266817573319095062799628537492791048391092577478382005012019416835632572465215950053539506334972912038960318318733757235757L</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">e&#x3D;65537</span><br><span class="line">n1&#x3D;23813929634961916607351565880455941766670447113389071712756695324346844628401731716721342593051007386272154527731664038624979611788014212477351852945244505409460937047258358062539110381430391840699958786987625931706228387994323041218966203797392082298285118826348211114759651033904573709571472601260689154545949713245271655372366964733467694911683404472839031932865195076679363440004259157441442904092160547940620462275523928770007343760308099893870201392965037704560065286860197211399375405419620507897112217284427055511050820476779226202266877872708788417574738346625361066145535064835057037859284000257460115692751L</span><br><span class="line">n2&#x3D;23813929634961916607351565880455941766670447113389071712756695324346844628401731716721342593051007386272154527731664038624979611788014212477351852945244505409460937047258358062539110381430391840699958786987625931706228387994323041218966203797392082298285118826348211114759651033904573709571472601260689154673727252437046185126099084752843732400209032782207790902956024459189700856089587545302854326571561755007254420608514135036673700243280752364319986331493694769729841789115612749641973878393284804681876299531933348630664123809944975501332215753682284226293973903784246618067269627749460102002825975011735463170307L</span><br><span class="line">encrypt&#x3D;18605789682603602447496491798717321758798293700581905324029316650457391496265655270825055100678097929357061608642146193773598093988238186832894784951616085628646685595376101261377731258729834390380505295109894703902052847643842156614062711247564519297808798554671766259798926540994634858657655351713982599673967765484141456377356967352743349134262973092564982272405212241089526282547070247316071159193009664342169931360323767519419547890738439815871541842638219161372841320792826512207337857015266817573319095062799628537492791048391092577478382005012019416835632572465215950053539506334972912038960318318733757235757L</span><br></pre></td></tr></table></figure>
 <p>发现给了两个 n，一个密文，那就是根据两个 n 来计算私钥。<br>首先尝试分解两个 n，n1 无果，n2 分出一部分素因数：</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/9223743-30f8ea24352ecb27.png" alt="image.png"></p>
 <p>显然 n2 不是两个素因数相乘，可以猜测 n1 是加密所用的 n。仔细观察 n1 和 n2 的高位都相同，相近，猜测n2可能是依据 n1 的 p 和 q 生成：</p>
@@ -192,11 +191,11 @@
 <p>n1 = p * q<br>n2 = (p + x) * (q + y)</p>
 </blockquote>
 <p>这样的话，可以推导：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p * q = n1</span><br><span class="line">(p + x)(q + y) = n2</span><br><span class="line">-&gt; x * y + p * y + q * x = t (t = n2 - n1)</span><br><span class="line">-&gt; x * q^2 + (x * y - t) * q + n * y = 0</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p * q &#x3D; n1</span><br><span class="line">(p + x)(q + y) &#x3D; n2</span><br><span class="line">-&gt; x * y + p * y + q * x &#x3D; t (t &#x3D; n2 - n1)</span><br><span class="line">-&gt; x * q^2 + (x * y - t) * q + n * y &#x3D; 0</span><br></pre></td></tr></table></figure>
 <p>该方程有素数解即可，可爆破 x 和 y，写出脚本：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">import</span> libnum</span><br><span class="line">e=<span class="number">65537</span></span><br><span class="line">n1=<span class="number">23813929634961916607351565880455941766670447113389071712756695324346844628401731716721342593051007386272154527731664038624979611788014212477351852945244505409460937047258358062539110381430391840699958786987625931706228387994323041218966203797392082298285118826348211114759651033904573709571472601260689154545949713245271655372366964733467694911683404472839031932865195076679363440004259157441442904092160547940620462275523928770007343760308099893870201392965037704560065286860197211399375405419620507897112217284427055511050820476779226202266877872708788417574738346625361066145535064835057037859284000257460115692751L</span></span><br><span class="line">n2=<span class="number">23813929634961916607351565880455941766670447113389071712756695324346844628401731716721342593051007386272154527731664038624979611788014212477351852945244505409460937047258358062539110381430391840699958786987625931706228387994323041218966203797392082298285118826348211114759651033904573709571472601260689154673727252437046185126099084752843732400209032782207790902956024459189700856089587545302854326571561755007254420608514135036673700243280752364319986331493694769729841789115612749641973878393284804681876299531933348630664123809944975501332215753682284226293973903784246618067269627749460102002825975011735463170307L</span></span><br><span class="line">encrypt=<span class="number">18605789682603602447496491798717321758798293700581905324029316650457391496265655270825055100678097929357061608642146193773598093988238186832894784951616085628646685595376101261377731258729834390380505295109894703902052847643842156614062711247564519297808798554671766259798926540994634858657655351713982599673967765484141456377356967352743349134262973092564982272405212241089526282547070247316071159193009664342169931360323767519419547890738439815871541842638219161372841320792826512207337857015266817573319095062799628537492791048391092577478382005012019416835632572465215950053539506334972912038960318318733757235757L</span></span><br><span class="line"></span><br><span class="line">t=n2-n1</span><br><span class="line">f1 = <span class="keyword">lambda</span> x, y: pow(x * y - t, <span class="number">2</span>) - <span class="number">4</span> * n1 * x * y</span><br><span class="line">f2 = <span class="keyword">lambda</span> x, y, s: (t - x * y - s) / (<span class="number">2</span> * x)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">3000</span>):</span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">3000</span>):</span><br><span class="line">        <span class="keyword">print</span> x,y</span><br><span class="line">        <span class="keyword">if</span> f1(x, y) &gt;= <span class="number">0</span>:</span><br><span class="line">            s, b = gmpy2.iroot(f1(x, y), <span class="number">2</span>)</span><br><span class="line">            <span class="keyword">if</span> b:</span><br><span class="line">                <span class="keyword">if</span> gmpy2.is_prime(f2(x,y,int(s))):</span><br><span class="line">                    <span class="keyword">print</span> <span class="string">"Success"</span></span><br><span class="line">                    p=f2(x,y,int(s))</span><br><span class="line">                    q=n1/p</span><br><span class="line">                    d=gmpy2.invert(e,(p<span class="number">-1</span>)*(q<span class="number">-1</span>))</span><br><span class="line">                    <span class="keyword">print</span> libnum.n2s(pow(encrypt,d,n1))</span><br><span class="line">                    exit()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">import</span> libnum</span><br><span class="line">e=<span class="number">65537</span></span><br><span class="line">n1=<span class="number">23813929634961916607351565880455941766670447113389071712756695324346844628401731716721342593051007386272154527731664038624979611788014212477351852945244505409460937047258358062539110381430391840699958786987625931706228387994323041218966203797392082298285118826348211114759651033904573709571472601260689154545949713245271655372366964733467694911683404472839031932865195076679363440004259157441442904092160547940620462275523928770007343760308099893870201392965037704560065286860197211399375405419620507897112217284427055511050820476779226202266877872708788417574738346625361066145535064835057037859284000257460115692751L</span></span><br><span class="line">n2=<span class="number">23813929634961916607351565880455941766670447113389071712756695324346844628401731716721342593051007386272154527731664038624979611788014212477351852945244505409460937047258358062539110381430391840699958786987625931706228387994323041218966203797392082298285118826348211114759651033904573709571472601260689154673727252437046185126099084752843732400209032782207790902956024459189700856089587545302854326571561755007254420608514135036673700243280752364319986331493694769729841789115612749641973878393284804681876299531933348630664123809944975501332215753682284226293973903784246618067269627749460102002825975011735463170307L</span></span><br><span class="line">encrypt=<span class="number">18605789682603602447496491798717321758798293700581905324029316650457391496265655270825055100678097929357061608642146193773598093988238186832894784951616085628646685595376101261377731258729834390380505295109894703902052847643842156614062711247564519297808798554671766259798926540994634858657655351713982599673967765484141456377356967352743349134262973092564982272405212241089526282547070247316071159193009664342169931360323767519419547890738439815871541842638219161372841320792826512207337857015266817573319095062799628537492791048391092577478382005012019416835632572465215950053539506334972912038960318318733757235757L</span></span><br><span class="line"></span><br><span class="line">t=n2-n1</span><br><span class="line">f1 = <span class="keyword">lambda</span> x, y: <span class="built_in">pow</span>(x * y - t, <span class="number">2</span>) - <span class="number">4</span> * n1 * x * y</span><br><span class="line">f2 = <span class="keyword">lambda</span> x, y, s: (t - x * y - s) / (<span class="number">2</span> * x)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">3000</span>):</span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">3000</span>):</span><br><span class="line">        <span class="built_in">print</span> x,y</span><br><span class="line">        <span class="keyword">if</span> f1(x, y) &gt;= <span class="number">0</span>:</span><br><span class="line">            s, b = gmpy2.iroot(f1(x, y), <span class="number">2</span>)</span><br><span class="line">            <span class="keyword">if</span> b:</span><br><span class="line">                <span class="keyword">if</span> gmpy2.is_prime(f2(x,y,<span class="built_in">int</span>(s))):</span><br><span class="line">                    <span class="built_in">print</span> <span class="string">&quot;Success&quot;</span></span><br><span class="line">                    p=f2(x,y,<span class="built_in">int</span>(s))</span><br><span class="line">                    q=n1/p</span><br><span class="line">                    d=gmpy2.invert(e,(p<span class="number">-1</span>)*(q<span class="number">-1</span>))</span><br><span class="line">                    <span class="built_in">print</span> libnum.n2s(<span class="built_in">pow</span>(encrypt,d,n1))</span><br><span class="line">                    exit()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>解出明文。</p>
-<p>参考：<br><a href="https://err0rzz.github.io/2017/11/14/CTF%E4%B8%ADRSA%E5%A5%97%E8%B7%AF/" target="_blank" rel="noopener">https://err0rzz.github.io/2017/11/14/CTF%E4%B8%ADRSA%E5%A5%97%E8%B7%AF/</a></p>
+<p>参考：<br><a target="_blank" rel="noopener" href="https://err0rzz.github.io/2017/11/14/CTF%E4%B8%ADRSA%E5%A5%97%E8%B7%AF/">https://err0rzz.github.io/2017/11/14/CTF%E4%B8%ADRSA%E5%A5%97%E8%B7%AF/</a></p>
 
       
 
@@ -520,23 +519,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Crypto</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Web</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Misc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">wp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Datacon</a>
+                <a href="javascript:void(0)" class="js-tag color2">Crypto</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -545,6 +532,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">ciscn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">wp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -557,6 +548,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">线下</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Misc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Datacon</a>
               </li>
             
             <div class="clearfix"></div>

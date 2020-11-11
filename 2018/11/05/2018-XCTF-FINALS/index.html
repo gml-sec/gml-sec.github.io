@@ -9,21 +9,24 @@
   <title>2018 XCTF FINALS | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="有幸参加了 2018 XCTF FINALS，线下长了不少见识。回学校就打了上海市大学生网络安全竞赛，现在记录一下 XCTF FINALS。 攻防赛四道 pwn，Web 狗也只能打打解题这样子… 解题有 5 道 Misc，2 道 Web 和 4 道 pwn，和队友做出了两道 Misc ，一道 Web 和两道 pwn。不得不说这次的 Misc 很新颖，加入了硬件的挑战，有两道题是通过给的路由器来拿">
-<meta name="keywords" content="CTF,Web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2018 XCTF FINALS">
-<meta property="og:url" content="http:&#x2F;&#x2F;igml.top&#x2F;2018&#x2F;11&#x2F;05&#x2F;2018-XCTF-FINALS&#x2F;index.html">
+<meta property="og:url" content="http://igml.top/2018/11/05/2018-XCTF-FINALS/index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
 <meta property="og:description" content="有幸参加了 2018 XCTF FINALS，线下长了不少见识。回学校就打了上海市大学生网络安全竞赛，现在记录一下 XCTF FINALS。 攻防赛四道 pwn，Web 狗也只能打打解题这样子… 解题有 5 道 Misc，2 道 Web 和 4 道 pwn，和队友做出了两道 Misc ，一道 Web 和两道 pwn。不得不说这次的 Misc 很新颖，加入了硬件的挑战，有两道题是通过给的路由器来拿">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-61b0a41e27b844f1.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-04787bf7b76d4d90.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-4c3c00d8e6e322c4.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-01782225a0d0feb8.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-6be35f179f2c4d91.png">
-<meta property="og:updated_time" content="2019-10-29T11:43:25.511Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9223743-61b0a41e27b844f1.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9223743-04787bf7b76d4d90.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9223743-4c3c00d8e6e322c4.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9223743-01782225a0d0feb8.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9223743-6be35f179f2c4d91.png">
+<meta property="article:published_time" content="2018-11-05T11:25:07.000Z">
+<meta property="article:modified_time" content="2019-10-29T11:43:25.511Z">
+<meta property="article:author" content="gml">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Web">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;9223743-61b0a41e27b844f1.png">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/9223743-61b0a41e27b844f1.png">
   
     <link rel="alternative" href="/atom.xml" title="gml&#39;s blog" type="application/atom+xml">
   
@@ -41,7 +44,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 5.2.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -55,10 +58,8 @@
 			<img src="/avator.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="">gml</a></h1>
+		  <h1 class="header-author"><a href=""></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">千里之行，始于足下。</p>
 		
 
 		<nav class="header-menu">
@@ -116,10 +117,8 @@
 				<img src="/avator.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">gml</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>千里之行，始于足下。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -191,12 +190,12 @@
 
 <h3 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h3><h4 id="babyphp"><a href="#babyphp" class="headerlink" title="babyphp"></a>babyphp</h4><p>这个题做的时候好像被人搅屎了，思路很清晰但是打不成功。。。后来找麦香师傅要了 docker，复现了一波就成了emmmmmm 有点可惜。</p>
 <p>题目源码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">    error_reporting(<span class="number">0</span>);</span><br><span class="line">    ini_set(<span class="string">'open_basedir'</span>, <span class="string">'/var/www/html:/tmp'</span>);</span><br><span class="line">    $file = <span class="string">'function.php'</span>;</span><br><span class="line">    $func = <span class="keyword">isset</span>($_GET[<span class="string">'function'</span>])?$_GET[<span class="string">'function'</span>]:<span class="string">'filters'</span>; </span><br><span class="line">    call_user_func($func,$_GET);</span><br><span class="line">    <span class="keyword">include</span>($file);</span><br><span class="line">    session_start();</span><br><span class="line">    $_SESSION[<span class="string">'name'</span>] = $_POST[<span class="string">'name'</span>];</span><br><span class="line">    <span class="keyword">if</span>($_SESSION[<span class="string">'name'</span>]==<span class="string">'admin'</span>)&#123;</span><br><span class="line">        header(<span class="string">'location:admin.php'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">    error_reporting(<span class="number">0</span>);</span><br><span class="line">    ini_set(<span class="string">&#x27;open_basedir&#x27;</span>, <span class="string">&#x27;/var/www/html:/tmp&#x27;</span>);</span><br><span class="line">    $file = <span class="string">&#x27;function.php&#x27;</span>;</span><br><span class="line">    $func = <span class="keyword">isset</span>($_GET[<span class="string">&#x27;function&#x27;</span>])?$_GET[<span class="string">&#x27;function&#x27;</span>]:<span class="string">&#x27;filters&#x27;</span>; </span><br><span class="line">    call_user_func($func,$_GET);</span><br><span class="line">    <span class="keyword">include</span>($file);</span><br><span class="line">    session_start();</span><br><span class="line">    $_SESSION[<span class="string">&#x27;name&#x27;</span>] = $_POST[<span class="string">&#x27;name&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>($_SESSION[<span class="string">&#x27;name&#x27;</span>]==<span class="string">&#x27;admin&#x27;</span>)&#123;</span><br><span class="line">        header(<span class="string">&#x27;location:admin.php&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>限定了包含的目录，有回调函数可以执行函数，session 的内容可以通过 name 控制。</p>
 <p>开始没有 get 到出题人的点，这种没有给任何 flag 信息的题应该就是 getshell了。开始一直纠结于回调函数第二个参数是数组如何利用，后来才知道这个题考点是<code>php7 + session 路径 + 变量覆盖</code> </p>
 <p>name 可以控制 session 文件的内容，那么要把马写到 session 文件中去。然而 php 默认的 session 存储存储路径显然不在限定的<code>/var/www/html 和 /tmp</code> 中，我们无法包含，也就无法利用。</p>
-<p>这里用到了 php7 的一个新特性，从 php7 开始，session_start 函数可以接收一个关联数组，可以覆盖 php.ini 文件中的默认配置，详细可见<a href="http://php.net/manual/zh/function.session-start.php" target="_blank" rel="noopener">官方文档</a> 。</p>
+<p>这里用到了 php7 的一个新特性，从 php7 开始，session_start 函数可以接收一个关联数组，可以覆盖 php.ini 文件中的默认配置，详细可见<a target="_blank" rel="noopener" href="http://php.net/manual/zh/function.session-start.php">官方文档</a> 。</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/9223743-61b0a41e27b844f1.png" alt="image.png"></p>
 <p>我们可以利用这个特点修改 session 的存放位置，payload:</p>
 <p><code>?function=sesson_start&amp;save_path=/tmp</code></p>
@@ -211,7 +210,7 @@
 <p>然后就是读 flag 了，拿蚁剑连一下：</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/9223743-01782225a0d0feb8.png" alt="image.png"></p>
 <h4 id="PUBG"><a href="#PUBG" class="headerlink" title="PUBG"></a>PUBG</h4><p>这道题是之前 2018 HITB GSEC FINAL 的 AWD 一道题的环境做了一些修改，当时我也去了现场，虽然没有打 AWD (打的解题)但是听了出题师傅 RicterZ 在新加坡国立大学的出题分享，照着差不多算是 wp 的 ppt 复现题目可还行…</p>
-<p>这个题比较麻烦，源码泄露-&gt; ZEND解密 -&gt; sql 注入-&gt; 伪造 cookie 进管理员 -&gt; 控制 curl 的内容写 shell，具体可以参考 De1ta 的 Web 大师傅的 <a href="https://xz.aliyun.com/t/3158#toc-2" target="_blank" rel="noopener">wp</a></p>
+<p>这个题比较麻烦，源码泄露-&gt; ZEND解密 -&gt; sql 注入-&gt; 伪造 cookie 进管理员 -&gt; 控制 curl 的内容写 shell，具体可以参考 De1ta 的 Web 大师傅的 <a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/3158#toc-2">wp</a></p>
 <h3 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h3><h4 id="Budge1"><a href="#Budge1" class="headerlink" title="Budge1"></a>Budge1</h4><p>Budge1 和 Budge2 是需要根据给的路由器拿 flag。</p>
 <p>Budge1 相对简单，Budge2 是拿到管理员的 shell，登进去管理员页面看 flag，还要焊接的操作，只可惜当时做的时候没有硬件了。。。</p>
 <p>Budge1 踩了坑，题目没给提示，还以为要抓包，连上网线分析了半天流量也没什么发现，然后出题人前面说 Budge1 是读灯的信息，才发现硬件有灯闪烁，应该是二进制的信息。两个灯可以闪烁，分别对应 0 和 1，连起来 hex 解码是 <code>hitb2018</code> ，然后怎么交也不对，提示说各种编码，hex 编码就过了…</p>
@@ -381,7 +380,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Web"><span class="toc-number">1.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#babyphp"><span class="toc-number">1.1.</span> <span class="toc-text">babyphp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PUBG"><span class="toc-number">1.2.</span> <span class="toc-text">PUBG</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Misc"><span class="toc-number">2.</span> <span class="toc-text">Misc</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Budge1"><span class="toc-number">2.1.</span> <span class="toc-text">Budge1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mysterious-signals"><span class="toc-number">2.2.</span> <span class="toc-text">Mysterious signals</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#感受"><span class="toc-number">3.</span> <span class="toc-text">感受</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Web"><span class="toc-number">1.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#babyphp"><span class="toc-number">1.1.</span> <span class="toc-text">babyphp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PUBG"><span class="toc-number">1.2.</span> <span class="toc-text">PUBG</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Misc"><span class="toc-number">2.</span> <span class="toc-text">Misc</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Budge1"><span class="toc-number">2.1.</span> <span class="toc-text">Budge1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mysterious-signals"><span class="toc-number">2.2.</span> <span class="toc-text">Mysterious signals</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%84%9F%E5%8F%97"><span class="toc-number">3.</span> <span class="toc-text">感受</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -543,23 +542,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Crypto</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Web</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Misc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">wp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Datacon</a>
+                <a href="javascript:void(0)" class="js-tag color2">Crypto</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -568,6 +555,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">ciscn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">wp</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -580,6 +571,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">线下</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Misc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Datacon</a>
               </li>
             
             <div class="clearfix"></div>
