@@ -5,28 +5,28 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://igml.top">
+  <link rel="dns-prefetch" href="https://igml.top">
   <title>2020 强网杯 writeup | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="打完强网杯就去学校报道了，抽空补一下wp。 强网先锋-辅助反序列化逃逸，参考https:&#x2F;&#x2F;m0nit0r.top&#x2F;2020&#x2F;02&#x2F;05&#x2F;object-injection-caused-by-PHP-string-escape&#x2F;#Joomla%E9%80%83%E9%80%B8再加上绕过wakeup，以及反序列化中使用大写S可用十六进制表示的一些绕过方式。 需要注意调试的时候最好url编码，直接e">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2020 强网杯 writeup">
-<meta property="og:url" content="http://igml.top/2020/08/28/2020-qwb/index.html">
+<meta property="og:url" content="https://igml.top/2020/08/28/2020-qwb/index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
 <meta property="og:description" content="打完强网杯就去学校报道了，抽空补一下wp。 强网先锋-辅助反序列化逃逸，参考https:&#x2F;&#x2F;m0nit0r.top&#x2F;2020&#x2F;02&#x2F;05&#x2F;object-injection-caused-by-PHP-string-escape&#x2F;#Joomla%E9%80%83%E9%80%B8再加上绕过wakeup，以及反序列化中使用大写S可用十六进制表示的一些绕过方式。 需要注意调试的时候最好url编码，直接e">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://igml.top/2020/08/28/2020-qwb/siixUdLyyYA0CgPrTYcrTGW7orUlSYJJg_fLnLixhR_ier_T5Vp-2Zmy_YK-LFgk2KQdudUfObrsfGQ9BPvh1F2kNp1AD_k_Wul3pWavrviitU88vtT9inzmxINfW0MlV4kBPqq0.png">
-<meta property="og:image" content="http://igml.top/2020/08/28/2020-qwb/nTFCbNjiuJVHnGXR8vO8p_hnw8wsgB44Hk3gjrbQYEVFEx1rYUMWP9UjIEmDYqQRo8fC3Q-zkoPiBcOY7qs37kmP3JKvklZkh1_5gLpx275KceTenCp89k1s1KVQuYAurHMFQwfh.png">
-<meta property="og:image" content="http://igml.top/2020/08/28/2020-qwb/vISYtt8fRrUQCho2750osAU6hqwZbV7_SUbI0hlWzE-YX_EqfbIXwLCASw-BmITL1Dq31AQbg3erETg5H9Mixh4l9Bn8SVNajF1ZdSHTaEJVldYycZ9gGQw2T2kb4tRoxO28fXf8.png">
-<meta property="og:image" content="http://igml.top/2020/08/28/2020-qwb/mx6vGXjZXUUflp5AP0Z0WvoOtC5ZqvWK6uTonALgu4hge9t9ICuU2ddWXRjjfExkb189jfdGr7utxt0CRxTxH8Ie8nwG61orWAHMTptSErbdA_pJv7Fm7FFCA3TpovnWcR86eEFO.png">
-<meta property="og:image" content="http://igml.top/2020/08/28/2020-qwb/1.png">
+<meta property="og:image" content="https://igml.top/2020/08/28/2020-qwb/siixUdLyyYA0CgPrTYcrTGW7orUlSYJJg_fLnLixhR_ier_T5Vp-2Zmy_YK-LFgk2KQdudUfObrsfGQ9BPvh1F2kNp1AD_k_Wul3pWavrviitU88vtT9inzmxINfW0MlV4kBPqq0.png">
+<meta property="og:image" content="https://igml.top/2020/08/28/2020-qwb/nTFCbNjiuJVHnGXR8vO8p_hnw8wsgB44Hk3gjrbQYEVFEx1rYUMWP9UjIEmDYqQRo8fC3Q-zkoPiBcOY7qs37kmP3JKvklZkh1_5gLpx275KceTenCp89k1s1KVQuYAurHMFQwfh.png">
+<meta property="og:image" content="https://igml.top/2020/08/28/2020-qwb/vISYtt8fRrUQCho2750osAU6hqwZbV7_SUbI0hlWzE-YX_EqfbIXwLCASw-BmITL1Dq31AQbg3erETg5H9Mixh4l9Bn8SVNajF1ZdSHTaEJVldYycZ9gGQw2T2kb4tRoxO28fXf8.png">
+<meta property="og:image" content="https://igml.top/2020/08/28/2020-qwb/mx6vGXjZXUUflp5AP0Z0WvoOtC5ZqvWK6uTonALgu4hge9t9ICuU2ddWXRjjfExkb189jfdGr7utxt0CRxTxH8Ie8nwG61orWAHMTptSErbdA_pJv7Fm7FFCA3TpovnWcR86eEFO.png">
+<meta property="og:image" content="https://igml.top/2020/08/28/2020-qwb/1.png">
 <meta property="article:published_time" content="2020-08-28T08:30:49.000Z">
 <meta property="article:modified_time" content="2020-08-28T08:44:42.678Z">
 <meta property="article:author" content="gml">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Web">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://igml.top/2020/08/28/2020-qwb/siixUdLyyYA0CgPrTYcrTGW7orUlSYJJg_fLnLixhR_ier_T5Vp-2Zmy_YK-LFgk2KQdudUfObrsfGQ9BPvh1F2kNp1AD_k_Wul3pWavrviitU88vtT9inzmxINfW0MlV4kBPqq0.png">
+<meta name="twitter:image" content="https://igml.top/2020/08/28/2020-qwb/siixUdLyyYA0CgPrTYcrTGW7orUlSYJJg_fLnLixhR_ier_T5Vp-2Zmy_YK-LFgk2KQdudUfObrsfGQ9BPvh1F2kNp1AD_k_Wul3pWavrviitU88vtT9inzmxINfW0MlV4kBPqq0.png">
   
     <link rel="alternative" href="/atom.xml" title="gml&#39;s blog" type="application/atom+xml">
   
@@ -330,7 +330,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxklEQVR42u3aS3LCMBAFQO5/aecAAfGeZAmoaq2o4MidLKbm93jE5/p3xk8mn8f3LB1cXNxl7jU8yTPtH9Dej4uL+yluG5LWv331zBsbLi7uT3GTJCZJgHBxcX+Rm4SncepzNJDh4uIucJPiZ3zRvanPDbUaLi7uamyJupT7Pm/p7+Li4k5xr/LkI5bkhvrtuLi4R7h5QGkHLUlJ074XFxf3JLcNT8lCxlw7tV31wMXF3cHNXz8XhtbrlycZGS4u7hFuUpx8xXIGLi7uQe7u5ap2NPvyX4aLi3uc2w4+kwboyjLHkydxcXGPcOeWsfKG6VwQzBsouLi4Z7h5UpKsV7Zl1UryhIuLey+3nrQszzWSFOrNTBgXF3czty0/8kJofRhT52K4uLg3cfNhyUquNHfDmyUMXFzcI9z8ujyEJUlMXfzg4uIe5yYDj7kGylIWhouLe4R7lWfut+aGsri4uJ/i5id/ZVvYzCVSuLi4u7l58Bpf1D4zuciFi4t7kDtXFLVLVG3xs9TfxcXFPc7Nf9KWQEUXBxcX98u4+QC1DXYbUxxcXNyS265OJuXKGJcXPLi4uOe5ecM0H8O061ntsBYXF3cb9w/8WZCfgZWJswAAAABJRU5ErkJggg==" alt="微信分享二维码">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABwElEQVR42u3aQZLDIAwF0dz/0p4TQPpLgMlUs3K5HHhkoUISnw8ez3SkX45+u2zIlSu3zU0X4IuN5hk9o1XkypV7kDtabPQNocw3Np9/+F6uXLlXcsnhhswsV67c/8flAY5sWK5cuXdySfLDjy8Euj1XkytXboPLq5T7nrfUd+XKlVviPuHgR5laYfTL6nLlyj3C5QGFt1RrATFYV65cuZu5nSQkDXzzYgdKruTKlXsBlwQsDu2UXVAgkytX7lJuCl21ybj4Ileu3CNcHow6CRI/yqDii1y5cjdzefuzRk9zFpT8yJUr9wiXJyT9RmmtgPKl8yNXrtzN3DR1IWGOBDW0oly5cl/i8oJFylqW/MiVK3czl1yh4IXO2oEpvqIhV67cl7hBQgIua6KrFbyAIleu3Au4JHjN0x7+Hs0sV67cg9y0WdJvsha/kStX7mbuE45OMAqaqWkfRq5cuUu5neYoCT286dLZtly5cndwa+VO3iidz0ney5Ur9y0uD0Pk+1XJj1y5cn+Lm4YhcvEryNjkypV7JZe3TDpBDbVS5MqVu41bC0885KVtm7gnLFeu3KXcOJQ0miK1P0KuXLkHuX8ZIZCfGYCa4AAAAABJRU5ErkJggg==" alt="微信分享二维码">
     </div>
 </div>
 
@@ -572,6 +572,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">D^3CTF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -675,7 +679,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">学习：Master@NISL in THU&lt;br&gt;CTF：Redbud &amp; Tea Deliverers&lt;br&gt;兴趣：Web 安全、协议安全</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">学习：Master@NISL in THU&lt;br&gt;主页：netsec.ccert.edu.cn/people/gml20&lt;br&gt;CTF：Redbud &amp; Tea Deliverers&lt;br&gt;兴趣：Web 安全、Iot 安全、协议安全</div>
   	  	
     	</section>
     

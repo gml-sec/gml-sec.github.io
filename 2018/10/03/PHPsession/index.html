@@ -5,21 +5,21 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://igml.top">
+  <link rel="dns-prefetch" href="https://igml.top">
   <title>PHP session 反序列化 | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Sessionsession就是服务器为用户浏览器创建的一个保存用户信息的文件存储的文件是以sess_sessionid来进行命名的，文件的内容就是session值的序列化之后的内容。session序列化与反序列化有三种方式：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PHP session 反序列化">
-<meta property="og:url" content="http://igml.top/2018/10/03/PHPsession/index.html">
+<meta property="og:url" content="https://igml.top/2018/10/03/PHPsession/index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
 <meta property="og:description" content="Sessionsession就是服务器为用户浏览器创建的一个保存用户信息的文件存储的文件是以sess_sessionid来进行命名的，文件的内容就是session值的序列化之后的内容。session序列化与反序列化有三种方式：">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://igml.top/2018/10/03/PHPsession/picture1.jpg">
-<meta property="og:image" content="http://igml.top/2018/10/03/PHPsession/picture2.jpg">
-<meta property="og:image" content="http://igml.top/2018/10/03/PHPsession/picture3.jpg">
-<meta property="og:image" content="http://igml.top/2018/10/03/PHPsession/picture4.jpg">
-<meta property="og:image" content="http://igml.top/2018/10/03/PHPsession/picture5.jpg">
+<meta property="og:image" content="https://igml.top/2018/10/03/PHPsession/picture1.jpg">
+<meta property="og:image" content="https://igml.top/2018/10/03/PHPsession/picture2.jpg">
+<meta property="og:image" content="https://igml.top/2018/10/03/PHPsession/picture3.jpg">
+<meta property="og:image" content="https://igml.top/2018/10/03/PHPsession/picture4.jpg">
+<meta property="og:image" content="https://igml.top/2018/10/03/PHPsession/picture5.jpg">
 <meta property="article:published_time" content="2018-10-03T06:32:47.000Z">
 <meta property="article:modified_time" content="2019-10-28T17:09:19.212Z">
 <meta property="article:author" content="gml">
@@ -27,7 +27,7 @@
 <meta property="article:tag" content="Web">
 <meta property="article:tag" content="PHP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://igml.top/2018/10/03/PHPsession/picture1.jpg">
+<meta name="twitter:image" content="https://igml.top/2018/10/03/PHPsession/picture1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="gml&#39;s blog" type="application/atom+xml">
   
@@ -329,7 +329,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABvklEQVR42u3aS47CQAwFQO5/6cx6hGie7U4DUvUKQZRUNk/+8HjE53o6z99Pvtl8cHFxx9xredbX5PdPPkdPwcXFPcjNH7O+5tWr5te8seHi4n49Ny+G8lDDxcX9RW6CWL/e0SDDxcUdcJPmZ9II9e6Ji4v7Ke7e0Ubv8y3zXVxc3Bb3Kp7qaiRphApPx8XFPcLNA2XvumVSGOHi4p7h9gYce/+QkccfLi7uSW5ejlQjKR9/jGY5uLi4m7i9VqcH6o1N/12Di4t7hLtemlaXrNUBaJKvUa+Gi4t7nJu3Mb3wKq9bcHFxb+YmIdJrY/Yua19WZLi4uDdwq4XIrpepLmVxcXE/y82bnF1BNhrK4OLiHudWl6br+0z+flH4GRcXdxM3D6DeYHRSbb0cmOLi4h7hVhce+ePz65tLVlxc3Nu41aiaQ0dVGC4u7m3cq3gmUZWPRx/zTMXFxd3Zoez+E9UymJIWqPkyuLi4Y241vPLH91qdUaGDi4u7lZsHTS/Ies1PYWCKi4v7UW5eElWXuNEr4eLi/gg3j7ZJnOHi4p7n5kPP6mi1Gmq4uLjfwJ2XLPkgNSllesGHi4u7ifsH8NFI53o87I8AAAAASUVORK5CYII=" alt="微信分享二维码">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABu0lEQVR42u3ay47CMAwFUP7/pztbpBH02k6iIp2sUBvaAwvLj7xe8bo+rPe7/3fmVxYvXFzcMff6uj7tqT4/+fzdgIuLe56bvyYJbcmP/P78j9dxcXEfzM3zkOQuLi7ur3PnpQ4uLu6vcKuNj0nxkxRXC2o1XFzcAXdta6P3eUt/FxcXt8W9iqvaIqkGrJsn4OLiHuHmASVPPvLwVH0vLi7uGW51HNJrhibQaKCLi4v7AG6SmkyGK+V34eLiHuHmW9fumQxvcHFxT3J7aUc1wFW/e5Po4OLibuDmW3vJ0Lx8uil+cHFxN3CTEFPdMw9eUZMFFxd3MzdvWEz259+9Gevi4uJu5labnnmY641MouIHFxd3Mzd59LxouYmjcdsUFxf3JLc3ZO2VQwuOeuDi4h7nVo9Y9dKXPCCWh6y4uLhLuRPQ5LBmeQ8uLu5m7lVceYmSswrhEhcX9wh30iRN2hzVEUthJoyLi7uZOzl6NRmWVK/j4uKe5+ZhKE+DeqlM1DDFxcV9GDf5MflxjWbFhouL+2Bu81jVoFGLi4t7krt2LBqNS3t/Fi4u7hFub7w6H9LMD2rg4uJu4P4BoNG5aIw8kPcAAAAASUVORK5CYII=" alt="微信分享二维码">
     </div>
 </div>
 
@@ -566,6 +566,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">D^3CTF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -669,7 +673,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">学习：Master@NISL in THU&lt;br&gt;CTF：Redbud &amp; Tea Deliverers&lt;br&gt;兴趣：Web 安全、协议安全</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">学习：Master@NISL in THU&lt;br&gt;主页：netsec.ccert.edu.cn/people/gml20&lt;br&gt;CTF：Redbud &amp; Tea Deliverers&lt;br&gt;兴趣：Web 安全、Iot 安全、协议安全</div>
   	  	
     	</section>
     

@@ -5,13 +5,13 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://igml.top">
+  <link rel="dns-prefetch" href="https://igml.top">
   <title>CBC-Padding攻击 | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="对于 CBC 翻转字节攻击以及 Padding Oracle Attack 这块的知识一直不怎么会运用，所以今天复现了一道在Xman 夏令营打排位赛的一道密码题，算是 Padding Oracle 的一个简化版，思想大同小异，只是这个题没有和服务器交互。 这个题也是仿 hack.lu 2016 的一道题，文章末尾有链接地址。 看下题，给了AESCipher.py,lockfile.py和flag.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CBC-Padding攻击">
-<meta property="og:url" content="http://igml.top/2018/10/19/CBC-Padding%E6%94%BB%E5%87%BB/index.html">
+<meta property="og:url" content="https://igml.top/2018/10/19/CBC-Padding%E6%94%BB%E5%87%BB/index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
 <meta property="og:description" content="对于 CBC 翻转字节攻击以及 Padding Oracle Attack 这块的知识一直不怎么会运用，所以今天复现了一道在Xman 夏令营打排位赛的一道密码题，算是 Padding Oracle 的一个简化版，思想大同小异，只是这个题没有和服务器交互。 这个题也是仿 hack.lu 2016 的一道题，文章末尾有链接地址。 看下题，给了AESCipher.py,lockfile.py和flag.">
 <meta property="og:locale" content="zh_CN">
@@ -322,7 +322,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3ay66CUBBEUf7/pzFxpDE0VV1opM9mdHODyHJQOf3YNvnan9fr36//yT+1f1zbNy4YMGDclrGXV32P/oQjWM3QnwwDBowVGEpc1ilXB2v9ovXT6neDAQMGDP0LlFBWng8DBgwYVzH0A597JwwYMGAkRazSGkuK2x/V4jBgwLghozcY+M3fX59vwIAB4+8Ze+tKWmO9QD95HxgwYIxm9I59vfGk3sJr/mQwYMAYysgjTx9q1vfUrbSTxh8MGDBGM9zme7IqUb+c+9IwYMBYh6E02fWys3f4M4aUR98FAwaM0Qx3qSIJWXdIqRfPMGDAWI2hF6VXDRXc1QoYMGCsyUhiVx8VJOWr/mQYMGDMZiRNfDeOlR/CPWLCgAFjHYabYAq4N2Bw1zhgwIAxlaGHqdsOc8cDyp0nOyMwYMAYyuhFaq/Q7a2FRbU4DBgwRjCSRYq8MZe06t4+BQMGjNGM5vHLbKvl8W10CmHAgDGOoUSt3ZkLOn/NwyIMGDBGM9yys7d4kbTb9AIbBgwYUxn5AkR9Tx61SvjCgAFjNsM92LmRmjTpYMCAAeNoMJAsWLgDyF6Uw4ABYzVG0j5zG/p62ew24GDAgLECQwlZNyJ7IR4FLgwYMBZgJIND9wCXNNpO1sJgwIABI47gpAC2e4QwYMBYkpFHbe9HgQEDBoxeEat/mTsA0IcKF9TiMGDAuAkj2dRw1zLcgYFbTsOAAWMc4wFse3rAmM5uOwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIklEQVR42u3aQWrEMAwF0Ln/pVPoqlBwv6SkYOd5NYRMxi8Lje2vzyce1/eo3nP9GMk9v++/eWBgYGzLuJaj92PJd9f35N/FwMB4DyOZSlLr8gK9fpX53DAwMDDWP5Oz8wlhYGBgzBnVkjp5BRgYGBjVTWZCmk/38b04BgbGhoxqMPCfnx/MNzAwMDZhXONxV+EezQEDA+NoRvVYbdJOkTdY5Feap4MYGBhHMPKCmE8rDyyrVzAwMN7G6JXR9eFaskDMA4lCvoGBgfEaRv7QSdPGDYEoBgbGoYxeKcyP3pIp5q0YUQaLgYFxHKP66N7U85eVRw4YGBjvYVSXgPnGsldkq8dwGBgYb2D0IsZqU1deah/fi2NgYGzLmB/3V4tvr6WjgMfAwDiIUV0C5pN7IkjAwMB4J+Ou5dp6GZeU0WprRbm7DQMDY3NG3gaRJAzrhWM1BC0f6mFgYBzKmEcC61I7CTgLeAwMjEMZecmbNFj0ospC0cfAwDia0dsDTjau+dPyIzkMDIyzGb1tZL6ky8trzhj9b2BgYGzIqJbCXpzZnMqgoGNgYJzEuIqjFzTm8UBvi4uBgXE2o1fmqgFA3v71RMMHBgbGGYyni2y1dOZRBAYGxtsYSUG8q7z2/hP+WBRiYGBgFI/1ey9ich0DAwMjiQHyQlltOLttn42BgbE5465tZwKoxqXRFhcDA+NoxrxTo3dI12tvvS3CxMDA2IPxBR45tz3FmNABAAAAAElFTkSuQmCC" alt="微信分享二维码">
     </div>
 </div>
 
@@ -564,6 +564,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">D^3CTF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -667,7 +671,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">学习：Master@NISL in THU&lt;br&gt;CTF：Redbud &amp; Tea Deliverers&lt;br&gt;兴趣：Web 安全、协议安全</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">学习：Master@NISL in THU&lt;br&gt;主页：netsec.ccert.edu.cn/people/gml20&lt;br&gt;CTF：Redbud &amp; Tea Deliverers&lt;br&gt;兴趣：Web 安全、Iot 安全、协议安全</div>
   	  	
     	</section>
     

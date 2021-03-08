@@ -5,13 +5,13 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://igml.top">
+  <link rel="dns-prefetch" href="https://igml.top">
   <title>CTF 中的 LFSR | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="线性反馈移位寄存器（LFSR）在流密码中有广泛的应用，是指给定前一状态的输出，将该输出的线性函数再用作输入的移位寄存器。LFSR 主要用于生成一串随机的比特流，比特流可用做加密明文的密钥。 LFSR 基本原理大致就是通过当前状态进行一些线性运算来确定下一状态。不清楚的可以参考这篇文章学习一下流密码和 LFSR 。 最开始接触 LFSR 是在强网杯的 streamgame，后来密码学课程上比较详细学">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CTF 中的 LFSR">
-<meta property="og:url" content="http://igml.top/2018/12/21/CTF%E4%B8%AD%E7%9A%84LFSR/index.html">
+<meta property="og:url" content="https://igml.top/2018/12/21/CTF%E4%B8%AD%E7%9A%84LFSR/index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
 <meta property="og:description" content="线性反馈移位寄存器（LFSR）在流密码中有广泛的应用，是指给定前一状态的输出，将该输出的线性函数再用作输入的移位寄存器。LFSR 主要用于生成一串随机的比特流，比特流可用做加密明文的密钥。 LFSR 基本原理大致就是通过当前状态进行一些线性运算来确定下一状态。不清楚的可以参考这篇文章学习一下流密码和 LFSR 。 最开始接触 LFSR 是在强网杯的 streamgame，后来密码学课程上比较详细学">
 <meta property="og:locale" content="zh_CN">
@@ -567,7 +567,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aQY7DIAwF0N7/0hlpttNE33YyEuSxqtqI8Fi4NubzicfxO86+/zuuZ7j+fDbDDQMDA2NZxnE5zhjXr7+eJ/k1XxsGBsZ7GEmITIJmwqg+E/0BYGBgYLQSu7PgmAd3DAwMjHnAzVO3fEEYGBgYkyI2L0fP5u8lnTfX4hgYGAsyqo2B//z8YH8DAwNjEcZRHL3mZd4WPVoDAwNjb0ZSRublZX5wNm+OFnYFAwNjI0Zv6U88k7cWMDAw3sOY1ImTaxm9xd1w3IaBgbEgo9oMSI7v84boXVc9MDAw3sbIU7TJr0lbFAMDA6N64JVftpg83+NhYGDsykgA+QH9/PleOY2BgfEGxqQxOT/Wr6aDX2bGwMDYmhGFs9Y1r/w6V7VVEK0QAwNja8ZdVx9yRvWCWnmLMTAwtmAkr5lckugledUrHRgYGLsyqkdm83tnj8yPgYHxGkYyXd6k7OWk1STyS8DFwMDYjpGXrPmk1bZBjok2HQMDYztGfkzfYxR2MQ70n+oOYWBgbMGoLqv3TL411UCMgYGxNyMPi3mamC+xd7GjmSBiYGAsyziKY1KOzjO6cg8WAwNjC0avjOyljNWFJjOXMRgYGMsyqgfxVVK1PZD3NDAwMN7GmATZXjpYjfqj9gAGBsZrGPNjtev3VgtpDAwMjPkliWobMj9iOy1iMTAwtmbkL+i9Jg+meVD+5NEaAwNjcUavgJw3Pp+bDQMDYyPGD/SDYL6VuGpGAAAAAElFTkSuQmCC" alt="微信分享二维码">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIUlEQVR42u3aS27DMAwFwNz/0ukFGvWRVApYGq+CILY1WRD8vV7x9V5eyb2fnpZ8v+3CwMB4LCM5YvXoybvW35T/PgwMjAsY60CZfF6/OAmpa9IfZ8bAwMBopYC7wjEGBgbGPOCuw2tS0Fb/PgwMjDsZ+YHyNDFvpeXF84ZaHAMD44GMPGn7/89fmW9gYGA8ivEuXvldSRjtneGXZ2JgYBzNqLbSkjFAr0DttfYwMDBuYMyTtry8rD6zMHLAwMC4hlENr+skb/7MwrswMDCOZuQN/XXo7JWpOSY6GwYGxtGM/OiTNlkvQI/KXQwMjCMY1dDZ+2+qjPJqBQYGxtGMaqmZp2W9oeZ88ICBgXEeY97Er4by/K4CGwMD40rGpK2WB+7eIHM0EsDAwHggo5quVb/plbtVEgYGxg2MZJFiXh/3RpjlQhoDA+NQxrwpliR/3xgGYGBg3MYorFu1Wm/5KkZvCQMDA+NsRu+n+Suro4X5ABUDA+M8xq5VrfyIySJsXhhjYGDcxpi36ZOxQX5vITHFwMC4hjFJ9fKyNk8uy4MBDAyM4xjv4pUH4nxguWFdAwMD42hGLzjOVyjypYr15zIGAwPjsYw8yFZbZr3QWR1kYmBg3MOYrDXsAuehvzwYwMDAuIzRyzR7SWFzCQwDAwOjuJyRL1XkyeLHIhYDA+NoRq9ZP2n050ff3G7DwMB4IGNSOiavn+xuVd+OgYFxHOMHWX+TYap9KsQAAAAASUVORK5CYII=" alt="微信分享二维码">
     </div>
 </div>
 
@@ -809,6 +809,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">D^3CTF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -912,7 +916,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">学习：Master@NISL in THU&lt;br&gt;CTF：Redbud &amp; Tea Deliverers&lt;br&gt;兴趣：Web 安全、协议安全</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">学习：Master@NISL in THU&lt;br&gt;主页：netsec.ccert.edu.cn/people/gml20&lt;br&gt;CTF：Redbud &amp; Tea Deliverers&lt;br&gt;兴趣：Web 安全、Iot 安全、协议安全</div>
   	  	
     	</section>
     

@@ -5,13 +5,13 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://igml.top">
+  <link rel="dns-prefetch" href="https://igml.top">
   <title>2018 XCTF FINALS | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="有幸参加了 2018 XCTF FINALS，线下长了不少见识。回学校就打了上海市大学生网络安全竞赛，现在记录一下 XCTF FINALS。 攻防赛四道 pwn，Web 狗也只能打打解题这样子… 解题有 5 道 Misc，2 道 Web 和 4 道 pwn，和队友做出了两道 Misc ，一道 Web 和两道 pwn。不得不说这次的 Misc 很新颖，加入了硬件的挑战，有两道题是通过给的路由器来拿">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2018 XCTF FINALS">
-<meta property="og:url" content="http://igml.top/2018/11/05/2018-XCTF-FINALS/index.html">
+<meta property="og:url" content="https://igml.top/2018/11/05/2018-XCTF-FINALS/index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
 <meta property="og:description" content="有幸参加了 2018 XCTF FINALS，线下长了不少见识。回学校就打了上海市大学生网络安全竞赛，现在记录一下 XCTF FINALS。 攻防赛四道 pwn，Web 狗也只能打打解题这样子… 解题有 5 道 Misc，2 道 Web 和 4 道 pwn，和队友做出了两道 Misc ，一道 Web 和两道 pwn。不得不说这次的 Misc 很新颖，加入了硬件的挑战，有两道题是通过给的路由器来拿">
 <meta property="og:locale" content="zh_CN">
@@ -332,7 +332,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3a22orMQwF0P7/T6dw3kpIZm9rWk7s5aeBuS4HFMvS11c8Hv/G8/HzNa+ufD6bX3PbwMDA+FjG4+14dU1y73tSMk3JkzEwMM5hJEH21euTT3z/6WvBHQMDAyMPl0kYzRedGBgYGHNGfjZJSttFJAYGxsmMSQo6mYJJkoyBgXEOY1IY+O3jP6pvYGBg/MeMRzny5V27EGyLDT/uwsDA2JqRLMvaiDeJ/WsTgYGBcRpjEhzfb/Tnxc7FxSIGBsYBjJaU35uXCtamCQMDY29GXgZoAZMPbVNZDAyMvRltc0O+Dfc3E4SBgXEmo22/uCv1nZcTMDAwdmWstWclwTHfSkvKAxfPxMDA2Jqx9vo8EN/7z7DYbIGBgbEFow5t43aKxTQ1b87AwMDYlDFprVhrp2g3+BZ/BwwMjA9n5AXCSRkgLwzkm3cXzRYYGBibMibNXm262z7zIqBjYGBszbgrTU1Szd8of2JgYJzDaMuNSejMCwNtCL5IZTEwMLZjRIutcqO/TUHzs0USi4GBsSljrTDQLiXbiYvSYAwMjK0ZeRLbNj2sbdLlqTIGBsY5jEc52s369sqkIHqRxGJgYGzHaJPVtSS2bfNqN/swMDBOYMyD7GTJ2NZaMTAwTmbkqea8wDn5B3j5dgwMDIxxsrpWYCi2+TAwMDDK9q8kTc2DeJQ8Y2BgHMBog2beHrH2cW3ZAAMDY2/GpNFhbQMuL0zeBsDAwPhUxjdrMmWrJXpqGwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJElEQVR42u3aS27jMBAFQN//0gow28TKe2xnAJHFVWAYtEqLTv9er/hc/873T959/u4737+f3Pmxg4GB8VjGdXuSh77/PHmsd9Tk2TAwMM5hJFcn4TK5Mw/KybNhYGBgTB4xR94HegwMDIwJY17cJt/EwMDAyIvYtkxtU8D7xPFjtTgGBsYDGe1g4H/+/YfzDQwMjIcwrvIkLbO1sHgNDgYGxt6MSavrvvhs1ynWwK95xw4DA+MhjEkCt1am5s2+mo2BgbE1Yz7CzFcr5g244kkwMDAezsiL1bUBQFGClrdhYGCcxmgXHdpUL0ki23Tzh64hBgbG1owE05Ly8UAegqP5BgYGxnaMtu2ep3Tz9lx+JwYGxt6M++Rs/jNtA25tCQMDA+NMRhtM11K9+UACAwPjBEbb1m9L1kn4rl8HBgbGpox5gz4P020DrrgHAwNja8YkOcsD7loR2/4bwMDA2JURmcqWWbv+1U4wftluw8DA2I6RB9k2vK4NL5NBxS9tOwwMjO0YRbYYXJ2/ubUiFgMDAyNf55r8cPKC6pYfBgbG1ox5QJwE6zkYAwPjBMZVng8vco2LZAwMjBMYf5G0tasS7RrHWuGNgYHxdEZ+9WdHnmurG2+RGBgYBzDyhK9dg1hsnMWtPQwMDIx2bNmG5nnzDgMDAyNvgeVJYZ6S5qseGBgYJzDaInZtGDlvrmFgYJzJWCsd2xK3XezIhwcYGBhbM74ALwwd88bwoGUAAAAASUVORK5CYII=" alt="微信分享二维码">
     </div>
 </div>
 
@@ -574,6 +574,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">D^3CTF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
@@ -677,7 +681,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">学习：Master@NISL in THU&lt;br&gt;CTF：Redbud &amp; Tea Deliverers&lt;br&gt;兴趣：Web 安全、协议安全</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">学习：Master@NISL in THU&lt;br&gt;主页：netsec.ccert.edu.cn/people/gml20&lt;br&gt;CTF：Redbud &amp; Tea Deliverers&lt;br&gt;兴趣：Web 安全、Iot 安全、协议安全</div>
   	  	
     	</section>
     
