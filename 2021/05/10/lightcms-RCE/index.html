@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="https://igml.top">
   <title>lightcms后台RCE漏洞挖掘 | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言之前为了熟悉下 laravel，找了个基于 laravel 开发的 cms 审计练练手，瞄准了 lightcms。 先是挖到了一个比较简单的任意文件读取&amp;RCE漏洞，提了issue被修复后又简单审计了一波，挖掘到了一个有意思的RCE，感觉很适合 CTF，就拿来出题了，被用做了今年红帽杯的初赛。很遗憾由于放出题目时间较晚+很多dalao去打津门杯了，这道题只有两个队伍解出。">
+  <meta name="description" content="前言之前为了熟悉下 laravel，找了个基于 laravel 开发的 cms 审计练练手，瞄准了 lightcms。 先是挖到了一个比较简单的任意文件读取&amp;RCE漏洞，提了issue被修复后又简单审计了一波，挖掘到了一个有意思的RCE，感觉很适合 CTF，就拿来出题了，被用做了今年红帽杯的初赛。很遗憾由于放出题目时间较晚+很多dalao去打津门杯了，这道题只有两个队伍解出。 题目环境链接">
 <meta property="og:type" content="article">
 <meta property="og:title" content="lightcms后台RCE漏洞挖掘">
 <meta property="og:url" content="https://igml.top/2021/05/10/lightcms-RCE/index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
-<meta property="og:description" content="前言之前为了熟悉下 laravel，找了个基于 laravel 开发的 cms 审计练练手，瞄准了 lightcms。 先是挖到了一个比较简单的任意文件读取&amp;RCE漏洞，提了issue被修复后又简单审计了一波，挖掘到了一个有意思的RCE，感觉很适合 CTF，就拿来出题了，被用做了今年红帽杯的初赛。很遗憾由于放出题目时间较晚+很多dalao去打津门杯了，这道题只有两个队伍解出。">
+<meta property="og:description" content="前言之前为了熟悉下 laravel，找了个基于 laravel 开发的 cms 审计练练手，瞄准了 lightcms。 先是挖到了一个比较简单的任意文件读取&amp;RCE漏洞，提了issue被修复后又简单审计了一波，挖掘到了一个有意思的RCE，感觉很适合 CTF，就拿来出题了，被用做了今年红帽杯的初赛。很遗憾由于放出题目时间较晚+很多dalao去打津门杯了，这道题只有两个队伍解出。 题目环境链接">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://igml.top/2021/05/10/lightcms-RCE/image-20210510001913866.png">
 <meta property="og:image" content="https://igml.top/2021/05/10/lightcms-RCE/image-20210510002401236.png">
@@ -25,7 +25,7 @@
 <meta property="og:image" content="https://igml.top/2021/05/10/lightcms-RCE/image-20210510003921345.png">
 <meta property="og:image" content="https://igml.top/2021/05/10/lightcms-RCE/image-20210510003934994.png">
 <meta property="article:published_time" content="2021-05-09T16:05:33.000Z">
-<meta property="article:modified_time" content="2021-05-09T16:53:33.781Z">
+<meta property="article:modified_time" content="2021-05-11T13:46:58.115Z">
 <meta property="article:author" content="gml">
 <meta property="article:tag" content="PHP">
 <meta property="article:tag" content="laravel">
@@ -194,6 +194,7 @@
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前为了熟悉下 laravel，找了个基于 laravel 开发的 cms 审计练练手，瞄准了 lightcms。</p>
 <p>先是挖到了一个比较简单的任意文件读取&amp;RCE漏洞，提了issue被修复后又简单审计了一波，挖掘到了一个有意思的RCE，感觉很适合 CTF，就拿来出题了，被用做了今年红帽杯的初赛。很遗憾由于放出题目时间较晚+很多dalao去打津门杯了，这道题只有两个队伍解出。</p>
+<p>题目环境链接：<a target="_blank" rel="noopener" href="https://github.com/gml-sec/My-CTF-Challenges/tree/main/2021-Redhat-ezlight">https://github.com/gml-sec/My-CTF-Challenges/tree/main/2021-Redhat-ezlight</a>。</p>
 <a id="more"></a>
 
 <p>关于lightcms的简单介绍：</p>
