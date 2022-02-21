@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="https://igml.top">
   <title>TQLCTF-SQL_TEST出题笔记 | gml&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本次TQLCTF算是Redbud第一次参与全国赛的命题和组织（也大概率是我最后一次参与，文末有退役老选手的小作文hhh），所以想给大家出一道有趣新颖的题目。一直没什么idea，所以想着找个框架挖一挖链子算了，但是可能比较俗，所以结合了mysql写文件，并加了一个独特的phar反序列化触发点。">
+  <meta name="description" content="本次TQLCTF算是Redbud第一次参与全国赛的命题和组织（也大概率是我最后一次参与，文末有退役老选手的小作文hhh），所以想给大家出一道有趣新颖的题目。一直没什么idea，所以想着找个框架挖一挖链子算了，但是可能比较俗，所以结合了mysql写文件，并加了一个独特的phar反序列化触发点。 题目环境：https:&#x2F;&#x2F;github.com&#x2F;gml-sec&#x2F;My-CTF-Challenges&#x2F;tre">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TQLCTF-SQL_TEST出题笔记">
 <meta property="og:url" content="https://igml.top/2022/02/20/TQLCTF2022/index.html">
 <meta property="og:site_name" content="gml&#39;s blog">
-<meta property="og:description" content="本次TQLCTF算是Redbud第一次参与全国赛的命题和组织（也大概率是我最后一次参与，文末有退役老选手的小作文hhh），所以想给大家出一道有趣新颖的题目。一直没什么idea，所以想着找个框架挖一挖链子算了，但是可能比较俗，所以结合了mysql写文件，并加了一个独特的phar反序列化触发点。">
+<meta property="og:description" content="本次TQLCTF算是Redbud第一次参与全国赛的命题和组织（也大概率是我最后一次参与，文末有退役老选手的小作文hhh），所以想给大家出一道有趣新颖的题目。一直没什么idea，所以想着找个框架挖一挖链子算了，但是可能比较俗，所以结合了mysql写文件，并加了一个独特的phar反序列化触发点。 题目环境：https:&#x2F;&#x2F;github.com&#x2F;gml-sec&#x2F;My-CTF-Challenges&#x2F;tre">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://igml.top/2022/02/20/TQLCTF2022/image-20220220170538668.png">
 <meta property="og:image" content="https://igml.top/2022/02/20/TQLCTF2022/image-20220220170632680.png">
@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://igml.top/2022/02/20/TQLCTF2022/image-20220220171123191.png">
 <meta property="og:image" content="https://igml.top/2022/02/20/TQLCTF2022/image-20220220171142745.png">
 <meta property="article:published_time" content="2022-02-20T08:37:20.000Z">
-<meta property="article:modified_time" content="2022-02-20T12:53:38.781Z">
+<meta property="article:modified_time" content="2022-02-21T02:54:41.301Z">
 <meta property="article:author" content="gml-sec">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Web">
@@ -189,6 +189,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>本次TQLCTF算是Redbud第一次参与全国赛的命题和组织（也大概率是我最后一次参与，文末有退役老选手的小作文hhh），所以想给大家出一道有趣新颖的题目。一直没什么idea，所以想着找个框架挖一挖链子算了，但是可能比较俗，所以结合了mysql写文件，并加了一个独特的phar反序列化触发点。</p>
+<p>题目环境：<a target="_blank" rel="noopener" href="https://github.com/gml-sec/My-CTF-Challenges/tree/main/2022-TQLCTF-SQL_TEST">https://github.com/gml-sec/My-CTF-Challenges/tree/main/2022-TQLCTF-SQL_TEST</a></p>
 <a id="more"></a>
 
 <h2 id="出题思路"><a href="#出题思路" class="headerlink" title="出题思路"></a>出题思路</h2><p>选框架挖链子花了挺长时间，一些常见框架比如laravel、thinkphp等被挖烂了，最后发现Symfony5新版本似乎没啥链子，但是本人没有挖掘出最新版本RCE的链子，选了5.4.2版本挖了条链子。（测试中发现直接拿phpggc中Monolog的链子就能打，就把Monolog的依赖给删了）</p>
